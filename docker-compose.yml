@@ -4,7 +4,7 @@ services:
     container_name: nginx-shield
     restart: always
     environment:
-      # Disable IP geolocation lookup (set to "true", "1", or "yes" to disable)
+      # The localization module requires at least 2 GB of RAM to disable IP geolocation lookup (set to "true", "1", or "yes" to disable)
       - DISABLE_GEOLOCATE=false
     volumes:
       # Nginx access and error logs directory (used by Fail2Ban)
