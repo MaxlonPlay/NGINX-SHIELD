@@ -1,0 +1,26 @@
+{"id": "ua_001", "pattern": "Mozilla/5\\.0.*Chrome/", "description": "Browser: Google Chrome", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_002", "pattern": "Mozilla/5\\.0.*Firefox/", "description": "Browser: Mozilla Firefox", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_003", "pattern": "Mozilla/5\\.0.*Safari/.*(?!Chrome)", "description": "Browser: Apple Safari", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_004", "pattern": "Mozilla/5\\.0.*Edg/", "description": "Browser: Microsoft Edge", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_005", "pattern": "Opera/", "description": "Browser: Opera", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_010", "pattern": "Android.*Mobile", "description": "Dispositivo mobile: Android", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_011", "pattern": "iPhone.*Mobile", "description": "Dispositivo mobile: iPhone", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_012", "pattern": "iPad.*Mobile", "description": "Dispositivo mobile: iPad", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_020", "pattern": "Jellyfin", "description": "Client: Jellyfin", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_021", "pattern": "Nextcloud", "description": "Client: Nextcloud", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_022", "pattern": "ownCloud", "description": "Client: ownCloud", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_030", "pattern": "Googlebot", "description": "Bot: Google Search Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_031", "pattern": "bingbot", "description": "Bot: Bing Search Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_032", "pattern": "Baiduspider", "description": "Bot: Baidu Search Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_033", "pattern": "DuckDuckBot", "description": "Bot: DuckDuckGo Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_034", "pattern": "Slackbot", "description": "Bot: Slack Link Preview Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_035", "pattern": "TelegramBot", "description": "Bot: Telegram Link Preview Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_036", "pattern": "WhatsApp", "description": "Bot: WhatsApp Link Preview (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_040", "pattern": "curl/[8-9]\\.", "description": "Tool: curl moderno (potenzialmente legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_041", "pattern": "wget/1\\.(2[0-9])", "description": "Tool: wget moderno (potenzialmente legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_050", "pattern": "monitoring|uptime|pingdom|statuscake", "description": "Servizio: Monitoring/Uptime (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_051", "pattern": "Prometheus|Grafana", "description": "Monitoring: Prometheus/Grafana", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_060", "pattern": "axios/", "description": "Library: Axios (JavaScript HTTP client)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_061", "pattern": "node-fetch", "description": "Library: node-fetch (Node.js)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_062", "pattern": "PostmanRuntime", "description": "Tool: Postman (testing API)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_063", "pattern": "Insomnia", "description": "Tool: Insomnia (testing API)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}

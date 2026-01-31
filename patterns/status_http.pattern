@@ -1,0 +1,63 @@
+{"id": "status_0", "pattern": "100", "description": "Continua", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_1", "pattern": "101", "description": "Cambio di protocollo", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_2", "pattern": "102", "description": "Processando", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_3", "pattern": "103", "description": "Early Hints", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_4", "pattern": "200", "description": "OK", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_5", "pattern": "201", "description": "Creato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_6", "pattern": "202", "description": "Accettato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_7", "pattern": "203", "description": "Informazioni non autenticate", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_8", "pattern": "204", "description": "Nessun contenuto", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_9", "pattern": "205", "description": "Reset contenuto", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_10", "pattern": "206", "description": "Contenuto parziale", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_11", "pattern": "207", "description": "Multi-status (WebDAV)", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_12", "pattern": "208", "description": "Già notificato (WebDAV)", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_13", "pattern": "226", "description": "IM Usato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_14", "pattern": "300", "description": "Scelte multiple", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_15", "pattern": "301", "description": "Spostato permanentemente", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_16", "pattern": "302", "description": "Trovato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_17", "pattern": "303", "description": "Vedi altro", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_18", "pattern": "304", "description": "Non modificato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_19", "pattern": "305", "description": "Utilizzare il proxy", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_20", "pattern": "306", "description": "(Non utilizzato)", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_21", "pattern": "307", "description": "Redirect temporaneo", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_22", "pattern": "308", "description": "Redirect permanente", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_23", "pattern": "400", "description": "Richiesta non valida", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_24", "pattern": "401", "description": "Non autorizzato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_25", "pattern": "402", "description": "Pagamento richiesto", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_26", "pattern": "403", "description": "Vietato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_27", "pattern": "404", "description": "Non trovato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_28", "pattern": "405", "description": "Metodo non consentito", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_29", "pattern": "406", "description": "Non accettabile", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_30", "pattern": "407", "description": "Autenticazione proxy richiesta", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_31", "pattern": "408", "description": "Timeout richiesta", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_32", "pattern": "409", "description": "Conflitto", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_33", "pattern": "410", "description": "Non più disponibile", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_34", "pattern": "411", "description": "Lunghezza richiesta mancante", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_35", "pattern": "412", "description": "Precondizione fallita", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_36", "pattern": "413", "description": "Contenuto troppo grande", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_37", "pattern": "414", "description": "URI troppo lungo", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_38", "pattern": "415", "description": "Tipo media non supportato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_39", "pattern": "416", "description": "Intervallo non soddisfacibile", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_40", "pattern": "417", "description": "Aspettativa fallita", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_41", "pattern": "418", "description": "Sono una teiera", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_42", "pattern": "421", "description": "Richiesta mal indirizzata", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_43", "pattern": "422", "description": "Entità non processabile (WebDAV)", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_44", "pattern": "423", "description": "Bloccato (WebDAV)", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_45", "pattern": "424", "description": "Dipendenza fallita (WebDAV)", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_46", "pattern": "425", "description": "Troppo presto", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_47", "pattern": "426", "description": "Upgrade richiesto", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_48", "pattern": "428", "description": "Precondizione richiesta", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_49", "pattern": "429", "description": "Troppe richieste", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_50", "pattern": "431", "description": "Intestazioni troppo grandi", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_51", "pattern": "451", "description": "Non disponibile legalmente", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_52", "pattern": "500", "description": "Errore interno del server", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_53", "pattern": "501", "description": "Non implementato", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_54", "pattern": "502", "description": "Bad Gateway", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_55", "pattern": "503", "description": "Servizio non disponibile", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_56", "pattern": "504", "description": "Gateway timeout", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_57", "pattern": "505", "description": "Versione HTTP non supportata", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_58", "pattern": "506", "description": "Variante anche negozia", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_59", "pattern": "507", "description": "Spazio insufficiente (WebDAV)", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_60", "pattern": "508", "description": "Loop rilevato (WebDAV)", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_61", "pattern": "510", "description": "Non esteso", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "status_62", "pattern": "511", "description": "Autenticazione di rete richiesta", "type": "status_http", "createdAt": "2026-01-18T18:00:00.000000"}

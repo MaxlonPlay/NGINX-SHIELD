@@ -1,0 +1,39 @@
+{"id": "dangerous_url_001", "pattern": "web shell", "description": "Tentativo di web shell", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_002", "pattern": "reverse shell", "description": "Tentativo di reverse shell", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_003", "pattern": "backdoor", "description": "Tentativo di backdoor", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_004", "pattern": "remote code execution", "description": "Tentativo di RCE", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_005", "pattern": "code injection", "description": "Tentativo di code injection", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_006", "pattern": "command injection", "description": "Tentativo di command injection", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_010", "pattern": "sql injection", "description": "Tentativo di SQL injection", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_011", "pattern": "sqli", "description": "Tentativo di SQL injection (abbreviato)", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_012", "pattern": "union select", "description": "SQL injection UNION-based", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_020", "pattern": "cross-site scripting", "description": "Tentativo di XSS", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_021", "pattern": "xss", "description": "Tentativo di XSS (abbreviato)", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_022", "pattern": "script injection", "description": "Tentativo di script injection", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_030", "pattern": "brute force", "description": "Attacco brute force", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_031", "pattern": "bruteforce", "description": "Attacco brute force", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_032", "pattern": "password cracking", "description": "Tentativo di cracking password", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_040", "pattern": "path traversal", "description": "Tentativo di path traversal", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_041", "pattern": "directory traversal", "description": "Tentativo di directory traversal", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_042", "pattern": "lfi", "description": "Local File Inclusion", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_043", "pattern": "rfi", "description": "Remote File Inclusion", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_050", "pattern": "exploit", "description": "Tentativo di sfruttare vulnerabilità", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_051", "pattern": "vulnerability", "description": "Riferimento a vulnerabilità", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_052", "pattern": "zero-day", "description": "Exploit zero-day", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_060", "pattern": "malware", "description": "Riferimento a malware", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_061", "pattern": "trojan", "description": "Riferimento a trojan", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_062", "pattern": "virus", "description": "Riferimento a virus", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_063", "pattern": "ransomware", "description": "Riferimento a ransomware", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_070", "pattern": "botnet", "description": "Riferimento a botnet", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_071", "pattern": "ddos", "description": "Tentativo di attacco DDoS", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_072", "pattern": "dos attack", "description": "Tentativo di attacco DoS", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_080", "pattern": "crypto mining", "description": "Tentativo di crypto mining", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_081", "pattern": "cryptojacking", "description": "Tentativo di cryptojacking", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_090", "pattern": "scanner", "description": "Utilizzo di tool scanner", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_091", "pattern": "scanning", "description": "Tentativo di scansione", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_092", "pattern": "vulnerability scan", "description": "Scansione vulnerabilità", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_093", "pattern": "port scan", "description": "Scansione porte", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_100", "pattern": "unauthorized access", "description": "Tentativo di accesso non autorizzato", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_101", "pattern": "privilege escalation", "description": "Tentativo di escalation privilegi", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_110", "pattern": "file upload malicious", "description": "Tentativo di upload file malevolo", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_111", "pattern": "unrestricted file upload", "description": "Upload file non ristretto", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}

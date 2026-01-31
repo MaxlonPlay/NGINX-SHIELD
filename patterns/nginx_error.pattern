@@ -1,0 +1,5 @@
+{"id": "nginx_error_0", "pattern": "connect\\(\\) failed \\(113: No route to host\\)", "description": "Errore di rete: nessuna route verso l'host (upstream non raggiungibile)", "type": "nginx_error", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "nginx_error_1", "pattern": "upstream timed out", "description": "Timeout durante la comunicazione con l'upstream", "type": "nginx_error", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "nginx_error_2", "pattern": "connection refused", "description": "Connessione rifiutata dall'upstream (servizio non attivo o porta chiusa)", "type": "nginx_error", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "nginx_error_3", "pattern": "host not found", "description": "Host upstream non trovato (problema DNS o configurazione)", "type": "nginx_error", "createdAt": "2026-01-18T18:00:00.000000"}
+{"id": "nginx_error_4", "pattern": "buffered to a temporary file", "description": "Risposta upstream scritta temporaneamente su disco (file grande o backend lento)", "type": "nginx_error", "createdAt": "2026-01-18T18:00:00.000000"}
