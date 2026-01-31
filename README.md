@@ -113,7 +113,7 @@ docker compose up --build
 
 ## Deployment e Aggiornamenti
 
-- Build immagini Docker con `build_docker_ngsh.sh`
+- Build immagini Docker con `build_docker.sh`
 
 ---
 
