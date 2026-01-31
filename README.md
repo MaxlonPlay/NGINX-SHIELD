@@ -76,19 +76,15 @@ Il flusso tipico:
 - Node.js 18+
 - Docker (opzionale, per deploy containerizzato)
 
-### 1. Backend Python
+### 1. Backend Python e front react
 ```bash
 pip install -r requirements.txt
-python start.py
-```
-
-### 2. Frontend React
-```bash
 npm install
-npm run dev
+npm run build
+python start_build.py
 ```
 
-### 3. Deploy con Docker
+### 2. (OPZIONALE) Deploy con Docker
 ```bash
 docker compose up --build
 ```
@@ -107,13 +103,13 @@ docker compose up --build
 1. Installa le dipendenze Python e Node.js.
 2. Configura i file in `data/conf/` e `patterns/`.
 3. Avvia backend e frontend oppure usa Docker.
-4. Accedi alla dashboard web su `http://localhost:8080`.
+4. Accedi alla dashboard web su `http://localhost:8000`.
 
 ---
 
 ## Deployment e Aggiornamenti
 
-- Build immagini Docker con `build_docker_ngsh.sh`
+- Build immagini Docker con `build_docker.sh`
 
 ---
 
