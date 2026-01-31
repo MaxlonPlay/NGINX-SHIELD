@@ -1,0 +1,22 @@
+Bservices:
+  nginx-shield:
+    image: maxlonplay/nginx-shield:latest
+    container_name: nginx-shield
+    restart: always
+    environment:
+      # Disable IP geolocation lookup (set to "true", "1", or "yes" to disable)
+      - DISABLE_GEOLOCATE=false
+    volumes:
+      # Nginx access and error logs directory (used by Fail2Ban)
+      - /your/nginx/log/directory:/app/nginx-logs
+      # Fail2Ban socket directory (required to interact with Fail2Ban on the host)
+      - /var/run/fail2ban:/var/run/fail2ban
+      # Persistent data for nginx-shield
+      - /nginx-shield/data:/app/data
+      # nginx-shield application logs
+      - /nginx-shield/logs:/app/log
+      # Sync container time with host system time (read-only)
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      # Web interface / API port
+      - "8000:8000"

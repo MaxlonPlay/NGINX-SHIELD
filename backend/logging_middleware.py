@@ -14,7 +14,6 @@ import jwt
 
 class CompleteLosggingMiddleware (BaseHTTPMiddleware):
 
-
     def __init__(self, app):
         super().__init__(app)
         self .log_file = self .get_log_file()

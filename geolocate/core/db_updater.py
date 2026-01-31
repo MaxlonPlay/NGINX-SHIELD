@@ -40,10 +40,10 @@ class DBUpdater:
                             if total_size > 0:
                                 progress = (downloaded_size / total_size)*100
                                 print(f"\r[WARNING] Scaricamento: {downloaded_size /
-                                                           (1024 *
-                                                            1024):.2f}MB / {total_size /
-                                                                            (1024 *
-                                                                             1024):.2f}MB ({progress:.1f}%)", end='')
+                                                                   (1024 *
+                                                                    1024):.2f}MB / {total_size /
+                                                                                    (1024 *
+                                                                                     1024):.2f}MB ({progress:.1f}%)", end='')
                             else:
                                 print(
                                     f"\rScaricamento: {downloaded_size / (1024 * 1024):.2f}MB", end='')
@@ -67,11 +67,13 @@ class DBUpdater:
                         'asn',
                         'organization',
                         'country']):
-                    print("[ERROR] Errore: Intestazione CSV non valida o colonne mancanti.")
+                    print(
+                        "[ERROR] Errore: Intestazione CSV non valida o colonne mancanti.")
                     return False
                 first_data_line = f .readline()
                 if not first_data_line .strip():
-                    print("[WARNING] Avviso: Il file CSV sembra vuoto dopo l'intestazione.")
+                    print(
+                        "[WARNING] Avviso: Il file CSV sembra vuoto dopo l'intestazione.")
             print("[INFO] Validazione CSV di base superata.")
             return True
         except Exception as e:
@@ -137,7 +139,8 @@ class DBUpdater:
             os .remove(self .temp_filename)
             return False
         if not self ._update_files():
-            print("[ERROR] Aggiornamento fallito: Errore durante la sostituzione dei file.")
+            print(
+                "[ERROR] Aggiornamento fallito: Errore durante la sostituzione dei file.")
             return False
         print("=== Aggiornamento Database CSV Completato ===")
         return True

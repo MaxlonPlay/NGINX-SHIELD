@@ -401,7 +401,6 @@ def process_and_check_ban_optimized(
         user_agent_full,
         user_agent_desc):
 
-
     if whitelist_manager .is_whitelisted(ip):
         return
 
