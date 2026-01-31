@@ -107,9 +107,9 @@ docker compose up --build
 
 ---
 
-## Deployment e Aggiornamenti
+## Deployment Docker 
 
-- Build immagini Docker con `build_docker.sh`
+- https://hub.docker.com/r/maxlonplay/nginx-shield
 
 ---
 
