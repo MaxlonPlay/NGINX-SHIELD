@@ -1,0 +1,274 @@
+{
+  "common": {
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "add": "Adicionar",
+    "close": "Fechar",
+    "confirm": "Confirmar",
+    "success": "Sucesso",
+    "error": "Erro",
+    "warning": "Aviso",
+    "retry": "Tentar novamente",
+    "refresh": "Recarregar",
+    "export": "Exportar CSV",
+    "search": "Pesquisar",
+    "clear": "Limpar",
+    "update": "Atualizar",
+    "remove": "Remover",
+    "show": "Mostrar",
+    "hide": "Ocultar",
+    "total": "total",
+    "found": "Encontrados"
+  },
+  "auth": {
+    "login": "Entrar",
+    "logout": "Sair",
+    "username": "Nome de Usuário",
+    "password": "Senha",
+    "currentPassword": "Senha Atual",
+    "newPassword": "Nova Senha",
+    "confirmPassword": "Confirmar Senha",
+    "changePassword": "Alterar Senha",
+    "logoutSuccess": "Logout realizado",
+    "logoutDescription": "Você foi desconectado com sucesso"
+  },
+  "dashboard": {
+    "title": "Visão Geral do Sistema",
+    "subtitle": "Monitoramento de atividade e status do sistema Nginx Shield",
+    "systemOverview": "Visão Geral do Sistema"
+  },
+  "stats": {
+    "totalRequests": "Requisições Totais",
+    "blockedRequests": "Requisições Bloqueadas",
+    "bannedIPs": "IPs Banidos",
+    "whitelist": "Lista Branca",
+    "last24h": "nas últimas 24h",
+    "ofTotal": "do total",
+    "automaticAndManual": "Banimentos automáticos e manuais",
+    "totalAuthorized": "Total de IPs/domínios autorizados",
+    "autoRefreshActive": "Atualização automática ativa",
+    "manualUpdate": "Atualização manual",
+    "lastUpdate": "Última atualização"
+  },
+  "accountSettings": {
+    "title": "Configurações da Conta",
+    "description": "Gerencie as configurações da sua conta, incluindo alteração de senha.",
+    "accountDetails": "Detalhes da Conta",
+    "username": "Nome de Usuário",
+    "lastPasswordUpdate": "Última Atualização de Senha",
+    "changePasswordTitle": "Alterar Senha",
+    "currentPassword": "Senha Atual",
+    "currentPasswordPlaceholder": "Digite a senha atual",
+    "newPassword": "Nova Senha",
+    "newPasswordPlaceholder": "Digite a nova senha (mín. 8 caracteres)",
+    "confirmNewPassword": "Confirmar Nova Senha",
+    "confirmPasswordPlaceholder": "Confirme a nova senha",
+    "updating": "Atualizando...",
+    "errors": {
+      "allFieldsRequired": "Todos os campos são obrigatórios.",
+      "passwordMinLength": "A nova senha deve conter pelo menos 8 caracteres.",
+      "passwordMismatch": "As novas senhas não coincidem.",
+      "usernameError": "Não é possível recuperar o nome de usuário para atualização.",
+      "noInfoAccount": "Não é possível recuperar as informações da conta.",
+      "errorGetUserInfo": "Erro ao recuperar as informações do usuário.",
+      "connectionError": "Erro de conexão ao atualizar a senha.",
+      "updateFailed": "Falha na atualização da senha.",
+      "errorUpdatingPassword": "Erro ao atualizar a senha.",
+      "notPosibleChangePassword": "Não é possível atualizar a senha. Verifique a senha atual ou tente novamente mais tarde."
+    },
+    "success": {
+      "passwordUpdated": "Senha atualizada. Por segurança, você será desconectado em breve. Faça login novamente."
+    }
+  },
+  "whitelist": {
+    "title": "Gerenciamento de Lista Branca",
+    "addEntry": "Adicionar Entrada à Lista Branca",
+    "editEntry": "Editar Entrada da Lista Branca",
+    "addDescription": "Adicionar um novo IP, domínio ou rede à lista branca",
+    "editDescription": "Editar a descrição da entrada selecionada",
+    "type": "Tipo",
+    "ipAddress": "Endereço IP",
+    "network": "Rede (CIDR)",
+    "domain": "Domínio",
+    "description": "Descrição",
+    "descriptionPlaceholder": "Descrição opcional",
+    "insertDescription": "Digite uma descrição",
+    "noDescription": "Sem descrição",
+    "adding": "Adicionando...",
+    "updating": "Atualizando...",
+    "originalEntry": "Entrada original:",
+    "types": {
+      "ip": "Endereço IP",
+      "cidr": "Rede/CIDR",
+      "domain": "Domínio"
+    },
+    "placeholders": {
+      "ip": "ex: 192.168.1.100",
+      "cidr": "ex: 192.168.1.0/24",
+      "domain": "ex: example.com"
+    },
+    "errors": {
+      "invalidValue": "Digite um valor válido",
+      "invalidIP": "Formato de IP inválido (ex: 192.168.1.100)",
+      "invalidCIDR": "Formato CIDR inválido (ex: 192.168.1.0/24)",
+      "invalidDomain": "Formato de domínio inválido (ex: example.com)",
+      "invalidDescription": "Digite uma descrição válida",
+      "addError": "Erro ao adicionar entrada",
+      "updateError": "Erro ao atualizar entrada",
+      "cannotAdd": "Não é possível adicionar entrada à lista branca",
+      "cannotUpdate": "Não é possível atualizar entrada da lista branca."
+    },
+    "success": {
+      "added": "Entrada adicionada com sucesso à lista branca",
+      "updated": "Entrada atualizada com sucesso"
+    }
+  },
+  "ipManagement": {
+    "title": "Gerenciamento de IP",
+    "automaticBans": "Banimentos Automáticos",
+    "manualBans": "Banimentos Manuais",
+    "unbanIP": "Desbanir IP",
+    "confirmUnban": "Confirmar desbloqueio",
+    "unbanning": "Desbloqueando...",
+    "ipUnblocked": "IP Desbloqueado",
+    "ipUnblockedDescription": "foi removido dos banimentos",
+    "banCIDR": "CIDR Banido",
+    "banCIDRDescription": "A rede foi banida com sucesso",
+    "banMultiple": "Banimento em Massa Concluído",
+    "banMultipleDescription": "CIDRs banidos com sucesso, falharam",
+    "errors": {
+      "loadError": "Não é possível carregar a lista de IPs banidos",
+      "unbanError": "Erro ao desbloquear IP",
+      "banCIDRError": "Erro ao banir CIDR",
+      "banMultipleError": "Erro no banimento em massa",
+      "fail2banError": "Erro fail2ban"
+    }
+  },
+  "recentBans": {
+    "title": "Banimentos Automáticos Recentes",
+    "description": "Últimos IPs banidos automaticamente pelo sistema",
+    "timeAgo": {
+      "fewMoments": "Há poucos instantes",
+      "minutesAgo": "min atrás",
+      "hoursAgo": "horas atrás"
+    },
+    "noBans": "Nenhum banimento automático recente",
+    "noResults": "Nenhum banimento encontrado para",
+    "removeFilter": "Remover filtro",
+    "clickToFilter": "Clique para filtrar"
+  },
+  "systemStatus": {
+    "title": "Status do Sistema",
+    "description": "Monitoramento de serviços críticos",
+    "lastCheck": "Última verificação:",
+    "autoRefresh": "Atualização automática ativa",
+    "manualMode": "Atualização manual",
+    "switchToManual": "Mudar para modo manual",
+    "enableAutoRefresh": "Ativar atualização automática",
+    "refreshNow": "Atualizar agora",
+    "services": {
+      "threatMonitoring": "Monitoramento de ameaças",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "Ativo",
+      "error": "Erro",
+      "cpuUsage": "Uso de CPU",
+      "ramUsage": "Uso de RAM",
+      "temperature": "Temperatura"
+    },
+    "errors": {
+      "systemError": "Erro do Sistema",
+      "cannotRetrieve": "Não é possível recuperar dados do sistema",
+      "loading": "Carregando Sistema",
+      "retrieving": "Recuperando dados do sistema..."
+    }
+  },
+  "threatMap": {
+    "title": "Distribuição de Ameaças (EM DESENVOLVIMENTO)",
+    "description": "Distribuição geográfica de ataques em tempo real",
+    "countriesWithActivity": "Países com Atividade Suspeita",
+    "recentAttacks": "Ataques Recentes para",
+    "noRecentAttacks": "Nenhum ataque recente registrado para",
+    "selectCountry": "Selecione um país da lista para ver detalhes das ameaças.",
+    "showAll": "Mostrar todos os",
+    "countries": "Países",
+    "showLess": "Mostrar menos",
+    "severity": {
+      "critical": "CRÍTICO",
+      "extremelyHigh": "EXTREMAMENTE ALTO",
+      "veryHigh": "MUITO ALTO",
+      "high": "ALTO",
+      "medium": "MÉDIO",
+      "low": "BAIXO",
+      "veryLow": "MUITO BAIXO"
+    }
+  },
+  "logViewer": {
+    "title": "Visualizador de Logs",
+    "description": "Visualizar logs do sistema da API backend",
+    "autoUpdate": "atualização a cada",
+    "live": "Ao Vivo",
+    "pause": "Pausar",
+    "start": "Iniciar",
+    "selectLogType": "Selecionar tipo de log",
+    "reload": "Recarregar",
+    "reloading": "Recarregando...",
+    "exportCSV": "Exportar CSV",
+    "searchPlaceholder": "Pesquisar nos logs...",
+    "displayed": "Exibidos",
+    "logsOf": "logs de",
+    "noLogs": "Nenhum log encontrado",
+    "noResults": "Nenhum resultado encontrado",
+    "loadingLogs": "Carregando logs...",
+    "noLogsAvailable": "Nenhum arquivo de log disponível",
+    "errors": {
+      "cannotLoad": "Não é possível carregar a lista de logs. Verifique a conexão.",
+      "loadError": "Erro ao carregar logs"
+    },
+    "intervals": {
+      "1s": "1s",
+      "3s": "3s",
+      "5s": "5s",
+      "10s": "10s"
+    }
+  },
+  "validation": {
+    "required": "Campo obrigatório",
+    "minLength": "Comprimento mínimo: {{count}} caracteres",
+    "maxLength": "Comprimento máximo: {{count}} caracteres",
+    "invalidFormat": "Formato inválido"
+  },
+  "settings": {
+    "language": "Idioma",
+    "languageDescription": "Selecione o idioma da interface",
+    "currentLanguage": "Idioma atual",
+    "changeLanguage": "Alterar idioma",
+    "languageChanged": "Idioma alterado para"
+  },
+  "toast": {
+    "error": "Ocorreu um erro",
+    "success": "Operação concluída com sucesso",
+    "info": "Informação",
+    "warning": "Aviso"
+  },
+  "filters": {
+    "activeFilters": "Filtros ativos",
+    "clearAll": "Limpar tudo",
+    "addFilter": "Adicionar filtro"
+  },
+  "buttons": {
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "add": "Adicionar",
+    "update": "Atualizar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "save": "Salvar",
+    "close": "Fechar"
+  }
+}

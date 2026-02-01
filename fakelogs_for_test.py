@@ -6,7 +6,7 @@ import os
 
 
 LOG_FILE = "/app/nginx-logs/proxy-host-16_access.log"
-DELAY_BETWEEN_LOGS = 0.5
+DELAY_BETWEEN_LOGS = 0.05
 
 
 USER_AGENTS = [

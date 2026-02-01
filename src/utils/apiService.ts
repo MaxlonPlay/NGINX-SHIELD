@@ -230,6 +230,7 @@ export const authService = {
   },
 
   async getUserInfo(): Promise<{
+    data: any;
     success: boolean;
     user: { username: string; last_password_update: string };
   }> {

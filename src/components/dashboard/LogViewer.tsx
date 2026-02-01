@@ -53,7 +53,7 @@ export const LogViewer = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const isUserScrollingRef = useRef(false);
 
-  const PAGE_SIZE = 50;
+  const PAGE_SIZE = 100;
 
   const scrollRef = useInfiniteScroll({
     onLoadMore: loadMoreLogs,
@@ -313,7 +313,7 @@ export const LogViewer = () => {
                 value={refreshInterval.toString()}
                 onValueChange={(val) => setRefreshInterval(parseInt(val))}
               >
-                <SelectTrigger className="w-32 bg-slate-900/50 border-slate-600 text-white">
+                <SelectTrigger className="w-20 bg-slate-900/50 border-slate-600 text-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-800 border-slate-600">
@@ -340,7 +340,7 @@ export const LogViewer = () => {
                 }}
                 disabled={isLoadingLogs || availableLogs.length === 0}
               >
-                <SelectTrigger className="w-48 bg-slate-900/50 border-slate-600 text-white hover:bg-slate-900 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                <SelectTrigger className="w-40 bg-slate-900/50 border-slate-600 text-white hover:bg-slate-900 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
                   <SelectValue
                     placeholder={
                       isLoadingLogs ? "Caricamento..." : "Seleziona tipo log"
@@ -399,7 +399,7 @@ export const LogViewer = () => {
 
           {}
           <div className="flex items-center space-x-2">
-            <Search className="h-4 w-4 text-slate-500" />
+            <Search className="h-5 w-5 text-slate-500" />
             <Input
               type="text"
               placeholder="Ricerca nei log..."
@@ -424,7 +424,7 @@ export const LogViewer = () => {
 
         <CardContent>
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
+            <div className="flex items-center justify-between text-sm text-slate-400 mb-4 ">
               <span>
                 {searchQuery.trim() ? (
                   <>
@@ -446,7 +446,7 @@ export const LogViewer = () => {
                   (scrollRef as any).current = el;
                 }
               }}
-              className="h-[500px] overflow-y-auto space-y-1 bg-slate-900/30 p-4 rounded-lg border border-slate-700"
+              className="h-[700px] overflow-y-auto space-y-1 bg-slate-900/30 p-4 rounded-lg border border-slate-700"
             >
               {filteredLogs.length === 0 ? (
                 <div className="text-center text-slate-400 py-8">

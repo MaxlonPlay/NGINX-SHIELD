@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +10,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 import {
   CircleUser,
@@ -18,11 +25,28 @@ import {
   EyeOff,
   User,
   Calendar,
+  Languages,
+  Check,
+  Globe,
 } from "lucide-react";
 import { authService } from "../../utils/apiService";
 import { TOTPConfiguration } from "./TOTPConfiguration";
 
+const availableLanguages = [
+  { code: "it", name: "Italiano", flag: "🇮🇹" },
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "es", name: "Español", flag: "🇪🇸" },
+  { code: "fr", name: "Français", flag: "🇫🇷" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "ar", name: "العربية", flag: "🇸🇦" },
+  { code: "ch", name: "中文", flag: "🇨🇳" },
+  { code: "ja", name: "日本語", flag: "🇯🇵" },
+  { code: "ru", name: "Русский", flag: "🇷🇺" },
+  { code: "pt", name: "Português", flag: "🇵🇹" },
+];
+
 export const AccountSettings = () => {
+  const { t, i18n } = useTranslation();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -35,14 +59,31 @@ export const AccountSettings = () => {
   const [accountLastModifiedDate, setAccountLastModifiedDate] = useState<
     string | null
   >(null);
+  const [currentLang, setCurrentLang] = useState(i18n.language);
 
   const { toast } = useToast();
+
+  const changeLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    setCurrentLang(langCode);
+    localStorage.setItem("nginxshield_language", langCode);
+    toast({
+      title: t("common.success"),
+      description: `${t("settings.languageChanged")} ${availableLanguages.find((l) => l.code === langCode)?.name}`,
+    });
+  };
+
+  const getCurrentLanguage = () => {
+    return (
+      availableLanguages.find((lang) => lang.code === currentLang) ||
+      availableLanguages[0]
+    );
+  };
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         const result = await authService.getUserInfo();
-        console.log("Risultato getUserInfo:", result);
 
         if (result.success) {
           const userData = result.user || result.data?.user;
@@ -55,31 +96,25 @@ export const AccountSettings = () => {
               ),
             );
           } else {
-            console.error("Struttura dati utente non riconosciuta:", result);
             toast({
-              title: "Attenzione",
-              description:
-                "Impossibile recuperare alcune informazioni dell'account.",
+              title: t("common.warning"),
+              description: t("accountSettings.errors.noInfoAccount"),
               variant: "destructive",
             });
           }
         } else {
-          console.error("Errore nella risposta getUserInfo:", result);
+          console.error(t("accountSettings.errors.errorGetUserInfo"), result);
           toast({
-            title: "Errore",
-            description: "Impossibile recuperare le informazioni dell'account.",
+            title: t("common.error"),
+            description: t("accountSettings.errors.noInfoAccount"),
             variant: "destructive",
           });
         }
       } catch (error) {
-        console.error(
-          "Errore durante il recupero delle informazioni utente:",
-          error,
-        );
+        console.error(t("accountSettings.errors.errorGetUserInfo"), error);
         toast({
-          title: "Errore",
-          description:
-            "Errore di connessione durante il recupero delle informazioni.",
+          title: t("common.error"),
+          description: t("accountSettings.errors.connectionError"),
           variant: "destructive",
         });
       }
@@ -115,8 +150,8 @@ export const AccountSettings = () => {
 
     if (!currentPassword || !newPassword || !confirmNewPassword) {
       toast({
-        title: "Errore",
-        description: "Tutti i campi sono obbligatori.",
+        title: t("common.error"),
+        description: t("accountSettings.errors.allFieldsRequired"),
         variant: "destructive",
       });
       return;
@@ -124,8 +159,8 @@ export const AccountSettings = () => {
 
     if (newPassword.length < 8) {
       toast({
-        title: "Errore",
-        description: "La nuova password deve contenere almeno 8 caratteri.",
+        title: t("common.error"),
+        description: t("accountSettings.errors.passwordMinLength"),
         variant: "destructive",
       });
       return;
@@ -133,8 +168,8 @@ export const AccountSettings = () => {
 
     if (newPassword !== confirmNewPassword) {
       toast({
-        title: "Errore",
-        description: "Le nuove password non corrispondono.",
+        title: t("common.error"),
+        description: t("accountSettings.errors.passwordMismatch"),
         variant: "destructive",
       });
       return;
@@ -142,9 +177,8 @@ export const AccountSettings = () => {
 
     if (!loggedInUsername) {
       toast({
-        title: "Errore",
-        description:
-          "Impossibile recuperare il nome utente per l'aggiornamento.",
+        title: t("common.error"),
+        description: t("accountSettings.errors.usernameError"),
         variant: "destructive",
       });
       return;
@@ -160,9 +194,8 @@ export const AccountSettings = () => {
 
       if (result.success) {
         toast({
-          title: "Successo",
-          description:
-            "Password aggiornata. Per sicurezza, verrai disconnesso a breve. Effettua di nuovo il login.",
+          title: t("common.success"),
+          description: t("accountSettings.success.passwordUpdated"),
         });
         setCurrentPassword("");
         setNewPassword("");
@@ -176,19 +209,18 @@ export const AccountSettings = () => {
         }, 3000);
       } else {
         toast({
-          title: "Errore",
+          title: t("common.error"),
           description:
-            result.message || "Errore durante l'aggiornamento della password.",
+            result.message || t("accountSettings.errors.updateFailed"),
           variant: "destructive",
         });
       }
     } catch (error: any) {
-      console.error("Errore durante il cambio password:", error);
+      console.error(t("accountSettings.errors.errorUpdatingPassword"), error);
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description:
-          error.message ||
-          "Impossibile aggiornare la password. Verifica la password attuale o riprova più tardi.",
+          error.message || t("accountSettings.errors.notPosibleChangePassword"),
         variant: "destructive",
       });
     } finally {
@@ -198,35 +230,101 @@ export const AccountSettings = () => {
 
   return (
     <div className="max-w-2xl mx-auto mt-8 space-y-6">
+      <Card className="bg-slate-800/50 border-slate-700">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center">
+            <Globe className="h-5 w-5 mr-2 text-green-400" />
+            {t("settings.language")}
+          </CardTitle>
+          <CardDescription className="text-slate-400">
+            {t("settings.languageDescription")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between p-4 bg-slate-900/30 rounded-lg border border-slate-700">
+            <div className="flex items-center space-x-3">
+              <Languages className="h-5 w-5 text-blue-400" />
+              <div>
+                <p className="text-white font-medium">
+                  {t("settings.currentLanguage")}
+                </p>
+                <p className="text-slate-400 text-sm flex items-center">
+                  <span className="text-lg mr-2">
+                    {getCurrentLanguage().flag}
+                  </span>
+                  {getCurrentLanguage().name}
+                </p>
+              </div>
+            </div>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-slate-700 border-slate-600 text-white hover:bg-slate-600"
+                >
+                  <Languages className="h-4 w-4 mr-2" />
+                  {t("settings.changeLanguage")}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="bg-slate-800 border-slate-700 min-w-[200px]"
+              >
+                {availableLanguages.map((lang) => (
+                  <DropdownMenuItem
+                    key={lang.code}
+                    onClick={() => changeLanguage(lang.code)}
+                    className="text-slate-300 hover:text-white hover:bg-slate-700/50 cursor-pointer flex items-center justify-between py-2"
+                  >
+                    <div className="flex items-center">
+                      <span className="text-xl mr-3">{lang.flag}</span>
+                      <span>{lang.name}</span>
+                    </div>
+                    {currentLang === lang.code && (
+                      <Check className="h-4 w-4 text-green-400" />
+                    )}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </CardContent>
+      </Card>
+
       {}
       <Card className="bg-slate-800/50 border-slate-700">
         <CardHeader>
           <CardTitle className="text-white flex items-center">
             <CircleUser className="h-5 w-5 mr-2 text-blue-400" />
-            Impostazioni Account
+            {t("accountSettings.title")}
           </CardTitle>
           <CardDescription className="text-slate-400">
-            Gestisci le impostazioni del tuo account, inclusa la modifica della
-            password.
+            {t("accountSettings.description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {}
           <div className="mb-6 p-4 bg-slate-900/30 rounded-lg border border-slate-700">
             <h3 className="text-md font-semibold text-white mb-3">
-              Dettagli Account
+              {t("accountSettings.accountDetails")}
             </h3>
             <div className="space-y-2">
               <div className="flex items-center text-slate-300">
                 <User className="h-4 w-4 mr-2 text-blue-400" />
-                <span className="font-medium">Nome Utente:</span>
+                <span className="font-medium">
+                  {t("accountSettings.username")}:
+                </span>
                 <span className="ml-2 text-white">
                   {loggedInUsername || "Caricamento..."}
                 </span>
               </div>
               <div className="flex items-center text-slate-300">
                 <Calendar className="h-4 w-4 mr-2 text-purple-400" />
-                <span className="font-medium">Ultima Modifica Password:</span>
+                <span className="font-medium">
+                  {t("accountSettings.lastPasswordUpdate")}:
+                </span>
                 <span className="ml-2 text-white">
                   {accountLastModifiedDate || "Caricamento..."}
                 </span>
@@ -242,7 +340,7 @@ export const AccountSettings = () => {
               className="bg-blue-600 hover:bg-blue-700 text-white w-full mb-6"
             >
               <Save className="h-4 w-4 mr-2" />
-              Cambia Password
+              {t("accountSettings.changePasswordTitle")}
             </Button>
           )}
 
@@ -253,13 +351,13 @@ export const AccountSettings = () => {
               className="space-y-4 p-4 bg-slate-900/30 rounded-lg border border-slate-700"
             >
               <h3 className="text-md font-semibold text-white mb-3">
-                Cambio Password
+                {t("accountSettings.changePasswordTitle")}
               </h3>
 
               {}
               <div className="space-y-2">
                 <Label htmlFor="currentPassword" className="text-slate-300">
-                  Password Attuale
+                  {t("accountSettings.currentPassword")}
                 </Label>
                 <div className="relative">
                   <Input
@@ -267,7 +365,9 @@ export const AccountSettings = () => {
                     type={showCurrentPassword ? "text" : "password"}
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder="Inserisci la password attuale"
+                    placeholder={t(
+                      "accountSettings.currentPasswordPlaceholder",
+                    )}
                     className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-500 pr-10"
                     disabled={isLoading}
                   />
@@ -296,7 +396,7 @@ export const AccountSettings = () => {
               {}
               <div className="space-y-2">
                 <Label htmlFor="newPassword" className="text-slate-300">
-                  Nuova Password
+                  {t("accountSettings.newPassword")}
                 </Label>
                 <div className="relative">
                   <Input
@@ -304,7 +404,7 @@ export const AccountSettings = () => {
                     type={showNewPassword ? "text" : "password"}
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Inserisci la nuova password (min. 8 caratteri)"
+                    placeholder={t("accountSettings.newPasswordPlaceholder")}
                     className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-500 pr-10"
                     disabled={isLoading}
                   />
@@ -333,7 +433,7 @@ export const AccountSettings = () => {
               {}
               <div className="space-y-2">
                 <Label htmlFor="confirmNewPassword" className="text-slate-300">
-                  Conferma Nuova Password
+                  {t("accountSettings.confirmNewPassword")}
                 </Label>
                 <div className="relative">
                   <Input
@@ -341,7 +441,9 @@ export const AccountSettings = () => {
                     type={showConfirmNewPassword ? "text" : "password"}
                     value={confirmNewPassword}
                     onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    placeholder="Conferma la nuova password"
+                    placeholder={t(
+                      "accountSettings.confirmPasswordPlaceholder",
+                    )}
                     className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-500 pr-10"
                     disabled={isLoading}
                   />
@@ -380,7 +482,7 @@ export const AccountSettings = () => {
                 ) : (
                   <>
                     <Save className="h-4 w-4 mr-2" />
-                    Cambia Password
+                    {t("accountSettings.changePasswordTitle")}
                   </>
                 )}
               </Button>
@@ -397,7 +499,7 @@ export const AccountSettings = () => {
                 }}
                 disabled={isLoading}
               >
-                Annulla
+                {t("common.cancel")}
               </Button>
             </form>
           )}

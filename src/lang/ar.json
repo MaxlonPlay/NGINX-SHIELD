@@ -1,0 +1,274 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "add": "إضافة",
+    "close": "إغلاق",
+    "confirm": "تأكيد",
+    "success": "نجح",
+    "error": "خطأ",
+    "warning": "تحذير",
+    "retry": "إعادة المحاولة",
+    "refresh": "تحديث",
+    "export": "تصدير CSV",
+    "search": "بحث",
+    "clear": "مسح",
+    "update": "تحديث",
+    "remove": "إزالة",
+    "show": "عرض",
+    "hide": "إخفاء",
+    "total": "المجموع",
+    "found": "تم العثور على"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "changePassword": "تغيير كلمة المرور",
+    "logoutSuccess": "تم تسجيل الخروج",
+    "logoutDescription": "تم تسجيل خروجك بنجاح"
+  },
+  "dashboard": {
+    "title": "نظرة عامة على النظام",
+    "subtitle": "مراقبة نشاط وحالة نظام Nginx Shield",
+    "systemOverview": "نظرة عامة على النظام"
+  },
+  "stats": {
+    "totalRequests": "إجمالي الطلبات",
+    "blockedRequests": "الطلبات المحظورة",
+    "bannedIPs": "عناوين IP المحظورة",
+    "whitelist": "القائمة البيضاء",
+    "last24h": "في آخر 24 ساعة",
+    "ofTotal": "من الإجمالي",
+    "automaticAndManual": "الحظر التلقائي واليدوي",
+    "totalAuthorized": "إجمالي عناوين IP/النطاقات المصرح بها",
+    "autoRefreshActive": "التحديث التلقائي نشط",
+    "manualUpdate": "تحديث يدوي",
+    "lastUpdate": "آخر تحديث"
+  },
+  "accountSettings": {
+    "title": "إعدادات الحساب",
+    "description": "إدارة إعدادات حسابك، بما في ذلك تغيير كلمة المرور.",
+    "accountDetails": "تفاصيل الحساب",
+    "username": "اسم المستخدم",
+    "lastPasswordUpdate": "آخر تحديث لكلمة المرور",
+    "changePasswordTitle": "تغيير كلمة المرور",
+    "currentPassword": "كلمة المرور الحالية",
+    "currentPasswordPlaceholder": "أدخل كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة (8 أحرف على الأقل)",
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+    "confirmPasswordPlaceholder": "أكد كلمة المرور الجديدة",
+    "updating": "جاري التحديث...",
+    "errors": {
+      "allFieldsRequired": "جميع الحقول مطلوبة.",
+      "passwordMinLength": "يجب أن تحتوي كلمة المرور الجديدة على 8 أحرف على الأقل.",
+      "passwordMismatch": "كلمات المرور الجديدة غير متطابقة.",
+      "usernameError": "تعذر الحصول على اسم المستخدم للتحديث.",
+      "noInfoAccount": "تعذر الحصول على معلومات الحساب.",
+      "errorGetUserInfo": "خطأ في الحصول على معلومات المستخدم.",
+      "connectionError": "خطأ في الاتصال أثناء تحديث كلمة المرور.",
+      "updateFailed": "فشل تحديث كلمة المرور.",
+      "errorUpdatingPassword": "خطأ في تحديث كلمة المرور.",
+      "notPosibleChangePassword": "تعذر تحديث كلمة المرور. تحقق من كلمة المرور الحالية أو حاول مرة أخرى لاحقاً."
+    },
+    "success": {
+      "passwordUpdated": "تم تحديث كلمة المرور. لأسباب أمنية، سيتم تسجيل خروجك قريباً. يرجى تسجيل الدخول مرة أخرى."
+    }
+  },
+  "whitelist": {
+    "title": "إدارة القائمة البيضاء",
+    "addEntry": "إضافة إدخال إلى القائمة البيضاء",
+    "editEntry": "تعديل إدخال القائمة البيضاء",
+    "addDescription": "إضافة عنوان IP أو نطاق أو شبكة جديدة إلى القائمة البيضاء",
+    "editDescription": "تعديل وصف الإدخال المحدد",
+    "type": "النوع",
+    "ipAddress": "عنوان IP",
+    "network": "الشبكة (CIDR)",
+    "domain": "النطاق",
+    "description": "الوصف",
+    "descriptionPlaceholder": "وصف اختياري",
+    "insertDescription": "أدخل وصفاً",
+    "noDescription": "بدون وصف",
+    "adding": "جاري الإضافة...",
+    "updating": "جاري التحديث...",
+    "originalEntry": "الإدخال الأصلي:",
+    "types": {
+      "ip": "عنوان IP",
+      "cidr": "شبكة/CIDR",
+      "domain": "نطاق"
+    },
+    "placeholders": {
+      "ip": "مثال: 192.168.1.100",
+      "cidr": "مثال: 192.168.1.0/24",
+      "domain": "مثال: example.com"
+    },
+    "errors": {
+      "invalidValue": "أدخل قيمة صالحة",
+      "invalidIP": "تنسيق IP غير صالح (مثال: 192.168.1.100)",
+      "invalidCIDR": "تنسيق CIDR غير صالح (مثال: 192.168.1.0/24)",
+      "invalidDomain": "تنسيق النطاق غير صالح (مثال: example.com)",
+      "invalidDescription": "أدخل وصفاً صالحاً",
+      "addError": "خطأ في إضافة الإدخال",
+      "updateError": "خطأ في تحديث الإدخال",
+      "cannotAdd": "تعذرت إضافة الإدخال إلى القائمة البيضاء",
+      "cannotUpdate": "تعذر تحديث إدخال القائمة البيضاء."
+    },
+    "success": {
+      "added": "تمت إضافة الإدخال إلى القائمة البيضاء بنجاح",
+      "updated": "تم تحديث الإدخال بنجاح"
+    }
+  },
+  "ipManagement": {
+    "title": "إدارة عناوين IP",
+    "automaticBans": "الحظر التلقائي",
+    "manualBans": "الحظر اليدوي",
+    "unbanIP": "إلغاء حظر IP",
+    "confirmUnban": "تأكيد إلغاء الحظر",
+    "unbanning": "جاري إلغاء الحظر...",
+    "ipUnblocked": "تم إلغاء حظر IP",
+    "ipUnblockedDescription": "تمت إزالته من قائمة الحظر",
+    "banCIDR": "تم حظر CIDR",
+    "banCIDRDescription": "تم حظر الشبكة بنجاح",
+    "banMultiple": "اكتمل الحظر الجماعي",
+    "banMultipleDescription": "تم حظر CIDRs بنجاح، فشل",
+    "errors": {
+      "loadError": "تعذر تحميل قائمة عناوين IP المحظورة",
+      "unbanError": "خطأ في إلغاء حظر IP",
+      "banCIDRError": "خطأ في حظر CIDR",
+      "banMultipleError": "خطأ في الحظر الجماعي",
+      "fail2banError": "خطأ fail2ban"
+    }
+  },
+  "recentBans": {
+    "title": "الحظر التلقائي الأخير",
+    "description": "آخر عناوين IP التي تم حظرها تلقائياً بواسطة النظام",
+    "timeAgo": {
+      "fewMoments": "منذ لحظات قليلة",
+      "minutesAgo": "دقائق مضت",
+      "hoursAgo": "ساعات مضت"
+    },
+    "noBans": "لا يوجد حظر تلقائي حديث",
+    "noResults": "لم يتم العثور على حظر لـ",
+    "removeFilter": "إزالة التصفية",
+    "clickToFilter": "انقر للتصفية"
+  },
+  "systemStatus": {
+    "title": "حالة النظام",
+    "description": "مراقبة الخدمات الحيوية",
+    "lastCheck": "آخر فحص:",
+    "autoRefresh": "التحديث التلقائي نشط",
+    "manualMode": "تحديث يدوي",
+    "switchToManual": "التبديل إلى الوضع اليدوي",
+    "enableAutoRefresh": "تفعيل التحديث التلقائي",
+    "refreshNow": "تحديث الآن",
+    "services": {
+      "threatMonitoring": "مراقبة التهديدات",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "نشط",
+      "error": "خطأ",
+      "cpuUsage": "استخدام المعالج",
+      "ramUsage": "استخدام الذاكرة",
+      "temperature": "درجة الحرارة"
+    },
+    "errors": {
+      "systemError": "خطأ في النظام",
+      "cannotRetrieve": "تعذر الحصول على بيانات النظام",
+      "loading": "جاري تحميل النظام",
+      "retrieving": "جاري الحصول على بيانات النظام..."
+    }
+  },
+  "threatMap": {
+    "title": "توزيع التهديدات (قيد التطوير)",
+    "description": "التوزيع الجغرافي للهجمات في الوقت الفعلي",
+    "countriesWithActivity": "البلدان ذات النشاط المشبوه",
+    "recentAttacks": "الهجمات الأخيرة لـ",
+    "noRecentAttacks": "لم يتم تسجيل هجمات حديثة لـ",
+    "selectCountry": "اختر دولة من القائمة لرؤية تفاصيل التهديدات.",
+    "showAll": "عرض الكل",
+    "countries": "البلدان",
+    "showLess": "عرض أقل",
+    "severity": {
+      "critical": "حرج",
+      "extremelyHigh": "عالي للغاية",
+      "veryHigh": "عالي جداً",
+      "high": "عالي",
+      "medium": "متوسط",
+      "low": "منخفض",
+      "veryLow": "منخفض جداً"
+    }
+  },
+  "logViewer": {
+    "title": "عارض السجلات",
+    "description": "عرض سجلات النظام من واجهة برمجة التطبيقات الخلفية",
+    "autoUpdate": "التحديث كل",
+    "live": "مباشر",
+    "pause": "إيقاف مؤقت",
+    "start": "بدء",
+    "selectLogType": "اختر نوع السجل",
+    "reload": "إعادة التحميل",
+    "reloading": "جاري إعادة التحميل...",
+    "exportCSV": "تصدير CSV",
+    "searchPlaceholder": "البحث في السجلات...",
+    "displayed": "معروض",
+    "logsOf": "سجلات من",
+    "noLogs": "لم يتم العثور على سجلات",
+    "noResults": "لم يتم العثور على نتائج",
+    "loadingLogs": "جاري تحميل السجلات...",
+    "noLogsAvailable": "لا توجد ملفات سجلات متاحة",
+    "errors": {
+      "cannotLoad": "تعذر تحميل قائمة السجلات. تحقق من الاتصال.",
+      "loadError": "خطأ في تحميل السجلات"
+    },
+    "intervals": {
+      "1s": "1 ثانية",
+      "3s": "3 ثواني",
+      "5s": "5 ثواني",
+      "10s": "10 ثواني"
+    }
+  },
+  "validation": {
+    "required": "حقل مطلوب",
+    "minLength": "الحد الأدنى للطول: {{count}} أحرف",
+    "maxLength": "الحد الأقصى للطول: {{count}} أحرف",
+    "invalidFormat": "تنسيق غير صالح"
+  },
+  "settings": {
+    "language": "اللغة",
+    "languageDescription": "اختر لغة الواجهة",
+    "currentLanguage": "اللغة الحالية",
+    "changeLanguage": "تغيير اللغة",
+    "languageChanged": "تم تغيير اللغة إلى"
+  },
+  "toast": {
+    "error": "حدث خطأ",
+    "success": "تمت العملية بنجاح",
+    "info": "معلومات",
+    "warning": "تحذير"
+  },
+  "filters": {
+    "activeFilters": "التصفيات النشطة",
+    "clearAll": "مسح الكل",
+    "addFilter": "إضافة تصفية"
+  },
+  "buttons": {
+    "confirm": "تأكيد",
+    "cancel": "إلغاء",
+    "add": "إضافة",
+    "update": "تحديث",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "save": "حفظ",
+    "close": "إغلاق"
+  }
+}

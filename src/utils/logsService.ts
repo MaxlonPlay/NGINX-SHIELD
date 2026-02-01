@@ -73,7 +73,7 @@ export const logService = {
   searchLogs: async (
     logType: string = "npm_debug",
     query: string = "",
-    limit: number = 100,
+    limit: number = 1500,
   ) => {
     try {
       console.log(`[LOGS] Searching in ${logType} with query: "${query}"`);

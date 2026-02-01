@@ -1,0 +1,274 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "close": "Close",
+    "confirm": "Confirm",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "retry": "Retry",
+    "refresh": "Reload",
+    "export": "Export CSV",
+    "search": "Search",
+    "clear": "Clear",
+    "update": "Update",
+    "remove": "Remove",
+    "show": "Show",
+    "hide": "Hide",
+    "total": "total",
+    "found": "Found"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "username": "Username",
+    "password": "Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "changePassword": "Change Password",
+    "logoutSuccess": "Logout successful",
+    "logoutDescription": "You have been successfully logged out"
+  },
+  "dashboard": {
+    "title": "System Overview",
+    "subtitle": "Monitoring activity and status of Nginx Shield system",
+    "systemOverview": "System Overview"
+  },
+  "stats": {
+    "totalRequests": "Total Requests",
+    "blockedRequests": "Blocked Requests",
+    "bannedIPs": "Banned IPs",
+    "whitelist": "Whitelist",
+    "last24h": "in the last 24h",
+    "ofTotal": "of total",
+    "automaticAndManual": "Automatic and manual bans",
+    "totalAuthorized": "Total authorized IPs/domains",
+    "autoRefreshActive": "Auto-refresh active",
+    "manualUpdate": "Manual update",
+    "lastUpdate": "Last update"
+  },
+  "accountSettings": {
+    "title": "Account Settings",
+    "description": "Manage your account settings, including password change.",
+    "accountDetails": "Account Details",
+    "username": "Username",
+    "lastPasswordUpdate": "Last Password Update",
+    "changePasswordTitle": "Change Password",
+    "currentPassword": "Current Password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter new password (min. 8 characters)",
+    "confirmNewPassword": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Confirm new password",
+    "updating": "Updating...",
+    "errors": {
+      "allFieldsRequired": "All fields are required.",
+      "passwordMinLength": "New password must contain at least 8 characters.",
+      "passwordMismatch": "New passwords do not match.",
+      "usernameError": "Cannot retrieve username for update.",
+      "noInfoAccount": "Cannot retrieve account information.",
+      "errorGetUserInfo": "Error retrieving user information.",
+      "connectionError": "Connection error while updating password.",
+      "updateFailed": "Password update failed.",
+      "errorUpdatingPassword": "Error updating password.",
+      "notPosibleChangePassword": "Cannot update password. Verify current password or try again later."
+    },
+    "success": {
+      "passwordUpdated": "Password updated. For security, you will be logged out shortly. Please log in again."
+    }
+  },
+  "whitelist": {
+    "title": "Whitelist Management",
+    "addEntry": "Add Whitelist Entry",
+    "editEntry": "Edit Whitelist Entry",
+    "addDescription": "Add a new IP, domain or network to the whitelist",
+    "editDescription": "Edit the description of the selected entry",
+    "type": "Type",
+    "ipAddress": "IP Address",
+    "network": "Network (CIDR)",
+    "domain": "Domain",
+    "description": "Description",
+    "descriptionPlaceholder": "Optional description",
+    "insertDescription": "Enter a description",
+    "noDescription": "No description",
+    "adding": "Adding...",
+    "updating": "Updating...",
+    "originalEntry": "Original entry:",
+    "types": {
+      "ip": "IP Address",
+      "cidr": "Network/CIDR",
+      "domain": "Domain"
+    },
+    "placeholders": {
+      "ip": "e.g.: 192.168.1.100",
+      "cidr": "e.g.: 192.168.1.0/24",
+      "domain": "e.g.: example.com"
+    },
+    "errors": {
+      "invalidValue": "Enter a valid value",
+      "invalidIP": "Invalid IP format (e.g.: 192.168.1.100)",
+      "invalidCIDR": "Invalid CIDR format (e.g.: 192.168.1.0/24)",
+      "invalidDomain": "Invalid domain format (e.g.: example.com)",
+      "invalidDescription": "Enter a valid description",
+      "addError": "Error adding entry",
+      "updateError": "Error updating entry",
+      "cannotAdd": "Cannot add entry to whitelist",
+      "cannotUpdate": "Cannot update whitelist entry."
+    },
+    "success": {
+      "added": "Entry successfully added to whitelist",
+      "updated": "Entry successfully updated"
+    }
+  },
+  "ipManagement": {
+    "title": "IP Management",
+    "automaticBans": "Automatic Bans",
+    "manualBans": "Manual Bans",
+    "unbanIP": "Unban IP",
+    "confirmUnban": "Confirm unban",
+    "unbanning": "Unbanning...",
+    "ipUnblocked": "IP Unblocked",
+    "ipUnblockedDescription": "has been removed from bans",
+    "banCIDR": "CIDR Banned",
+    "banCIDRDescription": "The network has been successfully banned",
+    "banMultiple": "Mass Ban Completed",
+    "banMultipleDescription": "CIDRs successfully banned, failed",
+    "errors": {
+      "loadError": "Cannot load banned IP list",
+      "unbanError": "Error unbanning IP",
+      "banCIDRError": "Error banning CIDR",
+      "banMultipleError": "Error in mass ban",
+      "fail2banError": "fail2ban error"
+    }
+  },
+  "recentBans": {
+    "title": "Recent Automatic Bans",
+    "description": "Latest IPs automatically banned by the system",
+    "timeAgo": {
+      "fewMoments": "A few moments ago",
+      "minutesAgo": "min ago",
+      "hoursAgo": "hours ago"
+    },
+    "noBans": "No recent automatic bans",
+    "noResults": "No bans found for",
+    "removeFilter": "Remove filter",
+    "clickToFilter": "Click to filter"
+  },
+  "systemStatus": {
+    "title": "System Status",
+    "description": "Critical services monitoring",
+    "lastCheck": "Last check:",
+    "autoRefresh": "Auto-refresh active",
+    "manualMode": "Manual update",
+    "switchToManual": "Switch to manual mode",
+    "enableAutoRefresh": "Enable auto-refresh",
+    "refreshNow": "Refresh now",
+    "services": {
+      "threatMonitoring": "Threat monitoring",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "Active",
+      "error": "Error",
+      "cpuUsage": "CPU Usage",
+      "ramUsage": "RAM Usage",
+      "temperature": "Temperature"
+    },
+    "errors": {
+      "systemError": "System Error",
+      "cannotRetrieve": "Cannot retrieve system data",
+      "loading": "Loading System",
+      "retrieving": "Retrieving system data..."
+    }
+  },
+  "threatMap": {
+    "title": "Threat Distribution (IN DEVELOPMENT)",
+    "description": "Real-time geographic distribution of attacks",
+    "countriesWithActivity": "Countries with Suspicious Activity",
+    "recentAttacks": "Recent Attacks for",
+    "noRecentAttacks": "No recent attacks recorded for",
+    "selectCountry": "Select a country from the list to see threat details.",
+    "showAll": "Show all",
+    "countries": "Countries",
+    "showLess": "Show less",
+    "severity": {
+      "critical": "CRITICAL",
+      "extremelyHigh": "EXTREMELY HIGH",
+      "veryHigh": "VERY HIGH",
+      "high": "HIGH",
+      "medium": "MEDIUM",
+      "low": "LOW",
+      "veryLow": "VERY LOW"
+    }
+  },
+  "logViewer": {
+    "title": "Log Viewer",
+    "description": "View system logs from backend API",
+    "autoUpdate": "update every",
+    "live": "Live",
+    "pause": "Pause",
+    "start": "Start",
+    "selectLogType": "Select log type",
+    "reload": "Reload",
+    "reloading": "Reloading...",
+    "exportCSV": "Export CSV",
+    "searchPlaceholder": "Search in logs...",
+    "displayed": "Displayed",
+    "logsOf": "logs of",
+    "noLogs": "No logs found",
+    "noResults": "No results found",
+    "loadingLogs": "Loading logs...",
+    "noLogsAvailable": "No log files available",
+    "errors": {
+      "cannotLoad": "Cannot load log list. Check connection.",
+      "loadError": "Error loading logs"
+    },
+    "intervals": {
+      "1s": "1s",
+      "3s": "3s",
+      "5s": "5s",
+      "10s": "10s"
+    }
+  },
+  "validation": {
+    "required": "Required field",
+    "minLength": "Minimum length: {{count}} characters",
+    "maxLength": "Maximum length: {{count}} characters",
+    "invalidFormat": "Invalid format"
+  },
+  "settings": {
+    "language": "Language",
+    "languageDescription": "Select interface language",
+    "currentLanguage": "Current language",
+    "changeLanguage": "Change language",
+    "languageChanged": "Language changed to"
+  },
+  "toast": {
+    "error": "An error occurred",
+    "success": "Operation completed successfully",
+    "info": "Information",
+    "warning": "Warning"
+  },
+  "filters": {
+    "activeFilters": "Active filters",
+    "clearAll": "Clear all",
+    "addFilter": "Add filter"
+  },
+  "buttons": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "add": "Add",
+    "update": "Update",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "close": "Close"
+  }
+}

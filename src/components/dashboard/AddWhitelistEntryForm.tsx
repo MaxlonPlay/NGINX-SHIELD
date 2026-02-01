@@ -19,6 +19,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Plus, X, Loader2 } from "lucide-react";
 import { authService } from "../../utils/apiService";
+import { t } from "i18next";
 
 interface AddWhitelistEntryFormProps {
   onAdd: (entry: { type: string; value: string; description: string }) => void;
@@ -38,8 +39,8 @@ export const AddWhitelistEntryForm = ({
   const validateInput = () => {
     if (!value.trim()) {
       toast({
-        title: "Errore",
-        description: "Inserisci un valore valido",
+        title: t("common.error"),
+        description: t("error.invalidValue"),
         variant: "destructive",
       });
       return false;
@@ -51,8 +52,8 @@ export const AddWhitelistEntryForm = ({
           /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if (!ipRegex.test(value.trim())) {
           toast({
-            title: "Errore",
-            description: "Formato IP non valido (es: 192.168.1.100)",
+            title: t("common.error"),
+            description: t("whitelist.errors.invalidIP"),
             variant: "destructive",
           });
           return false;
@@ -64,8 +65,8 @@ export const AddWhitelistEntryForm = ({
           /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(?:[0-9]|[1-2][0-9]|3[0-2])$/;
         if (!cidrRegex.test(value.trim())) {
           toast({
-            title: "Errore",
-            description: "Formato CIDR non valido (es: 192.168.1.0/24)",
+            title: t("common.error"),
+            description: t("whitelist.errors.invalidCIDR"),
             variant: "destructive",
           });
           return false;
@@ -73,12 +74,14 @@ export const AddWhitelistEntryForm = ({
         break;
 
       case "domain":
-        const domainRegex =
-          /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-        if (!domainRegex.test(value.trim()) || value.trim().length < 3) {
+        const cleanedValue = value.trim().toLowerCase();
+
+        const domainRegex = /^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+
+        if (!domainRegex.test(cleanedValue)) {
           toast({
-            title: "Errore",
-            description: "Formato dominio non valido (es: example.com)",
+            title: t("common.error"),
+            description: t("whitelist.errors.invalidDomain"),
             variant: "destructive",
           });
           return false;
@@ -102,19 +105,19 @@ export const AddWhitelistEntryForm = ({
       const result = await authService.addWhitelistEntry({
         type: type,
         value: value.trim(),
-        description: description.trim() || "Nessuna descrizione",
+        description: description.trim() || t("whitelist.noDescription"),
       });
 
       if (result.success) {
         toast({
-          title: "Successo",
-          description: "Entry aggiunta alla whitelist con successo",
+          title: t("common.success"),
+          description: t("whitelist.success.added"),
         });
 
         onAdd({
           type: type,
           value: value.trim(),
-          description: description.trim() || "Nessuna descrizione",
+          description: description.trim() || t("whitelist.noDescription"),
         });
 
         setValue("");
@@ -122,18 +125,17 @@ export const AddWhitelistEntryForm = ({
         setType("ip");
       } else {
         toast({
-          title: "Errore",
-          description: result.message || "Errore durante l'aggiunta dell'entry",
+          title: t("common.error"),
+          description: result.message || t("whitelist.errors.addError"),
           variant: "destructive",
         });
       }
     } catch (error: any) {
-      console.error("Errore durante l'aggiunta dell'entry:", error);
+      console.error(t("whitelist.errors.addError"), error);
 
       toast({
-        title: "Errore",
-        description:
-          error.message || "Impossibile aggiungere l'entry alla whitelist",
+        title: t("common.error"),
+        description: error.message || t("whitelist.errors.cannotAdd"),
         variant: "destructive",
       });
     } finally {
@@ -144,18 +146,18 @@ export const AddWhitelistEntryForm = ({
   const getPlaceholder = () => {
     switch (type) {
       case "domain":
-        return "es: example.com";
+        return t("whitelist.placeholders.domain");
       case "cidr":
-        return "es: 192.168.1.0/24";
+        return t("whitelist.placeholders.cidr");
       default:
-        return "es: 192.168.1.100";
+        return t("whitelist.placeholders.ip");
     }
   };
 
   const getLabel = () => {
     switch (type) {
       case "domain":
-        return "Dominio";
+        return t("common.domain");
       case "cidr":
         return "Rete (CIDR)";
       default:
@@ -170,10 +172,10 @@ export const AddWhitelistEntryForm = ({
           <div>
             <CardTitle className="text-white flex items-center">
               <Plus className="h-5 w-5 mr-2 text-green-400" />
-              Aggiungi Entry Whitelist
+              {t("whitelist.addEntry")}
             </CardTitle>
             <CardDescription className="text-slate-400">
-              Aggiungi un nuovo IP, dominio o rete alla whitelist
+              {t("whitelist.addDescription")}
             </CardDescription>
           </div>
           <Button
@@ -191,16 +193,21 @@ export const AddWhitelistEntryForm = ({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="type" className="text-slate-300">
-              Tipo
+              {t("common.type")}
             </Label>
             <Select value={type} onValueChange={setType} disabled={isLoading}>
               <SelectTrigger className="bg-slate-900/50 border-slate-600 text-white">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-slate-800 border-slate-600">
-                <SelectItem value="ip">IP Address</SelectItem>
-                <SelectItem value="cidr">Network/CIDR</SelectItem> {}
-                <SelectItem value="domain">Domain</SelectItem>
+                <SelectItem value="ip">{t("whitelist.types.ip")}</SelectItem>
+                <SelectItem value="cidr">
+                  {t("whitelist.types.cidr1")}
+                </SelectItem>{" "}
+                {}
+                <SelectItem value="domain">
+                  {t("whitelist.types.domain")}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -221,13 +228,13 @@ export const AddWhitelistEntryForm = ({
 
           <div className="space-y-2">
             <Label htmlFor="description" className="text-slate-300">
-              Descrizione
+              {t("whitelist.description")}
             </Label>
             <Input
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Descrizione opzionale"
+              placeholder={t("whitelist.descriptionPlaceholder")}
               className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-500"
               disabled={isLoading}
             />
@@ -242,12 +249,12 @@ export const AddWhitelistEntryForm = ({
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Aggiungendo...
+                  {t("whitelist.adding")}
                 </>
               ) : (
                 <>
                   <Plus className="h-4 w-4 mr-2" />
-                  Aggiungi
+                  {t("whitelist.addEntry")}
                 </>
               )}
             </Button>
@@ -258,7 +265,7 @@ export const AddWhitelistEntryForm = ({
               className="bg-white text-slate-900 border-white hover:bg-slate-100 font-medium"
               disabled={isLoading}
             >
-              Annulla
+              {t("common.cancel")}
             </Button>
           </div>
         </form>

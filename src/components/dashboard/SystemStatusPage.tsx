@@ -430,7 +430,6 @@ export const SystemStatusPage = () => {
             </DialogContent>
           </Dialog>
 
-          {/* SEZIONE TEMPO REALE */}
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -461,7 +460,6 @@ export const SystemStatusPage = () => {
               </Card>
             )}
 
-            {/* Metriche 4 colonne */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <MetricCard
                 title="CPU"
@@ -505,14 +503,12 @@ export const SystemStatusPage = () => {
                 chartData={historyData?.data_points.slice(-20)}
                 dataKey="temperature"
               />
-              {/* Card Stato Sistema - Dettagliata */}
               <Card className="bg-slate-800/50 border-slate-700 relative overflow-hidden md:col-span-2 lg:col-span-1">
                 <CardContent className="pt-6">
                   <h3 className="text-slate-300 font-semibold mb-4 text-sm">
                     Stato Completo
                   </h3>
                   <div className="space-y-3 text-sm">
-                    {/* Servizi */}
                     <div>
                       <p className="text-slate-400 mb-2">Servizi:</p>
                       <div className="space-y-1 ml-2">
@@ -581,11 +577,9 @@ export const SystemStatusPage = () => {
                       </div>
                     </div>
 
-                    {/* Metriche con soglie */}
                     <div className="border-t border-slate-700 pt-3">
                       <p className="text-slate-400 mb-2">Metriche:</p>
                       <div className="space-y-1 ml-2">
-                        {/* CPU */}
                         <div className="flex items-center justify-between">
                           <span className="text-slate-400">CPU</span>
                           <div className="flex items-center gap-1">
@@ -608,7 +602,6 @@ export const SystemStatusPage = () => {
                           </div>
                         </div>
 
-                        {/* RAM */}
                         <div className="flex items-center justify-between">
                           <span className="text-slate-400">RAM</span>
                           <div className="flex items-center gap-1">
@@ -631,7 +624,6 @@ export const SystemStatusPage = () => {
                           </div>
                         </div>
 
-                        {/* Temperatura */}
                         <div className="flex items-center justify-between">
                           <span className="text-slate-400">Temp</span>
                           <div className="flex items-center gap-1">
@@ -667,7 +659,6 @@ export const SystemStatusPage = () => {
             </div>
           </div>
 
-          {/* SEZIONE GESTIONE SERVIZI */}
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -677,7 +668,6 @@ export const SystemStatusPage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Backend */}
               <Card className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-colors">
                 <CardContent className="pt-6">
                   <div className="space-y-4">
@@ -714,7 +704,6 @@ export const SystemStatusPage = () => {
                 </CardContent>
               </Card>
 
-              {/* Frontend */}
               <Card className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-colors">
                 <CardContent className="pt-6">
                   <div className="space-y-4">
@@ -747,7 +736,6 @@ export const SystemStatusPage = () => {
                 </CardContent>
               </Card>
 
-              {/* Analyzer */}
               <Card className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-colors">
                 <CardContent className="pt-6">
                   <div className="space-y-4">
@@ -780,7 +768,6 @@ export const SystemStatusPage = () => {
                 </CardContent>
               </Card>
 
-              {/* Geolocate */}
               <Card className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-colors">
                 <CardContent className="pt-6">
                   <div className="space-y-4">
@@ -815,7 +802,6 @@ export const SystemStatusPage = () => {
             </div>
           </div>
 
-          {/* SEZIONE STORICO */}
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -824,7 +810,6 @@ export const SystemStatusPage = () => {
               </h2>
             </div>
 
-            {/* Selector periodo */}
             <Card className="bg-slate-800/50 border-slate-700 mb-4">
               <CardContent className="pt-6">
                 <PeriodSelector
@@ -835,7 +820,6 @@ export const SystemStatusPage = () => {
               </CardContent>
             </Card>
 
-            {/* Grafici */}
             {historyLoading ? (
               <Card className="bg-slate-800/50 border-slate-700">
                 <CardContent className="pt-6 flex items-center justify-center h-96">

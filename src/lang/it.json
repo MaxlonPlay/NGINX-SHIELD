@@ -1,0 +1,415 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "add": "Aggiungi",
+    "close": "Chiudi",
+    "confirm": "Conferma",
+    "success": "Successo",
+    "error": "Errore",
+    "warning": "Attenzione",
+    "retry": "Riprova",
+    "refresh": "Ricarica",
+    "export": "Export CSV",
+    "search": "Ricerca",
+    "clear": "Cancella",
+    "update": "Aggiorna",
+    "remove": "Rimuovi",
+    "show": "Mostra",
+    "hide": "Nascondi",
+    "total": "totali",
+    "found": "Trovati",
+    "done": "Fatto",
+    "unknownError": "Errore sconosciuto",
+    "ip": "IP",
+    "cidr": "CIDR",
+    "domain": "Dominio",
+    "type": "Tipo"
+  },
+  "auth": {
+    "login": "Accedi",
+    "logout": "Esci",
+    "username": "Nome Utente",
+    "password": "Password",
+    "currentPassword": "Password Attuale",
+    "newPassword": "Nuova Password",
+    "confirmPassword": "Conferma Password",
+    "changePassword": "Cambia Password",
+    "changeCredentials": "Cambia Credenziali",
+    "logoutSuccess": "Logout eseguito",
+    "logoutDescription": "Sei stato disconnesso con successo",
+    "currentPasswordLabel": "Password Corrente",
+    "currentPasswordPlaceholder": "La tua password attuale",
+    "newUsernameLabel": "Nuovo Username",
+    "newUsernamePlaceholder": "Scegli un nuovo username",
+    "newPasswordLabel": "Nuova Password",
+    "newPasswordPlaceholder": "Min. 8 caratteri, maiuscola, minuscola, numero, speciale",
+    "confirmNewPasswordLabel": "Conferma Nuova Password",
+    "confirmPasswordPlaceholder": "Conferma la nuova password",
+    "updating": "Aggiornamento...",
+    "securityNotice": "Per motivi di sicurezza, devi cambiare le credenziali di default."
+  },
+  "changePassword": {
+    "title": "Cambia Credenziali",
+    "description": "Per motivi di sicurezza, devi cambiare le credenziali di default.",
+    "credentialsUpdated": "Credenziali Aggiornate",
+    "credentialsUpdatedDescription": "Le tue credenziali sono state aggiornate con successo!",
+    "errors": {
+      "allFieldsRequired": "Tutti i campi sono obbligatori.",
+      "passwordMismatch": "Le nuove password non corrispondono.",
+      "passwordRequirements": "La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale.",
+      "currentPasswordWrong": "Password corrente errata o sessione scaduta.",
+      "usernameInUse": "Username già in uso. Scegli un altro username.",
+      "cannotChangeDefaultUsername": "Non puoi cambiare il tuo username da 'admin_shield' a 'admin_david'. Effettua il primo login con 'admin_shield', poi cambia lo username a 'admin_david' e la password. Quindi effettua il login con le nuove credenziali.",
+      "connectionError": "Impossibile connettersi al server. Verifica la tua connessione o contatta l'amministratore."
+    }
+  },
+  "dashboard": {
+    "title": "Panoramica Sistema",
+    "subtitle": "Monitoraggio attività e stato del sistema Nginx Shield",
+    "systemOverview": "Panoramica Sistema"
+  },
+  "stats": {
+    "totalRequests": "Richieste Totali",
+    "blockedRequests": "Richieste Bloccate",
+    "bannedIPs": "IP Bannati",
+    "whitelist": "Whitelist",
+    "last24h": "nelle ultime 24h",
+    "ofTotal": "del totale",
+    "automaticAndManual": "Ban automatici e manuali",
+    "totalAuthorized": "Totale IP/domini autorizzati",
+    "autoRefreshActive": "Auto-refresh attivo",
+    "manualUpdate": "Aggiornamento manuale",
+    "lastUpdate": "Ultimo aggiornamento",
+    "systemStatusError": "Errore nel recupero dati sistema",
+    "percentageTotal": "% del totale"
+  },
+  "accountSettings": {
+    "title": "Impostazioni Account",
+    "description": "Gestisci le impostazioni del tuo account, inclusa la modifica della password.",
+    "accountDetails": "Dettagli Account",
+    "username": "Nome Utente",
+    "lastPasswordUpdate": "Ultima Modifica Password",
+    "changePasswordTitle": "Cambia Password",
+    "currentPassword": "Password Attuale",
+    "currentPasswordPlaceholder": "Inserisci la password attuale",
+    "newPassword": "Nuova Password",
+    "newPasswordPlaceholder": "Inserisci la nuova password (min. 8 caratteri)",
+    "confirmNewPassword": "Conferma Nuova Password",
+    "confirmPasswordPlaceholder": "Conferma la nuova password",
+    "updating": "Aggiornando...",
+    "errors": {
+      "allFieldsRequired": "Tutti i campi sono obbligatori.",
+      "passwordMinLength": "La nuova password deve contenere almeno 8 caratteri.",
+      "passwordMismatch": "Le nuove password non corrispondono.",
+      "usernameError": "Impossibile recuperare il nome utente per l'aggiornamento.",
+      "noInfoAccount": "Impossibile recuperare le informazioni dell'account.",
+      "errorGetUserInfo": "Errore durante il recupero delle informazioni dell'utente.",
+      "connectionError": "Errore di connessione durante l'aggiornamento della password.",
+      "updateFailed": "Aggiornamento della password non riuscito.",
+      "errorUpdatingPassword": "Errore durante l'aggiornamento della password.",
+      "notPosibleChangePassword": "Impossibile aggiornare la password. Verifica la password attuale o riprova più tardi."
+    },
+    "success": {
+      "passwordUpdated": "Password aggiornata. Per sicurezza, verrai disconnesso a breve. Effettua di nuovo il login."
+    }
+  },
+  "whitelist": {
+    "title": "Gestione Whitelist",
+    "addEntry": "Aggiungi alla Whitelist",
+    "editEntry": "Modifica Entry Whitelist",
+    "addDescription": "Aggiungi un nuovo IP, dominio o rete alla whitelist",
+    "editDescription": "Modifica la descrizione dell'entry selezionata",
+    "type": "Tipo",
+    "ipAddress": "Indirizzo IP",
+    "network": "Rete (CIDR)",
+    "description": "Descrizione",
+    "descriptionPlaceholder": "Descrizione opzionale",
+    "insertDescription": "Inserisci una descrizione",
+    "noDescription": "Nessuna descrizione",
+    "adding": "Aggiungendo...",
+    "updating": "Aggiornando...",
+    "originalEntry": "Entry originale:",
+    "types": {
+      "ip": "Indirizzo IP",
+      "cidr0": "Rete/CIDR",
+      "cidr1" : "Rete (CIDR)",
+      "domain": "Dominio"
+    },
+    "placeholders": {
+      "ip": "es: 192.168.1.100",
+      "cidr": "es: 192.168.1.0/24",
+      "domain": "es: example.com"
+    },
+    "errors": {
+      "invalidValue": "Inserifefefsci un valore valido",
+      "invalidIP": "Formato IP non valido (es: 192.168.1.100)",
+      "invalidCIDR": "Formato CIDR non valido (es: 192.168.1.0/24)",
+      "invalidDomain": "Formato dominio non valido (es: example.com)",
+      "invalidDescription": "Inserisci una descrizione valida",
+      "addError": "Errore durante l'aggiunta dell'entry",
+      "updateError": "Errore durante l'aggiornamento dell'entry",
+      "cannotAdd": "Impossibile aggiungere l'entry alla whitelist",
+      "cannotUpdate": "Impossibile aggiornare l'entry della whitelist."
+    },
+    "success": {
+      "added": "Entry aggiunta alla whitelist con successo",
+      "updated": "Entry aggiornata con successo"
+    }
+  },
+  "ipManagement": {
+    "title": "Gestione IP",
+    "automaticBans": "Ban Automatici",
+    "manualBans": "Ban Manuali",
+    "unbanIP": "Sblocca IP",
+    "confirmUnban": "Conferma sblocco",
+    "unbanning": "Sbloccando...",
+    "ipUnblocked": "IP Sbloccato",
+    "ipUnblockedDescription": "è stato rimosso dai ban",
+    "banCIDR": "CIDR Bannato",
+    "banCIDRDescription": "La rete è stata bannata correttamente",
+    "banMultiple": "Ban di Massa Completato",
+    "banMultipleDescription": "CIDR bannati con successo, falliti",
+    "automaticBansDisplayed": "IP Bannati Automaticamente Visualizzati:",
+    "manualBansDisplayed": "IP Bannati Manualmente Visualizzati:",
+    "automaticBansDescription": "Lista degli IP bannati automaticamente dal sistema.",
+    "manualBansDescription": "Lista degli IP bannati manualmente",
+    "banAllCIDRs": "Banna Tutti i CIDR",
+    "noAutomaticBans": "Nessun IP automatico trovato.",
+    "noManualBans": "Nessun IP manuale trovato.",
+    "noAutomaticBansWithFilters": "Nessun IP automatico trovato con i criteri di ricerca attuali.",
+    "noManualBansWithFilters": "Nessun IP manuale trovato con i criteri di ricerca attuali.",
+    "loadingMoreAutomatic": "Caricando altri ban automatici...",
+    "loadingMoreManual": "Caricando altri ban manuali...",
+    "endOfAutomaticList": "Fine della lista dei ban automatici.",
+    "endOfManualList": "Fine della lista dei ban manuali.",
+    "errors": {
+      "loadError": "Impossibile caricare la lista IP bannati",
+      "unbanError": "Errore durante lo sblocco dell'IP",
+      "banCIDRError": "Errore nel Ban del CIDR",
+      "banMultipleError": "Errore nel Ban di Massa",
+      "fail2banError": "Errore fail2ban"
+    }
+  },
+  "banEntry": {
+    "automatic": "Automatico",
+    "manual": "Manuale",
+    "httpCode": "HTTP",
+    "reason": "Motivo:",
+    "urlPath": "URL Path:",
+    "userAgent": "User Agent:",
+    "network": "Network:",
+    "asn": "ASN:",
+    "organization": "Organizzazione:",
+    "country": "Paese:",
+    "bannedAt": "Bannato:",
+    "clickToFilter": "Clicca per filtrare",
+    "banCIDR": "Banna CIDR",
+    "unblock": "Sblocca"
+  },
+  "cidrBan": {
+    "title": "Ban CIDR",
+    "description": "Banna una intera subnet e gestisci gli IP singoli",
+    "cidrLabel": "CIDR (es: 192.168.1.0/24)",
+    "cidrPlaceholder": "192.168.1.0/24",
+    "reasonLabel": "Motivo del Ban",
+    "reasonPlaceholder": "Es: DDoS, Malware, Spam...",
+    "banCIDRButton": "Banna CIDR",
+    "banning": "Bannando...",
+    "checking": "Cercando IP appartenenti al CIDR...",
+    "ipsFound": "Trovati {count} IP singoli in questo CIDR",
+    "cidrAlreadyBanned": "Il CIDR è già bannato. Vuoi sbannare gli IP singoli?",
+    "selectAll": "Seleziona Tutto",
+    "deselectAll": "Deseleziona Tutto",
+    "unbanSelected": "Sbanna IP Selezionati ({count})",
+    "unbanning": "Sbannando...",
+    "cidrBannedSuccessfully": "CIDR {cidr} bannato correttamente",
+    "ipsUnbanned": "{count} IP sbannati",
+    "banAnotherCIDR": "Banna un altro CIDR",
+    "confirmBanTitle": "Conferma Ban CIDR",
+    "confirmBanDescription": "Sei sicuro di voler bannare l'intera rete CIDR?",
+    "confirmMassBanTitle": "Conferma Ban di Massa",
+    "confirmMassBanDescription": "Sei sicuro di voler bannare le seguenti {count} reti CIDR?",
+    "networksList": "Elenco Reti da Bannare",
+    "errors": {
+      "cidrRequired": "Il CIDR è obbligatorio.",
+      "invalidCIDR": "Formato CIDR non valido. Usa il formato: 192.168.1.0/24",
+      "reasonRequired": "Il motivo deve contenere almeno 3 caratteri.",
+      "banError": "Errore nel Ban"
+    },
+    "success": {
+      "banned": "CIDR {cidr} bannato correttamente",
+      "ipsUnbanned": "{count} IP sbannati correttamente"
+    }
+  },
+  "manualBan": {
+    "title": "Ban Manuale IP",
+    "description": "Banna un IP o un intervallo CIDR manualmente. Il motivo è opzionale ma raccomandato.",
+    "ipPlaceholder": "IP o CIDR (es. 192.168.1.1)",
+    "reasonPlaceholder": "Motivo del ban (opzionale, min. 3 caratteri)",
+    "banButton": "Banna IP",
+    "banning": "Bannando...",
+    "reloadData": "Ricarica Dati",
+    "sendingRequest": "Invio richiesta di ban in corso...",
+    "invalidIPFormat": "Formato IP non valido",
+    "minCharacters": "Minimo 3 caratteri",
+    "errors": {
+      "ipRequired": "L'indirizzo IP è obbligatorio.",
+      "invalidIP": "Formato IP non valido (es. 192.168.1.1, 192.168.1.0/24, o IPv6).",
+      "reasonTooShort": "Il motivo del ban, se inserito, deve essere di almeno 3 caratteri."
+    },
+    "success": {
+      "banned": "L'IP {ip} è stato bannato con successo."
+    }
+  },
+  "searchAndFilter": {
+    "title": "Cerca IP Bannato",
+    "description": "Cerca per IP, motivo, dominio, percorso URL o user agent. Aggiungi più filtri per ricerche combinate.",
+    "placeholder": "Cerca IP, motivo, dominio, percorso URL o user agent...",
+    "preview": "Anteprima:",
+    "activeFilters": "Filtri attivi:",
+    "clearAll": "Pulisci tutto"
+  },
+  "recentBans": {
+    "title": "Ban Automatici Recenti",
+    "description": "Ultimi IP bannati automaticamente dal sistema",
+    "timeAgo": {
+      "fewMoments": "Pochi istanti fa",
+      "minutesAgo": "min fa",
+      "hoursAgo": "ore fa",
+      "daysAgo": "giorni fa"
+    },
+    "noBans": "Nessun ban automatico recente",
+    "noResults": "Nessun ban trovato per",
+    "removeFilter": "Rimuovi filtro",
+    "clickToFilter": "Clicca per filtrare"
+  },
+  "systemStatus": {
+    "title": "Stato Sistema",
+    "description": "Monitoraggio servizi critici",
+    "lastCheck": "Ultimo controllo:",
+    "autoRefresh": "Auto-refresh attivo",
+    "manualMode": "Aggiornamento manuale",
+    "switchToManual": "Passa a modalità manuale",
+    "enableAutoRefresh": "Attiva auto-refresh",
+    "refreshNow": "Aggiorna ora",
+    "services": {
+      "threatMonitoring": "Monitoraggio minacce",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "Attivo",
+      "error": "Errore",
+      "cpuUsage": "Uso CPU",
+      "ramUsage": "Uso RAM",
+      "temperature": "Temperatura"
+    },
+    "errors": {
+      "systemError": "Errore Sistema",
+      "cannotRetriveSystemData": "Impossibile recuperare i dati del sistema",
+      "loading": "Caricamento Sistema",
+      "retrieving": "Recupero dati del sistema in corso..."
+    }
+  },
+  "threatMap": {
+    "title": "Distribuzione delle Minacce (IN SVILIPPO)",
+    "description": "Distribuzione geografica degli attacchi in tempo reale",
+    "countriesWithActivity": "Paesi con Attività Sospetta",
+    "recentAttacks": "Attacchi Recenti per",
+    "noRecentAttacks": "Nessun attacco recente registrato per",
+    "selectCountry": "Seleziona un paese dalla lista per vedere i dettagli delle minacce.",
+    "showAll": "Mostra tutti i",
+    "countries": "Paesi",
+    "showLess": "Mostra di meno",
+    "severity": {
+      "critical": "CRITICO",
+      "extremelyHigh": "ESTREMAMENTE ALTO",
+      "veryHigh": "MOLTO ALTO",
+      "high": "ALTO",
+      "medium": "MEDIO",
+      "low": "BASSO",
+      "veryLow": "MOLTO BASSO"
+    }
+  },
+  "logViewer": {
+    "title": "Visualizzatore Log",
+    "description": "Visualizza i log del sistema da backend API",
+    "autoUpdate": "aggiornamento ogni",
+    "live": "Live",
+    "pause": "Pausa",
+    "start": "Avvia",
+    "selectLogType": "Seleziona tipo log",
+    "reload": "Ricarica",
+    "exportCSV": "Export CSV",
+    "searchPlaceholder": "Ricerca nei log...",
+    "displayed": "Visualizzati",
+    "logsOf": "log di",
+    "noLogs": "Nessun log trovato",
+    "noResults": "Nessun risultato trovato",
+    "loadingLogs": "Caricamento log...",
+    "noLogsAvailable": "Nessun file di log disponibile",
+    "errors": {
+      "cannotLoad": "Impossibile caricare la lista dei log. Verifica la connessione.",
+      "loadError": "Errore nel caricamento dei log"
+    },
+    "intervals": {
+      "1s": "1s",
+      "3s": "3s",
+      "5s": "5s",
+      "10s": "10s"
+    }
+  },
+  "validation": {
+    "required": "Campo obbligatorio",
+    "minLength": "Lunghezza minima: {{count}} caratteri",
+    "maxLength": "Lunghezza massima: {{count}} caratteri",
+    "invalidFormat": "Formato non valido",
+    "validationError": "Errore di Validazione"
+  },
+  "settings": {
+    "language": "Lingua",
+    "languageDescription": "Seleziona la lingua dell'interfaccia",
+    "currentLanguage": "Lingua corrente",
+    "changeLanguage": "Cambia lingua",
+    "languageChanged": "Lingua cambiata in"
+  },
+  "toast": {
+    "error": "Si è verificato un errore",
+    "success": "Operazione completata con successo",
+    "info": "Informazione",
+    "warning": "Attenzione",
+    "operationCompleted": "Operazione Completata",
+    "operationFailed": "Operazione Fallita",
+    "passwordError": "Errore password"
+  },
+  "filters": {
+    "activeFilters": "Filtri attivi",
+    "clearAll": "Cancella tutti",
+    "addFilter": "Aggiungi filtro"
+  },
+  "buttons": {
+    "confirm": "Conferma",
+    "cancel": "Annulla",
+    "add": "Aggiungi",
+    "update": "Aggiorna",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "save": "Salva",
+    "close": "Chiudi",
+    "confirmBan": "Conferma Ban"
+  },
+  "footer": {
+    "copyright": "© {year} MaxlonPlay",
+    "license": "Distribuito sotto la",
+    "licenseName": "GNU General Public License v3.0",
+    "donation": "Donazione"
+  },
+  "time": {
+    "hoursAgo": "{count} ore fa",
+    "daysAgo": "{count} giorni fa"
+  }
+}

@@ -31,6 +31,7 @@ import { useAutoRefresh } from "@/hooks/useAutoRefresh";
 
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { cn } from "@/lib/utils";
+import { t } from "i18next";
 
 const Progress = forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
@@ -78,11 +79,11 @@ export const SystemStatus = ({
       const data = await fetchSystemStatus();
       setSystemStatus(data);
     } catch (err) {
-      console.error("Errore nel recupero dati sistema:", err);
+      console.error(t("stats.systemStatusError"), err);
       setError(
         err instanceof SystemStatusError
           ? err
-          : new SystemStatusError("Errore sconosciuto"),
+          : new SystemStatusError(t("common.unknownError")),
       );
     }
   }, []);
@@ -163,7 +164,7 @@ export const SystemStatus = ({
           <CardTitle className="text-white flex items-center justify-between">
             <div className="flex items-center">
               <AlertCircle className="h-5 w-5 mr-2 text-red-400" />
-              Errore Sistema
+              {t("errors.systemError")}
             </div>
 
             {}
@@ -189,7 +190,7 @@ export const SystemStatus = ({
             </div>
           </CardTitle>
           <CardDescription className="text-slate-400">
-            Impossibile recuperare i dati del sistema
+            {t("errors.cannotRetriveSystemData")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -210,7 +211,9 @@ export const SystemStatus = ({
                 <RefreshCw
                   className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`}
                 />
-                <span>{isLoading ? "Ricaricamento..." : "Riprova"}</span>
+                <span>
+                  {isLoading ? t("common.loading") : t("common.retry")}
+                </span>
               </button>
             )}
           </div>
@@ -225,7 +228,7 @@ export const SystemStatus = ({
         <CardHeader>
           <CardTitle className="text-white flex items-center">
             <RefreshCw className="h-5 w-5 mr-2 text-blue-400 animate-spin" />
-            Caricamento Sistema
+            {t("common.loading")}
           </CardTitle>
           <CardDescription className="text-slate-400">
             Recupero dati del sistema in corso...

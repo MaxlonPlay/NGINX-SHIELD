@@ -24,6 +24,8 @@ export const IPManagement = () => {
   >([]);
   const [filteredManualBans, setFilteredManualBans] = useState<BanEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingMoreAutomatic, setLoadingMoreAutomatic] = useState(false);
+  const [loadingMoreManual, setLoadingMoreManual] = useState(false);
   const [confirmingUnban, setConfirmingUnban] = useState<{
     ip: string;
     type: "automatic" | "manual";
@@ -33,6 +35,10 @@ export const IPManagement = () => {
   const { toast } = useToast();
 
   const [limit] = useState(100);
+  const [automaticOffset, setAutomaticOffset] = useState(0);
+  const [manualOffset, setManualOffset] = useState(0);
+  const [hasMoreAutomatic, setHasMoreAutomatic] = useState(true);
+  const [hasMoreManual, setHasMoreManual] = useState(true);
   const [totalAutomaticBansCount, setTotalAutomaticBansCount] =
     useState<number>(0);
   const [totalManualBansCount, setTotalManualBansCount] = useState<number>(0);
@@ -61,9 +67,17 @@ export const IPManagement = () => {
               false ||
               ban.domain?.toLowerCase().includes(query) ||
               false ||
-              ban.url_path?.toLowerCase().includes(query) ||
+              ban.urlPath?.toLowerCase().includes(query) ||
               false ||
-              ban.user_agent?.toLowerCase().includes(query) ||
+              ban.userAgent?.toLowerCase().includes(query) ||
+              false ||
+              ban.network?.toLowerCase().includes(query) ||
+              false ||
+              ban.asn?.toLowerCase().includes(query) ||
+              false ||
+              ban.organization?.toLowerCase().includes(query) ||
+              false ||
+              ban.country?.toLowerCase().includes(query) ||
               false
             );
           });
@@ -112,6 +126,12 @@ export const IPManagement = () => {
       setManualBans(newManualBans);
       setFilteredAutomaticBans(newAutomaticBans);
       setFilteredManualBans(newManualBans);
+
+      setAutomaticOffset(limit);
+      setManualOffset(limit);
+
+      setHasMoreAutomatic(newAutomaticBans.length === limit);
+      setHasMoreManual(newManualBans.length === limit);
     } catch (error) {
       console.error("DEBUG: Errore caricamento IP bannati:", error);
       toast({
@@ -185,9 +205,75 @@ export const IPManagement = () => {
     setActiveFilters([]);
   };
 
-  const handleLoadMoreAutomatic = () => {};
+  const handleLoadMoreAutomatic = async () => {
+    if (loadingMoreAutomatic || !hasMoreAutomatic) return;
 
-  const handleLoadMoreManual = () => {};
+    setLoadingMoreAutomatic(true);
+    console.log(
+      `DEBUG: Caricamento altri ban automatici, offset: ${automaticOffset}`,
+    );
+
+    try {
+      const { automaticBans: newAutomaticBans } = await fetchBans(
+        limit,
+        automaticOffset,
+        0,
+        "",
+      );
+
+      if (newAutomaticBans.length > 0) {
+        setAutomaticBans((prev) => [...prev, ...newAutomaticBans]);
+        setAutomaticOffset((prev) => prev + limit);
+        setHasMoreAutomatic(newAutomaticBans.length === limit);
+      } else {
+        setHasMoreAutomatic(false);
+      }
+    } catch (error) {
+      console.error("DEBUG: Errore caricamento altri ban automatici:", error);
+      toast({
+        title: "Errore",
+        description: "Impossibile caricare altri ban automatici",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingMoreAutomatic(false);
+    }
+  };
+
+  const handleLoadMoreManual = async () => {
+    if (loadingMoreManual || !hasMoreManual) return;
+
+    setLoadingMoreManual(true);
+    console.log(
+      `DEBUG: Caricamento altri ban manuali, offset: ${manualOffset}`,
+    );
+
+    try {
+      const { manualBans: newManualBans } = await fetchBans(
+        limit,
+        0,
+        manualOffset,
+        "",
+      );
+
+      if (newManualBans.length > 0) {
+        setManualBans((prev) => [...prev, ...newManualBans]);
+        setManualOffset((prev) => prev + limit);
+        setHasMoreManual(newManualBans.length === limit);
+      } else {
+        setHasMoreManual(false);
+      }
+    } catch (error) {
+      console.error("DEBUG: Errore caricamento altri ban manuali:", error);
+      toast({
+        title: "Errore",
+        description: "Impossibile caricare altri ban manuali",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingMoreManual(false);
+    }
+  };
 
   const handleBanCIDR = async (cidr: string, reason: string) => {
     setIsLoading(true);
@@ -216,11 +302,11 @@ export const IPManagement = () => {
       console.error("Errore ban CIDR:", error);
       const errorResult = formatApiError(error);
 
-      let errorTitle = "❌ Errore nel Ban del CIDR";
+      let errorTitle = "Errore nel Ban del CIDR";
       let errorDescription = errorResult.message;
 
       if (errorResult.message.includes("fail2ban")) {
-        errorTitle = "❌ Errore fail2ban";
+        errorTitle = "Errore fail2ban";
         const hint =
           "fail2ban sia installato | fail2ban sia in esecuzione | L'utente abbia i permessi";
         errorDescription = `${errorResult.message}\n\n💡 Verifica che: ${hint}`;
@@ -314,8 +400,8 @@ export const IPManagement = () => {
           <AutomaticBansList
             automaticBans={filteredAutomaticBans}
             isLoading={isLoading}
-            loadingMoreAutomatic={false}
-            hasMoreAutomatic={false}
+            loadingMoreAutomatic={loadingMoreAutomatic}
+            hasMoreAutomatic={hasMoreAutomatic}
             limit={limit}
             confirmingUnban={confirmingUnban}
             onFilterClick={handleFilterClick}
@@ -332,8 +418,8 @@ export const IPManagement = () => {
           <ManualBansList
             manualBans={filteredManualBans}
             isLoading={isLoading}
-            loadingMoreManual={false}
-            hasMoreManual={false}
+            loadingMoreManual={loadingMoreManual}
+            hasMoreManual={hasMoreManual}
             limit={limit}
             confirmingUnban={confirmingUnban}
             onFilterClick={handleFilterClick}

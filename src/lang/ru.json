@@ -1,0 +1,274 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "save": "Сохранить",
+    "cancel": "Отменить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "add": "Добавить",
+    "close": "Закрыть",
+    "confirm": "Подтвердить",
+    "success": "Успех",
+    "error": "Ошибка",
+    "warning": "Предупреждение",
+    "retry": "Повторить",
+    "refresh": "Обновить",
+    "export": "Экспорт CSV",
+    "search": "Поиск",
+    "clear": "Очистить",
+    "update": "Обновить",
+    "remove": "Удалить",
+    "show": "Показать",
+    "hide": "Скрыть",
+    "total": "всего",
+    "found": "Найдено"
+  },
+  "auth": {
+    "login": "Войти",
+    "logout": "Выйти",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Подтвердить пароль",
+    "changePassword": "Изменить пароль",
+    "logoutSuccess": "Выход выполнен",
+    "logoutDescription": "Вы успешно вышли из системы"
+  },
+  "dashboard": {
+    "title": "Обзор системы",
+    "subtitle": "Мониторинг активности и состояния системы Nginx Shield",
+    "systemOverview": "Обзор системы"
+  },
+  "stats": {
+    "totalRequests": "Всего запросов",
+    "blockedRequests": "Заблокированные запросы",
+    "bannedIPs": "Заблокированные IP",
+    "whitelist": "Белый список",
+    "last24h": "за последние 24ч",
+    "ofTotal": "от общего числа",
+    "automaticAndManual": "Автоматические и ручные блокировки",
+    "totalAuthorized": "Всего авторизованных IP/доменов",
+    "autoRefreshActive": "Автообновление активно",
+    "manualUpdate": "Ручное обновление",
+    "lastUpdate": "Последнее обновление"
+  },
+  "accountSettings": {
+    "title": "Настройки учетной записи",
+    "description": "Управление настройками вашей учетной записи, включая изменение пароля.",
+    "accountDetails": "Детали учетной записи",
+    "username": "Имя пользователя",
+    "lastPasswordUpdate": "Последнее обновление пароля",
+    "changePasswordTitle": "Изменить пароль",
+    "currentPassword": "Текущий пароль",
+    "currentPasswordPlaceholder": "Введите текущий пароль",
+    "newPassword": "Новый пароль",
+    "newPasswordPlaceholder": "Введите новый пароль (мин. 8 символов)",
+    "confirmNewPassword": "Подтвердите новый пароль",
+    "confirmPasswordPlaceholder": "Подтвердите новый пароль",
+    "updating": "Обновление...",
+    "errors": {
+      "allFieldsRequired": "Все поля обязательны для заполнения.",
+      "passwordMinLength": "Новый пароль должен содержать не менее 8 символов.",
+      "passwordMismatch": "Новые пароли не совпадают.",
+      "usernameError": "Не удается получить имя пользователя для обновления.",
+      "noInfoAccount": "Не удается получить информацию об учетной записи.",
+      "errorGetUserInfo": "Ошибка при получении информации о пользователе.",
+      "connectionError": "Ошибка подключения при обновлении пароля.",
+      "updateFailed": "Не удалось обновить пароль.",
+      "errorUpdatingPassword": "Ошибка при обновлении пароля.",
+      "notPosibleChangePassword": "Невозможно обновить пароль. Проверьте текущий пароль или попробуйте позже."
+    },
+    "success": {
+      "passwordUpdated": "Пароль обновлен. В целях безопасности вы скоро будете отключены. Пожалуйста, войдите снова."
+    }
+  },
+  "whitelist": {
+    "title": "Управление белым списком",
+    "addEntry": "Добавить запись в белый список",
+    "editEntry": "Редактировать запись белого списка",
+    "addDescription": "Добавить новый IP, домен или сеть в белый список",
+    "editDescription": "Редактировать описание выбранной записи",
+    "type": "Тип",
+    "ipAddress": "IP-адрес",
+    "network": "Сеть (CIDR)",
+    "domain": "Домен",
+    "description": "Описание",
+    "descriptionPlaceholder": "Необязательное описание",
+    "insertDescription": "Введите описание",
+    "noDescription": "Без описания",
+    "adding": "Добавление...",
+    "updating": "Обновление...",
+    "originalEntry": "Исходная запись:",
+    "types": {
+      "ip": "IP-адрес",
+      "cidr": "Сеть/CIDR",
+      "domain": "Домен"
+    },
+    "placeholders": {
+      "ip": "напр.: 192.168.1.100",
+      "cidr": "напр.: 192.168.1.0/24",
+      "domain": "напр.: example.com"
+    },
+    "errors": {
+      "invalidValue": "Введите допустимое значение",
+      "invalidIP": "Неверный формат IP (напр.: 192.168.1.100)",
+      "invalidCIDR": "Неверный формат CIDR (напр.: 192.168.1.0/24)",
+      "invalidDomain": "Неверный формат домена (напр.: example.com)",
+      "invalidDescription": "Введите допустимое описание",
+      "addError": "Ошибка при добавлении записи",
+      "updateError": "Ошибка при обновлении записи",
+      "cannotAdd": "Невозможно добавить запись в белый список",
+      "cannotUpdate": "Невозможно обновить запись белого списка."
+    },
+    "success": {
+      "added": "Запись успешно добавлена в белый список",
+      "updated": "Запись успешно обновлена"
+    }
+  },
+  "ipManagement": {
+    "title": "Управление IP",
+    "automaticBans": "Автоматические блокировки",
+    "manualBans": "Ручные блокировки",
+    "unbanIP": "Разблокировать IP",
+    "confirmUnban": "Подтвердить разблокировку",
+    "unbanning": "Разблокировка...",
+    "ipUnblocked": "IP разблокирован",
+    "ipUnblockedDescription": "был удален из блокировок",
+    "banCIDR": "CIDR заблокирован",
+    "banCIDRDescription": "Сеть была успешно заблокирована",
+    "banMultiple": "Массовая блокировка завершена",
+    "banMultipleDescription": "CIDR успешно заблокированы, не удалось",
+    "errors": {
+      "loadError": "Не удается загрузить список заблокированных IP",
+      "unbanError": "Ошибка при разблокировке IP",
+      "banCIDRError": "Ошибка при блокировке CIDR",
+      "banMultipleError": "Ошибка при массовой блокировке",
+      "fail2banError": "Ошибка fail2ban"
+    }
+  },
+  "recentBans": {
+    "title": "Недавние автоматические блокировки",
+    "description": "Последние IP, автоматически заблокированные системой",
+    "timeAgo": {
+      "fewMoments": "Несколько мгновений назад",
+      "minutesAgo": "мин назад",
+      "hoursAgo": "ч назад"
+    },
+    "noBans": "Нет недавних автоматических блокировок",
+    "noResults": "Блокировки не найдены для",
+    "removeFilter": "Удалить фильтр",
+    "clickToFilter": "Нажмите для фильтрации"
+  },
+  "systemStatus": {
+    "title": "Состояние системы",
+    "description": "Мониторинг критических сервисов",
+    "lastCheck": "Последняя проверка:",
+    "autoRefresh": "Автообновление активно",
+    "manualMode": "Ручное обновление",
+    "switchToManual": "Переключиться на ручной режим",
+    "enableAutoRefresh": "Включить автообновление",
+    "refreshNow": "Обновить сейчас",
+    "services": {
+      "threatMonitoring": "Мониторинг угроз",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "Активен",
+      "error": "Ошибка",
+      "cpuUsage": "Использование CPU",
+      "ramUsage": "Использование RAM",
+      "temperature": "Температура"
+    },
+    "errors": {
+      "systemError": "Системная ошибка",
+      "cannotRetrieve": "Не удается получить данные системы",
+      "loading": "Загрузка системы",
+      "retrieving": "Получение данных системы..."
+    }
+  },
+  "threatMap": {
+    "title": "Распределение угроз (В РАЗРАБОТКЕ)",
+    "description": "Географическое распределение атак в реальном времени",
+    "countriesWithActivity": "Страны с подозрительной активностью",
+    "recentAttacks": "Недавние атаки для",
+    "noRecentAttacks": "Не зарегистрировано недавних атак для",
+    "selectCountry": "Выберите страну из списка, чтобы увидеть подробности угроз.",
+    "showAll": "Показать все",
+    "countries": "Страны",
+    "showLess": "Показать меньше",
+    "severity": {
+      "critical": "КРИТИЧЕСКИЙ",
+      "extremelyHigh": "ЧРЕЗВЫЧАЙНО ВЫСОКИЙ",
+      "veryHigh": "ОЧЕНЬ ВЫСОКИЙ",
+      "high": "ВЫСОКИЙ",
+      "medium": "СРЕДНИЙ",
+      "low": "НИЗКИЙ",
+      "veryLow": "ОЧЕНЬ НИЗКИЙ"
+    }
+  },
+  "logViewer": {
+    "title": "Просмотр логов",
+    "description": "Просмотр системных логов из backend API",
+    "autoUpdate": "обновление каждые",
+    "live": "В реальном времени",
+    "pause": "Пауза",
+    "start": "Запустить",
+    "selectLogType": "Выберите тип лога",
+    "reload": "Перезагрузить",
+    "reloading": "Перезагрузка...",
+    "exportCSV": "Экспорт CSV",
+    "searchPlaceholder": "Поиск в логах...",
+    "displayed": "Отображено",
+    "logsOf": "логов из",
+    "noLogs": "Логи не найдены",
+    "noResults": "Результаты не найдены",
+    "loadingLogs": "Загрузка логов...",
+    "noLogsAvailable": "Файлы логов недоступны",
+    "errors": {
+      "cannotLoad": "Не удается загрузить список логов. Проверьте соединение.",
+      "loadError": "Ошибка загрузки логов"
+    },
+    "intervals": {
+      "1s": "1с",
+      "3s": "3с",
+      "5s": "5с",
+      "10s": "10с"
+    }
+  },
+  "validation": {
+    "required": "Обязательное поле",
+    "minLength": "Минимальная длина: {{count}} символов",
+    "maxLength": "Максимальная длина: {{count}} символов",
+    "invalidFormat": "Неверный формат"
+  },
+  "settings": {
+    "language": "Язык",
+    "languageDescription": "Выберите язык интерфейса",
+    "currentLanguage": "Текущий язык",
+    "changeLanguage": "Изменить язык",
+    "languageChanged": "Язык изменен на"
+  },
+  "toast": {
+    "error": "Произошла ошибка",
+    "success": "Операция выполнена успешно",
+    "info": "Информация",
+    "warning": "Предупреждение"
+  },
+  "filters": {
+    "activeFilters": "Активные фильтры",
+    "clearAll": "Очистить все",
+    "addFilter": "Добавить фильтр"
+  },
+  "buttons": {
+    "confirm": "Подтвердить",
+    "cancel": "Отменить",
+    "add": "Добавить",
+    "update": "Обновить",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "save": "Сохранить",
+    "close": "Закрыть"
+  }
+}

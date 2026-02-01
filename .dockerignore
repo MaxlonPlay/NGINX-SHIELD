@@ -21,4 +21,15 @@ postcss.config.js
 *.db
 eslint.config.js
 components.json
+*.zip
+*.tar.gz
+coverage
+PREPARE_UP.py
+build_docker.sh
+tests
+start.py
+ROADMAP.md
+README.md
+fakelogs_for_test.py
+
 

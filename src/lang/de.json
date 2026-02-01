@@ -1,0 +1,274 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "add": "Hinzufügen",
+    "close": "Schließen",
+    "confirm": "Bestätigen",
+    "success": "Erfolg",
+    "error": "Fehler",
+    "warning": "Warnung",
+    "retry": "Erneut versuchen",
+    "refresh": "Neu laden",
+    "export": "CSV exportieren",
+    "search": "Suchen",
+    "clear": "Löschen",
+    "update": "Aktualisieren",
+    "remove": "Entfernen",
+    "show": "Anzeigen",
+    "hide": "Ausblenden",
+    "total": "gesamt",
+    "found": "Gefunden"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "changePassword": "Passwort ändern",
+    "logoutSuccess": "Erfolgreich abgemeldet",
+    "logoutDescription": "Sie wurden erfolgreich abgemeldet"
+  },
+  "dashboard": {
+    "title": "Systemübersicht",
+    "subtitle": "Überwachung der Aktivität und des Status des Nginx Shield-Systems",
+    "systemOverview": "Systemübersicht"
+  },
+  "stats": {
+    "totalRequests": "Gesamtanfragen",
+    "blockedRequests": "Blockierte Anfragen",
+    "bannedIPs": "Gesperrte IPs",
+    "whitelist": "Whitelist",
+    "last24h": "in den letzten 24h",
+    "ofTotal": "der Gesamtzahl",
+    "automaticAndManual": "Automatische und manuelle Sperrungen",
+    "totalAuthorized": "Gesamt autorisierte IPs/Domains",
+    "autoRefreshActive": "Auto-Aktualisierung aktiv",
+    "manualUpdate": "Manuelle Aktualisierung",
+    "lastUpdate": "Letzte Aktualisierung"
+  },
+  "accountSettings": {
+    "title": "Kontoeinstellungen",
+    "description": "Verwalten Sie Ihre Kontoeinstellungen, einschließlich Passwortänderung.",
+    "accountDetails": "Kontodetails",
+    "username": "Benutzername",
+    "lastPasswordUpdate": "Letzte Passwortaktualisierung",
+    "changePasswordTitle": "Passwort ändern",
+    "currentPassword": "Aktuelles Passwort",
+    "currentPasswordPlaceholder": "Aktuelles Passwort eingeben",
+    "newPassword": "Neues Passwort",
+    "newPasswordPlaceholder": "Neues Passwort eingeben (mind. 8 Zeichen)",
+    "confirmNewPassword": "Neues Passwort bestätigen",
+    "confirmPasswordPlaceholder": "Neues Passwort bestätigen",
+    "updating": "Aktualisiere...",
+    "errors": {
+      "allFieldsRequired": "Alle Felder sind erforderlich.",
+      "passwordMinLength": "Das neue Passwort muss mindestens 8 Zeichen enthalten.",
+      "passwordMismatch": "Die neuen Passwörter stimmen nicht überein.",
+      "usernameError": "Benutzername kann nicht für die Aktualisierung abgerufen werden.",
+      "noInfoAccount": "Kontoinformationen können nicht abgerufen werden.",
+      "errorGetUserInfo": "Fehler beim Abrufen der Benutzerinformationen.",
+      "connectionError": "Verbindungsfehler beim Aktualisieren des Passworts.",
+      "updateFailed": "Passwortaktualisierung fehlgeschlagen.",
+      "errorUpdatingPassword": "Fehler beim Aktualisieren des Passworts.",
+      "notPosibleChangePassword": "Passwort kann nicht aktualisiert werden. Überprüfen Sie das aktuelle Passwort oder versuchen Sie es später erneut."
+    },
+    "success": {
+      "passwordUpdated": "Passwort aktualisiert. Aus Sicherheitsgründen werden Sie in Kürze abgemeldet. Bitte melden Sie sich erneut an."
+    }
+  },
+  "whitelist": {
+    "title": "Whitelist-Verwaltung",
+    "addEntry": "Whitelist-Eintrag hinzufügen",
+    "editEntry": "Whitelist-Eintrag bearbeiten",
+    "addDescription": "Neue IP, Domain oder Netzwerk zur Whitelist hinzufügen",
+    "editDescription": "Beschreibung des ausgewählten Eintrags bearbeiten",
+    "type": "Typ",
+    "ipAddress": "IP-Adresse",
+    "network": "Netzwerk (CIDR)",
+    "domain": "Domain",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "Optionale Beschreibung",
+    "insertDescription": "Beschreibung eingeben",
+    "noDescription": "Keine Beschreibung",
+    "adding": "Wird hinzugefügt...",
+    "updating": "Wird aktualisiert...",
+    "originalEntry": "Ursprünglicher Eintrag:",
+    "types": {
+      "ip": "IP-Adresse",
+      "cidr": "Netzwerk/CIDR",
+      "domain": "Domain"
+    },
+    "placeholders": {
+      "ip": "z.B.: 192.168.1.100",
+      "cidr": "z.B.: 192.168.1.0/24",
+      "domain": "z.B.: example.com"
+    },
+    "errors": {
+      "invalidValue": "Gültigen Wert eingeben",
+      "invalidIP": "Ungültiges IP-Format (z.B.: 192.168.1.100)",
+      "invalidCIDR": "Ungültiges CIDR-Format (z.B.: 192.168.1.0/24)",
+      "invalidDomain": "Ungültiges Domain-Format (z.B.: example.com)",
+      "invalidDescription": "Gültige Beschreibung eingeben",
+      "addError": "Fehler beim Hinzufügen des Eintrags",
+      "updateError": "Fehler beim Aktualisieren des Eintrags",
+      "cannotAdd": "Eintrag kann nicht zur Whitelist hinzugefügt werden",
+      "cannotUpdate": "Whitelist-Eintrag kann nicht aktualisiert werden."
+    },
+    "success": {
+      "added": "Eintrag erfolgreich zur Whitelist hinzugefügt",
+      "updated": "Eintrag erfolgreich aktualisiert"
+    }
+  },
+  "ipManagement": {
+    "title": "IP-Verwaltung",
+    "automaticBans": "Automatische Sperrungen",
+    "manualBans": "Manuelle Sperrungen",
+    "unbanIP": "IP entsperren",
+    "confirmUnban": "Entsperrung bestätigen",
+    "unbanning": "Wird entsperrt...",
+    "ipUnblocked": "IP entsperrt",
+    "ipUnblockedDescription": "wurde aus den Sperrungen entfernt",
+    "banCIDR": "CIDR gesperrt",
+    "banCIDRDescription": "Das Netzwerk wurde erfolgreich gesperrt",
+    "banMultiple": "Massensperrung abgeschlossen",
+    "banMultipleDescription": "CIDRs erfolgreich gesperrt, fehlgeschlagen",
+    "errors": {
+      "loadError": "Liste der gesperrten IPs kann nicht geladen werden",
+      "unbanError": "Fehler beim Entsperren der IP",
+      "banCIDRError": "Fehler beim Sperren des CIDR",
+      "banMultipleError": "Fehler bei Massensperrung",
+      "fail2banError": "fail2ban-Fehler"
+    }
+  },
+  "recentBans": {
+    "title": "Kürzliche automatische Sperrungen",
+    "description": "Letzte vom System automatisch gesperrte IPs",
+    "timeAgo": {
+      "fewMoments": "Vor wenigen Augenblicken",
+      "minutesAgo": "Min. her",
+      "hoursAgo": "Std. her"
+    },
+    "noBans": "Keine kürzlichen automatischen Sperrungen",
+    "noResults": "Keine Sperrungen gefunden für",
+    "removeFilter": "Filter entfernen",
+    "clickToFilter": "Zum Filtern klicken"
+  },
+  "systemStatus": {
+    "title": "Systemstatus",
+    "description": "Überwachung kritischer Dienste",
+    "lastCheck": "Letzte Überprüfung:",
+    "autoRefresh": "Auto-Aktualisierung aktiv",
+    "manualMode": "Manuelle Aktualisierung",
+    "switchToManual": "Zu manuellem Modus wechseln",
+    "enableAutoRefresh": "Auto-Aktualisierung aktivieren",
+    "refreshNow": "Jetzt aktualisieren",
+    "services": {
+      "threatMonitoring": "Bedrohungsüberwachung",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "Aktiv",
+      "error": "Fehler",
+      "cpuUsage": "CPU-Auslastung",
+      "ramUsage": "RAM-Auslastung",
+      "temperature": "Temperatur"
+    },
+    "errors": {
+      "systemError": "Systemfehler",
+      "cannotRetrieve": "Systemdaten können nicht abgerufen werden",
+      "loading": "System wird geladen",
+      "retrieving": "Systemdaten werden abgerufen..."
+    }
+  },
+  "threatMap": {
+    "title": "Bedrohungsverteilung (IN ENTWICKLUNG)",
+    "description": "Geografische Verteilung von Angriffen in Echtzeit",
+    "countriesWithActivity": "Länder mit verdächtiger Aktivität",
+    "recentAttacks": "Kürzliche Angriffe für",
+    "noRecentAttacks": "Keine kürzlichen Angriffe aufgezeichnet für",
+    "selectCountry": "Wählen Sie ein Land aus der Liste, um Bedrohungsdetails anzuzeigen.",
+    "showAll": "Alle anzeigen",
+    "countries": "Länder",
+    "showLess": "Weniger anzeigen",
+    "severity": {
+      "critical": "KRITISCH",
+      "extremelyHigh": "EXTREM HOCH",
+      "veryHigh": "SEHR HOCH",
+      "high": "HOCH",
+      "medium": "MITTEL",
+      "low": "NIEDRIG",
+      "veryLow": "SEHR NIEDRIG"
+    }
+  },
+  "logViewer": {
+    "title": "Protokoll-Betrachter",
+    "description": "Systemprotokolle von Backend-API anzeigen",
+    "autoUpdate": "Aktualisierung alle",
+    "live": "Live",
+    "pause": "Pausieren",
+    "start": "Starten",
+    "selectLogType": "Protokolltyp auswählen",
+    "reload": "Neu laden",
+    "reloading": "Wird neu geladen...",
+    "exportCSV": "CSV exportieren",
+    "searchPlaceholder": "In Protokollen suchen...",
+    "displayed": "Angezeigt",
+    "logsOf": "Protokolle von",
+    "noLogs": "Keine Protokolle gefunden",
+    "noResults": "Keine Ergebnisse gefunden",
+    "loadingLogs": "Protokolle werden geladen...",
+    "noLogsAvailable": "Keine Protokolldateien verfügbar",
+    "errors": {
+      "cannotLoad": "Protokollliste kann nicht geladen werden. Überprüfen Sie die Verbindung.",
+      "loadError": "Fehler beim Laden der Protokolle"
+    },
+    "intervals": {
+      "1s": "1s",
+      "3s": "3s",
+      "5s": "5s",
+      "10s": "10s"
+    }
+  },
+  "validation": {
+    "required": "Pflichtfeld",
+    "minLength": "Mindestlänge: {{count}} Zeichen",
+    "maxLength": "Maximallänge: {{count}} Zeichen",
+    "invalidFormat": "Ungültiges Format"
+  },
+  "settings": {
+    "language": "Sprache",
+    "languageDescription": "Sprache der Benutzeroberfläche auswählen",
+    "currentLanguage": "Aktuelle Sprache",
+    "changeLanguage": "Sprache ändern",
+    "languageChanged": "Sprache geändert zu"
+  },
+  "toast": {
+    "error": "Ein Fehler ist aufgetreten",
+    "success": "Vorgang erfolgreich abgeschlossen",
+    "info": "Information",
+    "warning": "Warnung"
+  },
+  "filters": {
+    "activeFilters": "Aktive Filter",
+    "clearAll": "Alle löschen",
+    "addFilter": "Filter hinzufügen"
+  },
+  "buttons": {
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen",
+    "add": "Hinzufügen",
+    "update": "Aktualisieren",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "close": "Schließen"
+  }
+}

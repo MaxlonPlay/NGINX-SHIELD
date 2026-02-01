@@ -1,0 +1,274 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Añadir",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "success": "Éxito",
+    "error": "Error",
+    "warning": "Advertencia",
+    "retry": "Reintentar",
+    "refresh": "Recargar",
+    "export": "Exportar CSV",
+    "search": "Buscar",
+    "clear": "Limpiar",
+    "update": "Actualizar",
+    "remove": "Eliminar",
+    "show": "Mostrar",
+    "hide": "Ocultar",
+    "total": "total",
+    "found": "Encontrados"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "username": "Nombre de Usuario",
+    "password": "Contraseña",
+    "currentPassword": "Contraseña Actual",
+    "newPassword": "Nueva Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "changePassword": "Cambiar Contraseña",
+    "logoutSuccess": "Sesión cerrada",
+    "logoutDescription": "Has cerrado sesión exitosamente"
+  },
+  "dashboard": {
+    "title": "Vista General del Sistema",
+    "subtitle": "Monitoreo de actividad y estado del sistema Nginx Shield",
+    "systemOverview": "Vista General del Sistema"
+  },
+  "stats": {
+    "totalRequests": "Solicitudes Totales",
+    "blockedRequests": "Solicitudes Bloqueadas",
+    "bannedIPs": "IPs Bloqueadas",
+    "whitelist": "Lista Blanca",
+    "last24h": "en las últimas 24h",
+    "ofTotal": "del total",
+    "automaticAndManual": "Bloqueos automáticos y manuales",
+    "totalAuthorized": "Total de IPs/dominios autorizados",
+    "autoRefreshActive": "Auto-actualización activa",
+    "manualUpdate": "Actualización manual",
+    "lastUpdate": "Última actualización"
+  },
+  "accountSettings": {
+    "title": "Configuración de Cuenta",
+    "description": "Administra la configuración de tu cuenta, incluido el cambio de contraseña.",
+    "accountDetails": "Detalles de la Cuenta",
+    "username": "Nombre de Usuario",
+    "lastPasswordUpdate": "Última Actualización de Contraseña",
+    "changePasswordTitle": "Cambiar Contraseña",
+    "currentPassword": "Contraseña Actual",
+    "currentPasswordPlaceholder": "Introduce la contraseña actual",
+    "newPassword": "Nueva Contraseña",
+    "newPasswordPlaceholder": "Introduce la nueva contraseña (mín. 8 caracteres)",
+    "confirmNewPassword": "Confirmar Nueva Contraseña",
+    "confirmPasswordPlaceholder": "Confirma la nueva contraseña",
+    "updating": "Actualizando...",
+    "errors": {
+      "allFieldsRequired": "Todos los campos son obligatorios.",
+      "passwordMinLength": "La nueva contraseña debe contener al menos 8 caracteres.",
+      "passwordMismatch": "Las nuevas contraseñas no coinciden.",
+      "usernameError": "No se puede recuperar el nombre de usuario para la actualización.",
+      "noInfoAccount": "No se puede recuperar la información de la cuenta.",
+      "errorGetUserInfo": "Error al recuperar la información del usuario.",
+      "connectionError": "Error de conexión al actualizar la contraseña.",
+      "updateFailed": "Falló la actualización de la contraseña.",
+      "errorUpdatingPassword": "Error al actualizar la contraseña.",
+      "notPosibleChangePassword": "No se puede actualizar la contraseña. Verifica la contraseña actual o inténtalo de nuevo más tarde."
+    },
+    "success": {
+      "passwordUpdated": "Contraseña actualizada. Por seguridad, cerrarás sesión en breve. Por favor, inicia sesión nuevamente."
+    }
+  },
+  "whitelist": {
+    "title": "Gestión de Lista Blanca",
+    "addEntry": "Añadir Entrada a Lista Blanca",
+    "editEntry": "Editar Entrada de Lista Blanca",
+    "addDescription": "Añade una nueva IP, dominio o red a la lista blanca",
+    "editDescription": "Edita la descripción de la entrada seleccionada",
+    "type": "Tipo",
+    "ipAddress": "Dirección IP",
+    "network": "Red (CIDR)",
+    "domain": "Dominio",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Descripción opcional",
+    "insertDescription": "Introduce una descripción",
+    "noDescription": "Sin descripción",
+    "adding": "Añadiendo...",
+    "updating": "Actualizando...",
+    "originalEntry": "Entrada original:",
+    "types": {
+      "ip": "Dirección IP",
+      "cidr": "Red/CIDR",
+      "domain": "Dominio"
+    },
+    "placeholders": {
+      "ip": "ej.: 192.168.1.100",
+      "cidr": "ej.: 192.168.1.0/24",
+      "domain": "ej.: example.com"
+    },
+    "errors": {
+      "invalidValue": "Introduce un valor válido",
+      "invalidIP": "Formato IP no válido (ej.: 192.168.1.100)",
+      "invalidCIDR": "Formato CIDR no válido (ej.: 192.168.1.0/24)",
+      "invalidDomain": "Formato de dominio no válido (ej.: example.com)",
+      "invalidDescription": "Introduce una descripción válida",
+      "addError": "Error al añadir la entrada",
+      "updateError": "Error al actualizar la entrada",
+      "cannotAdd": "No se puede añadir la entrada a la lista blanca",
+      "cannotUpdate": "No se puede actualizar la entrada de la lista blanca."
+    },
+    "success": {
+      "added": "Entrada añadida exitosamente a la lista blanca",
+      "updated": "Entrada actualizada exitosamente"
+    }
+  },
+  "ipManagement": {
+    "title": "Gestión de IP",
+    "automaticBans": "Bloqueos Automáticos",
+    "manualBans": "Bloqueos Manuales",
+    "unbanIP": "Desbloquear IP",
+    "confirmUnban": "Confirmar desbloqueo",
+    "unbanning": "Desbloqueando...",
+    "ipUnblocked": "IP Desbloqueada",
+    "ipUnblockedDescription": "ha sido eliminada de los bloqueos",
+    "banCIDR": "CIDR Bloqueado",
+    "banCIDRDescription": "La red ha sido bloqueada correctamente",
+    "banMultiple": "Bloqueo Masivo Completado",
+    "banMultipleDescription": "CIDRs bloqueados exitosamente, fallidos",
+    "errors": {
+      "loadError": "No se puede cargar la lista de IPs bloqueadas",
+      "unbanError": "Error al desbloquear la IP",
+      "banCIDRError": "Error al bloquear CIDR",
+      "banMultipleError": "Error en bloqueo masivo",
+      "fail2banError": "Error de fail2ban"
+    }
+  },
+  "recentBans": {
+    "title": "Bloqueos Automáticos Recientes",
+    "description": "Últimas IPs bloqueadas automáticamente por el sistema",
+    "timeAgo": {
+      "fewMoments": "Hace unos momentos",
+      "minutesAgo": "min atrás",
+      "hoursAgo": "horas atrás"
+    },
+    "noBans": "No hay bloqueos automáticos recientes",
+    "noResults": "No se encontraron bloqueos para",
+    "removeFilter": "Eliminar filtro",
+    "clickToFilter": "Haz clic para filtrar"
+  },
+  "systemStatus": {
+    "title": "Estado del Sistema",
+    "description": "Monitoreo de servicios críticos",
+    "lastCheck": "Última verificación:",
+    "autoRefresh": "Auto-actualización activa",
+    "manualMode": "Actualización manual",
+    "switchToManual": "Cambiar a modo manual",
+    "enableAutoRefresh": "Activar auto-actualización",
+    "refreshNow": "Actualizar ahora",
+    "services": {
+      "threatMonitoring": "Monitoreo de amenazas",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "Activo",
+      "error": "Error",
+      "cpuUsage": "Uso de CPU",
+      "ramUsage": "Uso de RAM",
+      "temperature": "Temperatura"
+    },
+    "errors": {
+      "systemError": "Error del Sistema",
+      "cannotRetrieve": "No se pueden recuperar los datos del sistema",
+      "loading": "Cargando Sistema",
+      "retrieving": "Recuperando datos del sistema..."
+    }
+  },
+  "threatMap": {
+    "title": "Distribución de Amenazas (EN DESARROLLO)",
+    "description": "Distribución geográfica de ataques en tiempo real",
+    "countriesWithActivity": "Países con Actividad Sospechosa",
+    "recentAttacks": "Ataques Recientes para",
+    "noRecentAttacks": "No se registraron ataques recientes para",
+    "selectCountry": "Selecciona un país de la lista para ver los detalles de las amenazas.",
+    "showAll": "Mostrar todos los",
+    "countries": "Países",
+    "showLess": "Mostrar menos",
+    "severity": {
+      "critical": "CRÍTICO",
+      "extremelyHigh": "EXTREMADAMENTE ALTO",
+      "veryHigh": "MUY ALTO",
+      "high": "ALTO",
+      "medium": "MEDIO",
+      "low": "BAJO",
+      "veryLow": "MUY BAJO"
+    }
+  },
+  "logViewer": {
+    "title": "Visor de Registros",
+    "description": "Ver registros del sistema desde la API backend",
+    "autoUpdate": "actualización cada",
+    "live": "En Vivo",
+    "pause": "Pausar",
+    "start": "Iniciar",
+    "selectLogType": "Seleccionar tipo de registro",
+    "reload": "Recargar",
+    "reloading": "Recargando...",
+    "exportCSV": "Exportar CSV",
+    "searchPlaceholder": "Buscar en registros...",
+    "displayed": "Mostrados",
+    "logsOf": "registros de",
+    "noLogs": "No se encontraron registros",
+    "noResults": "No se encontraron resultados",
+    "loadingLogs": "Cargando registros...",
+    "noLogsAvailable": "No hay archivos de registro disponibles",
+    "errors": {
+      "cannotLoad": "No se puede cargar la lista de registros. Verifica la conexión.",
+      "loadError": "Error al cargar los registros"
+    },
+    "intervals": {
+      "1s": "1s",
+      "3s": "3s",
+      "5s": "5s",
+      "10s": "10s"
+    }
+  },
+  "validation": {
+    "required": "Campo obligatorio",
+    "minLength": "Longitud mínima: {{count}} caracteres",
+    "maxLength": "Longitud máxima: {{count}} caracteres",
+    "invalidFormat": "Formato no válido"
+  },
+  "settings": {
+    "language": "Idioma",
+    "languageDescription": "Selecciona el idioma de la interfaz",
+    "currentLanguage": "Idioma actual",
+    "changeLanguage": "Cambiar idioma",
+    "languageChanged": "Idioma cambiado a"
+  },
+  "toast": {
+    "error": "Ocurrió un error",
+    "success": "Operación completada exitosamente",
+    "info": "Información",
+    "warning": "Advertencia"
+  },
+  "filters": {
+    "activeFilters": "Filtros activos",
+    "clearAll": "Limpiar todo",
+    "addFilter": "Añadir filtro"
+  },
+  "buttons": {
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "add": "Añadir",
+    "update": "Actualizar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "save": "Guardar",
+    "close": "Cerrar"
+  }
+}

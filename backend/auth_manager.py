@@ -256,7 +256,7 @@ class AuthManager:
 
             except Exception as e:
                 print(
-                    f"🔴🔴[SETUP_TOTP_AUTH] ECCEZIONE: {
+                    f"[SETUP_TOTP_AUTH] ECCEZIONE: {
                         type(e).__name__}: {e}")
                 import traceback
                 traceback .print_exc()

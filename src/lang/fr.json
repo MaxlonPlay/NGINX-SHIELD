@@ -1,0 +1,274 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "close": "Fermer",
+    "confirm": "Confirmer",
+    "success": "Succès",
+    "error": "Erreur",
+    "warning": "Avertissement",
+    "retry": "Réessayer",
+    "refresh": "Recharger",
+    "export": "Exporter CSV",
+    "search": "Rechercher",
+    "clear": "Effacer",
+    "update": "Mettre à jour",
+    "remove": "Supprimer",
+    "show": "Afficher",
+    "hide": "Masquer",
+    "total": "total",
+    "found": "Trouvés"
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "changePassword": "Changer le mot de passe",
+    "logoutSuccess": "Déconnexion réussie",
+    "logoutDescription": "Vous avez été déconnecté avec succès"
+  },
+  "dashboard": {
+    "title": "Vue d'ensemble du système",
+    "subtitle": "Surveillance de l'activité et de l'état du système Nginx Shield",
+    "systemOverview": "Vue d'ensemble du système"
+  },
+  "stats": {
+    "totalRequests": "Requêtes totales",
+    "blockedRequests": "Requêtes bloquées",
+    "bannedIPs": "IPs bannies",
+    "whitelist": "Liste blanche",
+    "last24h": "dans les dernières 24h",
+    "ofTotal": "du total",
+    "automaticAndManual": "Bannissements automatiques et manuels",
+    "totalAuthorized": "Total d'IPs/domaines autorisés",
+    "autoRefreshActive": "Actualisation automatique active",
+    "manualUpdate": "Mise à jour manuelle",
+    "lastUpdate": "Dernière mise à jour"
+  },
+  "accountSettings": {
+    "title": "Paramètres du compte",
+    "description": "Gérez les paramètres de votre compte, y compris le changement de mot de passe.",
+    "accountDetails": "Détails du compte",
+    "username": "Nom d'utilisateur",
+    "lastPasswordUpdate": "Dernière mise à jour du mot de passe",
+    "changePasswordTitle": "Changer le mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "currentPasswordPlaceholder": "Entrez le mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Entrez le nouveau mot de passe (min. 8 caractères)",
+    "confirmNewPassword": "Confirmer le nouveau mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez le nouveau mot de passe",
+    "updating": "Mise à jour...",
+    "errors": {
+      "allFieldsRequired": "Tous les champs sont obligatoires.",
+      "passwordMinLength": "Le nouveau mot de passe doit contenir au moins 8 caractères.",
+      "passwordMismatch": "Les nouveaux mots de passe ne correspondent pas.",
+      "usernameError": "Impossible de récupérer le nom d'utilisateur pour la mise à jour.",
+      "noInfoAccount": "Impossible de récupérer les informations du compte.",
+      "errorGetUserInfo": "Erreur lors de la récupération des informations de l'utilisateur.",
+      "connectionError": "Erreur de connexion lors de la mise à jour du mot de passe.",
+      "updateFailed": "Échec de la mise à jour du mot de passe.",
+      "errorUpdatingPassword": "Erreur lors de la mise à jour du mot de passe.",
+      "notPosibleChangePassword": "Impossible de mettre à jour le mot de passe. Vérifiez le mot de passe actuel ou réessayez plus tard."
+    },
+    "success": {
+      "passwordUpdated": "Mot de passe mis à jour. Pour des raisons de sécurité, vous serez déconnecté sous peu. Veuillez vous reconnecter."
+    }
+  },
+  "whitelist": {
+    "title": "Gestion de la liste blanche",
+    "addEntry": "Ajouter une entrée à la liste blanche",
+    "editEntry": "Modifier l'entrée de la liste blanche",
+    "addDescription": "Ajouter une nouvelle IP, domaine ou réseau à la liste blanche",
+    "editDescription": "Modifier la description de l'entrée sélectionnée",
+    "type": "Type",
+    "ipAddress": "Adresse IP",
+    "network": "Réseau (CIDR)",
+    "domain": "Domaine",
+    "description": "Description",
+    "descriptionPlaceholder": "Description optionnelle",
+    "insertDescription": "Entrez une description",
+    "noDescription": "Aucune description",
+    "adding": "Ajout...",
+    "updating": "Mise à jour...",
+    "originalEntry": "Entrée originale :",
+    "types": {
+      "ip": "Adresse IP",
+      "cidr": "Réseau/CIDR",
+      "domain": "Domaine"
+    },
+    "placeholders": {
+      "ip": "ex : 192.168.1.100",
+      "cidr": "ex : 192.168.1.0/24",
+      "domain": "ex : example.com"
+    },
+    "errors": {
+      "invalidValue": "Entrez une valeur valide",
+      "invalidIP": "Format IP invalide (ex : 192.168.1.100)",
+      "invalidCIDR": "Format CIDR invalide (ex : 192.168.1.0/24)",
+      "invalidDomain": "Format de domaine invalide (ex : example.com)",
+      "invalidDescription": "Entrez une description valide",
+      "addError": "Erreur lors de l'ajout de l'entrée",
+      "updateError": "Erreur lors de la mise à jour de l'entrée",
+      "cannotAdd": "Impossible d'ajouter l'entrée à la liste blanche",
+      "cannotUpdate": "Impossible de mettre à jour l'entrée de la liste blanche."
+    },
+    "success": {
+      "added": "Entrée ajoutée avec succès à la liste blanche",
+      "updated": "Entrée mise à jour avec succès"
+    }
+  },
+  "ipManagement": {
+    "title": "Gestion des IP",
+    "automaticBans": "Bannissements automatiques",
+    "manualBans": "Bannissements manuels",
+    "unbanIP": "Débannir l'IP",
+    "confirmUnban": "Confirmer le débannissement",
+    "unbanning": "Débannissement...",
+    "ipUnblocked": "IP débloquée",
+    "ipUnblockedDescription": "a été supprimée des bannissements",
+    "banCIDR": "CIDR banni",
+    "banCIDRDescription": "Le réseau a été banni avec succès",
+    "banMultiple": "Bannissement de masse terminé",
+    "banMultipleDescription": "CIDRs bannis avec succès, échecs",
+    "errors": {
+      "loadError": "Impossible de charger la liste des IP bannies",
+      "unbanError": "Erreur lors du débannissement de l'IP",
+      "banCIDRError": "Erreur lors du bannissement du CIDR",
+      "banMultipleError": "Erreur lors du bannissement de masse",
+      "fail2banError": "Erreur fail2ban"
+    }
+  },
+  "recentBans": {
+    "title": "Bannissements automatiques récents",
+    "description": "Dernières IPs bannies automatiquement par le système",
+    "timeAgo": {
+      "fewMoments": "Il y a quelques instants",
+      "minutesAgo": "min il y a",
+      "hoursAgo": "heures il y a"
+    },
+    "noBans": "Aucun bannissement automatique récent",
+    "noResults": "Aucun bannissement trouvé pour",
+    "removeFilter": "Supprimer le filtre",
+    "clickToFilter": "Cliquez pour filtrer"
+  },
+  "systemStatus": {
+    "title": "État du système",
+    "description": "Surveillance des services critiques",
+    "lastCheck": "Dernière vérification :",
+    "autoRefresh": "Actualisation automatique active",
+    "manualMode": "Mise à jour manuelle",
+    "switchToManual": "Passer en mode manuel",
+    "enableAutoRefresh": "Activer l'actualisation automatique",
+    "refreshNow": "Actualiser maintenant",
+    "services": {
+      "threatMonitoring": "Surveillance des menaces",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "Actif",
+      "error": "Erreur",
+      "cpuUsage": "Utilisation CPU",
+      "ramUsage": "Utilisation RAM",
+      "temperature": "Température"
+    },
+    "errors": {
+      "systemError": "Erreur système",
+      "cannotRetrieve": "Impossible de récupérer les données du système",
+      "loading": "Chargement du système",
+      "retrieving": "Récupération des données du système..."
+    }
+  },
+  "threatMap": {
+    "title": "Distribution des menaces (EN DÉVELOPPEMENT)",
+    "description": "Distribution géographique des attaques en temps réel",
+    "countriesWithActivity": "Pays avec activité suspecte",
+    "recentAttacks": "Attaques récentes pour",
+    "noRecentAttacks": "Aucune attaque récente enregistrée pour",
+    "selectCountry": "Sélectionnez un pays dans la liste pour voir les détails des menaces.",
+    "showAll": "Afficher tous les",
+    "countries": "Pays",
+    "showLess": "Afficher moins",
+    "severity": {
+      "critical": "CRITIQUE",
+      "extremelyHigh": "EXTRÊMEMENT ÉLEVÉ",
+      "veryHigh": "TRÈS ÉLEVÉ",
+      "high": "ÉLEVÉ",
+      "medium": "MOYEN",
+      "low": "FAIBLE",
+      "veryLow": "TRÈS FAIBLE"
+    }
+  },
+  "logViewer": {
+    "title": "Visualiseur de journaux",
+    "description": "Afficher les journaux du système depuis l'API backend",
+    "autoUpdate": "mise à jour toutes les",
+    "live": "En direct",
+    "pause": "Pause",
+    "start": "Démarrer",
+    "selectLogType": "Sélectionner le type de journal",
+    "reload": "Recharger",
+    "reloading": "Rechargement...",
+    "exportCSV": "Exporter CSV",
+    "searchPlaceholder": "Rechercher dans les journaux...",
+    "displayed": "Affichés",
+    "logsOf": "journaux sur",
+    "noLogs": "Aucun journal trouvé",
+    "noResults": "Aucun résultat trouvé",
+    "loadingLogs": "Chargement des journaux...",
+    "noLogsAvailable": "Aucun fichier journal disponible",
+    "errors": {
+      "cannotLoad": "Impossible de charger la liste des journaux. Vérifiez la connexion.",
+      "loadError": "Erreur lors du chargement des journaux"
+    },
+    "intervals": {
+      "1s": "1s",
+      "3s": "3s",
+      "5s": "5s",
+      "10s": "10s"
+    }
+  },
+  "validation": {
+    "required": "Champ obligatoire",
+    "minLength": "Longueur minimale : {{count}} caractères",
+    "maxLength": "Longueur maximale : {{count}} caractères",
+    "invalidFormat": "Format invalide"
+  },
+  "settings": {
+    "language": "Langue",
+    "languageDescription": "Sélectionnez la langue de l'interface",
+    "currentLanguage": "Langue actuelle",
+    "changeLanguage": "Changer de langue",
+    "languageChanged": "Langue changée en"
+  },
+  "toast": {
+    "error": "Une erreur s'est produite",
+    "success": "Opération terminée avec succès",
+    "info": "Information",
+    "warning": "Avertissement"
+  },
+  "filters": {
+    "activeFilters": "Filtres actifs",
+    "clearAll": "Tout effacer",
+    "addFilter": "Ajouter un filtre"
+  },
+  "buttons": {
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "add": "Ajouter",
+    "update": "Mettre à jour",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "save": "Enregistrer",
+    "close": "Fermer"
+  }
+}

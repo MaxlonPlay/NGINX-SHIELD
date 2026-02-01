@@ -666,7 +666,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
             </div>
           )}
 
-          {/* Modal di disabilitazione */}
+          {}
           {showDisableModal && (
             <div className="mb-6 p-4 bg-red-900/20 rounded-lg border border-red-600">
               <h3 className="text-lg font-semibold text-red-400 mb-4 flex items-center">
@@ -902,7 +902,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                   </ul>
                 </div>
 
-                {/* Griglia dei codici di backup */}
+                {}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-slate-900/50 rounded border border-slate-600">
                   {backupCodes.map((code, index) => (
                     <div
@@ -947,7 +947,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
             </div>
           )}
 
-          {/* Informazioni di stato e sicurezza */}
+          {}
           <div className="space-y-4">
             {totpStatus.totp_enabled ? (
               <div className="p-4 bg-green-900/20 rounded-lg border border-green-700">

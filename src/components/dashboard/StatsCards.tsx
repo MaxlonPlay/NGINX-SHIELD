@@ -17,6 +17,7 @@ import { authService } from "../../utils/apiService";
 import { WhitelistEntry } from "@/utils/apiEndpoints";
 import { useAutoRefresh } from "@/hooks/useAutoRefresh";
 import { fetchBanCounts } from "@/utils/banManager";
+import { t } from "i18next";
 
 interface StatsCardsProps {
   refreshKey: number;
@@ -49,10 +50,6 @@ export const StatsCards = ({
   const loadStats = useCallback(async () => {
     try {
       const whitelistStatsResponse = await authService.getWhitelistStats();
-      console.log(
-        "Risposta whitelist stats dal backend:",
-        whitelistStatsResponse,
-      );
 
       let totalWhitelistEntries = 0;
       let ipEntries = 0;
@@ -65,12 +62,6 @@ export const StatsCards = ({
         ipEntries = stats.by_type?.ip || 0;
         cidrEntries = stats.by_type?.cidr || 0;
         domainEntries = stats.by_type?.domain || 0;
-        console.log("Statistiche whitelist dal backend:", {
-          totalWhitelistEntries,
-          ipEntries,
-          cidrEntries,
-          domainEntries,
-        });
       }
 
       let bannedIPsCount = 0;
@@ -95,7 +86,6 @@ export const StatsCards = ({
         last24hRequests: 0,
       };
 
-      console.log("Statistiche finali calcolate:", newStats);
       setStats(newStats);
     } catch (error) {
       console.error("Errore caricamento statistiche:", error);
@@ -116,7 +106,6 @@ export const StatsCards = ({
   });
 
   useEffect(() => {
-    console.log("Caricamento iniziale delle statistiche");
     loadStats();
   }, [loadStats]);
 
@@ -136,7 +125,7 @@ export const StatsCards = ({
         <Card className="bg-slate-800/50 border-slate-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-slate-400">
-              Richieste Totali
+              {t("stats.totalRequests")}
             </CardTitle>
             <Activity className="h-4 w-4 text-blue-400" />
           </CardHeader>
@@ -145,7 +134,7 @@ export const StatsCards = ({
               {stats.totalRequests.toLocaleString()}
             </div>
             <p className="text-xs text-slate-400">
-              {stats.last24hRequests} nelle ultime 24h
+              {stats.last24hRequests} {t("stats.last24h")}
             </p>
           </CardContent>
         </Card>
@@ -153,7 +142,7 @@ export const StatsCards = ({
         <Card className="bg-slate-800/50 border-slate-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-slate-400">
-              Richieste Bloccate
+              {t("stats.blockedRequests")}
             </CardTitle>
             <Shield className="h-4 w-4 text-red-400" />
           </CardHeader>
@@ -167,7 +156,7 @@ export const StatsCards = ({
                     1,
                   )
                 : 0}
-              % del totale
+              {t("stats.percentageTotal")}
             </p>
           </CardContent>
         </Card>
@@ -175,7 +164,7 @@ export const StatsCards = ({
         <Card className="bg-slate-800/50 border-slate-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-slate-400">
-              IP Bannati
+              {t("stats.bannedIPs")}
             </CardTitle>
             <AlertTriangle className="h-4 w-4 text-orange-400" />
           </CardHeader>
@@ -183,14 +172,16 @@ export const StatsCards = ({
             <div className="text-2xl font-bold text-orange-400">
               {stats.bannedIPs}
             </div>
-            <p className="text-xs text-slate-400">Ban automatici e manuali</p>
+            <p className="text-xs text-slate-400">
+              {t("stats.automaticAndManual")}
+            </p>
           </CardContent>
         </Card>
 
         <Card className="bg-slate-800/50 border-slate-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-slate-400">
-              Whitelist
+              {t("stats.whitelist")}
             </CardTitle>
             <Users className="h-4 w-4 text-green-400" />
           </CardHeader>
@@ -199,14 +190,20 @@ export const StatsCards = ({
               {stats.whitelistTotalEntries}
             </div>
             <p className="text-xs text-slate-400">
-              Totale IP/domini autorizzati
+              {t("stats.totalAuthorized")}
             </p>
             <div className="text-xs text-slate-400 mt-2">
-              <span className="font-semibold text-green-300">IP:</span>{" "}
+              <span className="font-semibold text-green-300">
+                {t("common.ip")}:
+              </span>{" "}
               {stats.whitelistIPs} &bull;{" "}
-              <span className="font-semibold text-blue-300">CIDR:</span>{" "}
+              <span className="font-semibold text-blue-300">
+                {t("common.cidr")}:
+              </span>{" "}
               {stats.whitelistCIDRs} &bull;{" "}
-              <span className="font-semibold text-purple-300">Domini:</span>{" "}
+              <span className="font-semibold text-purple-300">
+                {t("common.domain")}:
+              </span>{" "}
               {stats.whitelistDomains}
             </div>
           </CardContent>

@@ -1,0 +1,274 @@
+{
+  "common": {
+    "loading": "読み込み中...",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "edit": "編集",
+    "delete": "削除",
+    "add": "追加",
+    "close": "閉じる",
+    "confirm": "確認",
+    "success": "成功",
+    "error": "エラー",
+    "warning": "警告",
+    "retry": "再試行",
+    "refresh": "更新",
+    "export": "CSVエクスポート",
+    "search": "検索",
+    "clear": "クリア",
+    "update": "更新",
+    "remove": "削除",
+    "show": "表示",
+    "hide": "非表示",
+    "total": "合計",
+    "found": "見つかりました"
+  },
+  "auth": {
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "currentPassword": "現在のパスワード",
+    "newPassword": "新しいパスワード",
+    "confirmPassword": "パスワードの確認",
+    "changePassword": "パスワードを変更",
+    "logoutSuccess": "ログアウト成功",
+    "logoutDescription": "正常にログアウトしました"
+  },
+  "dashboard": {
+    "title": "システム概要",
+    "subtitle": "Nginx Shieldシステムのアクティビティとステータスの監視",
+    "systemOverview": "システム概要"
+  },
+  "stats": {
+    "totalRequests": "総リクエスト数",
+    "blockedRequests": "ブロックされたリクエスト",
+    "bannedIPs": "禁止されたIP",
+    "whitelist": "ホワイトリスト",
+    "last24h": "過去24時間",
+    "ofTotal": "全体の",
+    "automaticAndManual": "自動および手動の禁止",
+    "totalAuthorized": "承認済みIP/ドメインの合計",
+    "autoRefreshActive": "自動更新有効",
+    "manualUpdate": "手動更新",
+    "lastUpdate": "最終更新"
+  },
+  "accountSettings": {
+    "title": "アカウント設定",
+    "description": "パスワード変更を含むアカウント設定を管理します。",
+    "accountDetails": "アカウント詳細",
+    "username": "ユーザー名",
+    "lastPasswordUpdate": "最後のパスワード更新",
+    "changePasswordTitle": "パスワードを変更",
+    "currentPassword": "現在のパスワード",
+    "currentPasswordPlaceholder": "現在のパスワードを入力",
+    "newPassword": "新しいパスワード",
+    "newPasswordPlaceholder": "新しいパスワードを入力（最低8文字）",
+    "confirmNewPassword": "新しいパスワードの確認",
+    "confirmPasswordPlaceholder": "新しいパスワードを確認",
+    "updating": "更新中...",
+    "errors": {
+      "allFieldsRequired": "すべてのフィールドが必須です。",
+      "passwordMinLength": "新しいパスワードは8文字以上である必要があります。",
+      "passwordMismatch": "新しいパスワードが一致しません。",
+      "usernameError": "更新用のユーザー名を取得できません。",
+      "noInfoAccount": "アカウント情報を取得できません。",
+      "errorGetUserInfo": "ユーザー情報の取得中にエラーが発生しました。",
+      "connectionError": "パスワード更新中に接続エラーが発生しました。",
+      "updateFailed": "パスワードの更新に失敗しました。",
+      "errorUpdatingPassword": "パスワードの更新中にエラーが発生しました。",
+      "notPosibleChangePassword": "パスワードを更新できません。現在のパスワードを確認するか、後で再試行してください。"
+    },
+    "success": {
+      "passwordUpdated": "パスワードが更新されました。セキュリティのため、まもなくログアウトされます。再度ログインしてください。"
+    }
+  },
+  "whitelist": {
+    "title": "ホワイトリスト管理",
+    "addEntry": "ホワイトリストエントリを追加",
+    "editEntry": "ホワイトリストエントリを編集",
+    "addDescription": "新しいIP、ドメイン、またはネットワークをホワイトリストに追加",
+    "editDescription": "選択したエントリの説明を編集",
+    "type": "タイプ",
+    "ipAddress": "IPアドレス",
+    "network": "ネットワーク（CIDR）",
+    "domain": "ドメイン",
+    "description": "説明",
+    "descriptionPlaceholder": "オプションの説明",
+    "insertDescription": "説明を入力",
+    "noDescription": "説明なし",
+    "adding": "追加中...",
+    "updating": "更新中...",
+    "originalEntry": "元のエントリ：",
+    "types": {
+      "ip": "IPアドレス",
+      "cidr": "ネットワーク/CIDR",
+      "domain": "ドメイン"
+    },
+    "placeholders": {
+      "ip": "例：192.168.1.100",
+      "cidr": "例：192.168.1.0/24",
+      "domain": "例：example.com"
+    },
+    "errors": {
+      "invalidValue": "有効な値を入力してください",
+      "invalidIP": "無効なIP形式（例：192.168.1.100）",
+      "invalidCIDR": "無効なCIDR形式（例：192.168.1.0/24）",
+      "invalidDomain": "無効なドメイン形式（例：example.com）",
+      "invalidDescription": "有効な説明を入力してください",
+      "addError": "エントリの追加中にエラーが発生しました",
+      "updateError": "エントリの更新中にエラーが発生しました",
+      "cannotAdd": "ホワイトリストにエントリを追加できません",
+      "cannotUpdate": "ホワイトリストエントリを更新できません。"
+    },
+    "success": {
+      "added": "エントリがホワイトリストに正常に追加されました",
+      "updated": "エントリが正常に更新されました"
+    }
+  },
+  "ipManagement": {
+    "title": "IP管理",
+    "automaticBans": "自動禁止",
+    "manualBans": "手動禁止",
+    "unbanIP": "IPの禁止を解除",
+    "confirmUnban": "禁止解除を確認",
+    "unbanning": "禁止解除中...",
+    "ipUnblocked": "IPのブロック解除",
+    "ipUnblockedDescription": "禁止リストから削除されました",
+    "banCIDR": "CIDR禁止",
+    "banCIDRDescription": "ネットワークが正常に禁止されました",
+    "banMultiple": "一括禁止完了",
+    "banMultipleDescription": "CIDRが正常に禁止されました、失敗",
+    "errors": {
+      "loadError": "禁止されたIPリストを読み込めません",
+      "unbanError": "IPの禁止解除中にエラーが発生しました",
+      "banCIDRError": "CIDRの禁止中にエラーが発生しました",
+      "banMultipleError": "一括禁止中にエラーが発生しました",
+      "fail2banError": "fail2banエラー"
+    }
+  },
+  "recentBans": {
+    "title": "最近の自動禁止",
+    "description": "システムによって自動的に禁止された最新のIP",
+    "timeAgo": {
+      "fewMoments": "数秒前",
+      "minutesAgo": "分前",
+      "hoursAgo": "時間前"
+    },
+    "noBans": "最近の自動禁止はありません",
+    "noResults": "禁止が見つかりませんでした",
+    "removeFilter": "フィルターを削除",
+    "clickToFilter": "クリックしてフィルター"
+  },
+  "systemStatus": {
+    "title": "システムステータス",
+    "description": "重要なサービスの監視",
+    "lastCheck": "最終チェック：",
+    "autoRefresh": "自動更新有効",
+    "manualMode": "手動更新",
+    "switchToManual": "手動モードに切り替え",
+    "enableAutoRefresh": "自動更新を有効化",
+    "refreshNow": "今すぐ更新",
+    "services": {
+      "threatMonitoring": "脅威監視",
+      "fail2ban": "Fail2Ban",
+      "nginx": "Nginx"
+    },
+    "status": {
+      "active": "アクティブ",
+      "error": "エラー",
+      "cpuUsage": "CPU使用率",
+      "ramUsage": "RAM使用率",
+      "temperature": "温度"
+    },
+    "errors": {
+      "systemError": "システムエラー",
+      "cannotRetrieve": "システムデータを取得できません",
+      "loading": "システム読み込み中",
+      "retrieving": "システムデータを取得中..."
+    }
+  },
+  "threatMap": {
+    "title": "脅威の分布（開発中）",
+    "description": "リアルタイムの攻撃の地理的分布",
+    "countriesWithActivity": "疑わしい活動がある国",
+    "recentAttacks": "最近の攻撃",
+    "noRecentAttacks": "最近の攻撃は記録されていません",
+    "selectCountry": "リストから国を選択して脅威の詳細を表示します。",
+    "showAll": "すべて表示",
+    "countries": "国",
+    "showLess": "少なく表示",
+    "severity": {
+      "critical": "重大",
+      "extremelyHigh": "極めて高い",
+      "veryHigh": "非常に高い",
+      "high": "高い",
+      "medium": "中程度",
+      "low": "低い",
+      "veryLow": "非常に低い"
+    }
+  },
+  "logViewer": {
+    "title": "ログビューア",
+    "description": "バックエンドAPIからシステムログを表示",
+    "autoUpdate": "更新間隔",
+    "live": "ライブ",
+    "pause": "一時停止",
+    "start": "開始",
+    "selectLogType": "ログタイプを選択",
+    "reload": "再読み込み",
+    "reloading": "再読み込み中...",
+    "exportCSV": "CSVエクスポート",
+    "searchPlaceholder": "ログを検索...",
+    "displayed": "表示中",
+    "logsOf": "ログ、合計",
+    "noLogs": "ログが見つかりません",
+    "noResults": "結果が見つかりません",
+    "loadingLogs": "ログを読み込み中...",
+    "noLogsAvailable": "利用可能なログファイルはありません",
+    "errors": {
+      "cannotLoad": "ログリストを読み込めません。接続を確認してください。",
+      "loadError": "ログの読み込み中にエラーが発生しました"
+    },
+    "intervals": {
+      "1s": "1秒",
+      "3s": "3秒",
+      "5s": "5秒",
+      "10s": "10秒"
+    }
+  },
+  "validation": {
+    "required": "必須フィールド",
+    "minLength": "最小長：{{count}}文字",
+    "maxLength": "最大長：{{count}}文字",
+    "invalidFormat": "無効な形式"
+  },
+  "settings": {
+    "language": "言語",
+    "languageDescription": "インターフェース言語を選択",
+    "currentLanguage": "現在の言語",
+    "changeLanguage": "言語を変更",
+    "languageChanged": "言語が変更されました"
+  },
+  "toast": {
+    "error": "エラーが発生しました",
+    "success": "操作が正常に完了しました",
+    "info": "情報",
+    "warning": "警告"
+  },
+  "filters": {
+    "activeFilters": "アクティブなフィルター",
+    "clearAll": "すべてクリア",
+    "addFilter": "フィルターを追加"
+  },
+  "buttons": {
+    "confirm": "確認",
+    "cancel": "キャンセル",
+    "add": "追加",
+    "update": "更新",
+    "delete": "削除",
+    "edit": "編集",
+    "save": "保存",
+    "close": "閉じる"
+  }
+}
