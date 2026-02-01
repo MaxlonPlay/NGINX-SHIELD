@@ -63,11 +63,11 @@
 
 | Versione | Periodo | Deliverables |
 | :--- | :--- | :--- |
+| **v0.x.x** | Prima possibile | 🌍 Supporto multilingua UI (Previste: Inglese - Italiano - Spagnolo - Tedesco - Francese) |
 | **v0.4.x** | 1-2 mesi | 🤦‍♂️ Fix usabilità: Sban automatico per IP in range CIDR bannato (non funziona come previsto attualmente) |
 | **v0.4.x** | 1-2 mesi | 🔴 Fix critico: crittografia password email e salvataggio in db non piu in json file |
 | **v0.5.x** | 2-3 mesi | 📱 Backend Telegram completo e funzionale |
 | **v0.5.x** | 3-4 mesi | 🛡️ Estensione crittografia a tutti i dati sensibili |
-| **v0.6.x** | 4-6 mesi | 🌍 Supporto multilingua UI (Previste: Inglese - Italiano - Spagnolo - Tedesco - Francese) |
 
 
 ---
