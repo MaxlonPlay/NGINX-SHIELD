@@ -240,14 +240,12 @@ class ServerManager:
                     self .log_message(f"{name} arrestato", name)
                 except subprocess .TimeoutExpired:
                     self .log_message(
-                        f"Forzatura arresto {
-                            name .lower()}...", name)
+                        f"Forzatura arresto {name .lower()}...", name)
                     proc .kill()
                     proc .wait()
                 except Exception as e:
                     self .log_message(
-                        f"Errore durante l'arresto di {
-                            name .lower()}: {e}", name)
+                        f"Errore durante l'arresto di {name .lower()}: {e}", name)
         if os .path .exists(PID_FILE):
             os .remove(PID_FILE)
         self .log_message("=== SERVER MANAGER TERMINATO ===", "SYSTEM")
