@@ -12,3 +12,6 @@ run/geo_daemon.pid
 /src/.vs
 *.zip
 PREPARE_UP_fixed.py
+fakelogs_for_test.py
+PREPARE_UP.py
+push_image.sh
