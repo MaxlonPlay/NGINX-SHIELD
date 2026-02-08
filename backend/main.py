@@ -1512,7 +1512,9 @@ def get_whitelist_entries(
     )
 
 
-@app.post("/api/whitelist/entries", summary="🔒 Add entry whitelist", tags=["Whitelist"])
+@app.post(
+    "/api/whitelist/entries", summary="🔒 Add entry whitelist", tags=["Whitelist"]
+)
 @handle_endpoint_exceptions("aggiunta entry whitelist")
 def add_whitelist_entry(
     entry: WhitelistEntry,

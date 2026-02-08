@@ -24,8 +24,7 @@ class WhitelistManager:
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
-            cursor.execute(
-                """
+            cursor.execute("""
                 CREATE TABLE IF NOT EXISTS entries (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     type TEXT NOT NULL,
@@ -33,8 +32,7 @@ class WhitelistManager:
                     description TEXT,
                     created TEXT
                 )
-            """
-            )
+            """)
             conn.commit()
             conn.close()
             debug_log(

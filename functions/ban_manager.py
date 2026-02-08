@@ -63,8 +63,7 @@ def setup_db(db_file, NPM_DEBUG_LOG):
         conn = sqlite3.connect(db_file)
         c = conn.cursor()
 
-        c.execute(
-            """
+        c.execute("""
             CREATE TABLE IF NOT EXISTS automatic_bans (
                 id INTEGER PRIMARY KEY,
                 ip TEXT NOT NULL,
@@ -78,15 +77,13 @@ def setup_db(db_file, NPM_DEBUG_LOG):
                 organization TEXT,
                 country TEXT
             )
-        """
-        )
+        """)
         debug_log(
             "Tabella 'automatic_bans' verificata/creata con campi di geolocalizzazione.",
             NPM_DEBUG_LOG,
         )
 
-        c.execute(
-            """
+        c.execute("""
             CREATE TABLE IF NOT EXISTS manual_bans (
                 id INTEGER PRIMARY KEY,
                 ip TEXT NOT NULL,
@@ -97,8 +94,7 @@ def setup_db(db_file, NPM_DEBUG_LOG):
                 organization TEXT,
                 country TEXT
             )
-        """
-        )
+        """)
         debug_log(
             "Tabella 'manual_bans' verificata/creata con campi di geolocalizzazione.",
             NPM_DEBUG_LOG,

@@ -6,6 +6,7 @@ import shutil
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple, Any
 
+
 class BulkBanManager:
     def __init__(self, db_file: str, jail_name: str = "sshd", debug_log_func=None):
 

@@ -27,4 +27,3 @@ def handle_signal(
                 debug_log(
                     f"Thread {thread.name} ancora vivo dopo join timeout", npm_debug_log
                 )
-
