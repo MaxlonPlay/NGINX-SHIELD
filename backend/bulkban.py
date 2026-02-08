@@ -182,22 +182,35 @@ class BulkBanManager:
         ips_in_cidr = []
 
         try:
+
+            network = ipaddress.ip_network(cidr, strict=False)
+
             conn = sqlite3.connect(self.db_file)
             c = conn.cursor()
 
             if ban_type in [None, "automatic"]:
-                c.execute("SELECT id, ip FROM automatic_bans")
+
+                c.execute("SELECT id, ip FROM automatic_bans WHERE ip NOT LIKE '%/%'")
                 for row_id, ip in c.fetchall():
-                    if self._ip_in_cidr(ip, cidr):
-                        ips_in_cidr.append(
-                            {"id": row_id, "ip": ip, "type": "automatic"}
-                        )
+                    try:
+                        if ipaddress.ip_address(ip) in network:
+                            ips_in_cidr.append(
+                                {"id": row_id, "ip": ip, "type": "automatic"}
+                            )
+                    except ValueError:
+
+                        continue
 
             if ban_type in [None, "manual"]:
-                c.execute("SELECT id, ip FROM manual_bans WHERE ip != ?", (cidr,))
+
+                c.execute("SELECT id, ip FROM manual_bans WHERE ip != ? AND ip NOT LIKE '%/%'", (cidr,))
                 for row_id, ip in c.fetchall():
-                    if self._ip_in_cidr(ip, cidr):
-                        ips_in_cidr.append({"id": row_id, "ip": ip, "type": "manual"})
+                    try:
+                        if ipaddress.ip_address(ip) in network:
+                            ips_in_cidr.append({"id": row_id, "ip": ip, "type": "manual"})
+                    except ValueError:
+
+                        continue
 
             conn.close()
 
@@ -227,6 +240,15 @@ class BulkBanManager:
                 "error_type": "validation_error",
             }
 
+        if not ip_ids:
+            return {
+                "success": True,
+                "message": "Nessun IP da sbannare",
+                "unbanned_ips": [],
+                "failed_ips": [],
+                "cidr": cidr,
+            }
+
         unbanned_ips = []
         failed_ips = []
 
@@ -235,54 +257,45 @@ class BulkBanManager:
             c = conn.cursor()
 
             ips_to_unban = []
-            for ip_id in ip_ids:
 
-                c.execute("SELECT ip FROM automatic_bans WHERE id = ?", (ip_id,))
-                result = c.fetchone()
-                if result:
-                    ips_to_unban.append((result[0], "automatic", ip_id))
-                    continue
+            placeholders = ','.join('?' * len(ip_ids))
+            c.execute(f"SELECT id, ip FROM automatic_bans WHERE id IN ({placeholders})", ip_ids)
+            for ip_id, ip in c.fetchall():
+                ips_to_unban.append((ip, "automatic", ip_id))
 
-                c.execute("SELECT ip FROM manual_bans WHERE id = ?", (ip_id,))
-                result = c.fetchone()
-                if result:
-                    ips_to_unban.append((result[0], "manual", ip_id))
+            found_ids = {ip_id for _, _, ip_id in ips_to_unban}
+            remaining_ids = [ip_id for ip_id in ip_ids if ip_id not in found_ids]
 
-            conn.close()
+            if remaining_ids:
+                placeholders = ','.join('?' * len(remaining_ids))
+                c.execute(f"SELECT id, ip FROM manual_bans WHERE id IN ({placeholders})", remaining_ids)
+                for ip_id, ip in c.fetchall():
+                    ips_to_unban.append((ip, "manual", ip_id))
 
             for ip, ban_type, ip_id in ips_to_unban:
                 try:
 
-                    unban_command = (
-                        f"fail2ban-client set {self .jail_name} unbanip {ip}"
-                    )
-                    success, stdout, stderr = self._execute_fail2ban_command(
-                        unban_command
-                    )
+                    if self.fail2ban_available:
+                        unban_command = f"fail2ban-client set {self.jail_name} unbanip {ip}"
+                        success, stdout, stderr = self._execute_fail2ban_command(unban_command)
 
-                    if not success:
-                        error_detail = stderr if stderr else stdout
-                        self.debug_log(
-                            f"Avviso: Errore rimozione da fail2ban per IP {ip}: {error_detail}"
-                        )
-
-                    conn = sqlite3.connect(self.db_file)
-                    c = conn.cursor()
+                        if not success:
+                            error_detail = stderr if stderr else stdout
+                            self.debug_log(f"Avviso: Errore rimozione da fail2ban per IP {ip}: {error_detail}")
 
                     table_name = f"{ban_type}_bans"
                     c.execute(f"DELETE FROM {table_name} WHERE id = ?", (ip_id,))
-                    conn.commit()
-                    conn.close()
 
-                    unbanned_ips.append(
-                        {"ip": ip, "type": ban_type, "status": "unbanned"}
-                    )
-
-                    self.debug_log(f"IP {ip} sbannato da {ban_type}_bans")
+                    unbanned_ips.append({"ip": ip, "type": ban_type, "status": "unbanned"})
 
                 except Exception as e:
                     self.debug_log(f"Errore nello sbannamento di {ip}: {str(e)}")
                     failed_ips.append({"ip": ip, "error": str(e)})
+
+            conn.commit()
+            conn.close()
+
+            self.debug_log(f"Sbannati {len(unbanned_ips)} IP dal CIDR {cidr}")
 
             return {
                 "success": True,
@@ -306,28 +319,119 @@ class BulkBanManager:
         successful = 0
         failed = 0
 
-        for item in cidr_list:
-            cidr = item.get("cidr", "").strip()
-            reason = item.get("reason", "Ban multiplo CIDR").strip()
+        if not cidr_list:
+            return {
+                "success": True,
+                "message": "Nessun CIDR da bannare",
+                "successful": 0,
+                "failed": 0,
+                "results": [],
+            }
 
-            result = self.ban_cidr(cidr, reason)
-            results.append(
-                {
+        try:
+
+            conn = sqlite3.connect(self.db_file)
+            c = conn.cursor()
+
+            c.execute("SELECT id, ip FROM automatic_bans WHERE ip NOT LIKE '%/%'")
+            automatic_ips = [(row_id, ip) for row_id, ip in c.fetchall()]
+
+            c.execute("SELECT id, ip FROM manual_bans WHERE ip NOT LIKE '%/%'")
+            manual_ips = [(row_id, ip) for row_id, ip in c.fetchall()]
+
+            conn.close()
+
+            self.debug_log(f"Pre-caricati {len(automatic_ips) + len(manual_ips)} IP dal database")
+
+            all_ips_to_unban = []
+            banned_cidrs = []
+
+            for item in cidr_list:
+                cidr = item.get("cidr", "").strip()
+                reason = item.get("reason", "Ban multiplo CIDR").strip()
+
+                result = self.ban_cidr(cidr, reason)
+                results.append({
                     "cidr": cidr,
                     "success": result["success"],
                     "message": result["message"],
-                }
-            )
+                })
 
-            if result["success"]:
-                successful += 1
-            else:
-                failed += 1
+                if result["success"]:
+                    successful += 1
+                    banned_cidrs.append(cidr)
 
-        return {
-            "success": failed == 0,
-            "message": f"Bannati {successful} CIDR, {failed} falliti",
-            "successful": successful,
-            "failed": failed,
-            "results": results,
-        }
+                    try:
+                        network = ipaddress.ip_network(cidr, strict=False)
+
+                        for row_id, ip in automatic_ips:
+                            try:
+                                if ipaddress.ip_address(ip) in network:
+                                    all_ips_to_unban.append((ip, "automatic", row_id))
+                            except ValueError:
+                                continue
+
+                        for row_id, ip in manual_ips:
+                            try:
+                                if ipaddress.ip_address(ip) in network:
+                                    all_ips_to_unban.append((ip, "manual", row_id))
+                            except ValueError:
+                                continue
+
+                    except Exception as e:
+                        self.debug_log(f"Errore controllo IP per CIDR {cidr}: {str(e)}")
+                else:
+                    failed += 1
+
+            if all_ips_to_unban:
+                self.debug_log(f"Inizio sbannamento batch di {len(all_ips_to_unban)} IP")
+
+                conn = sqlite3.connect(self.db_file)
+                c = conn.cursor()
+
+                unbanned_count = 0
+                unbanned_from_f2b = 0
+
+                for ip, ban_type, ip_id in all_ips_to_unban:
+                    try:
+
+                        if self.fail2ban_available:
+                            unban_command = f"fail2ban-client set {self.jail_name} unbanip {ip}"
+                            success, stdout, stderr = self._execute_fail2ban_command(unban_command)
+
+                            if success:
+                                unbanned_from_f2b += 1
+                            else:
+                                error_detail = stderr if stderr else stdout
+                                self.debug_log(f"Avviso fail2ban per IP {ip}: {error_detail}")
+
+                        table_name = f"{ban_type}_bans"
+                        c.execute(f"DELETE FROM {table_name} WHERE id = ?", (ip_id,))
+                        unbanned_count += 1
+
+                    except Exception as e:
+                        self.debug_log(f"Errore nello sbannamento di {ip}: {str(e)}")
+
+                conn.commit()
+                conn.close()
+
+                self.debug_log(f"Sbannati {unbanned_count} IP dal database e {unbanned_from_f2b} da fail2ban")
+
+            return {
+                "success": failed == 0,
+                "message": f"Bannati {successful} CIDR ({len(all_ips_to_unban)} IP sbannati), {failed} falliti",
+                "successful": successful,
+                "failed": failed,
+                "results": results,
+                "ips_unbanned": len(all_ips_to_unban),
+            }
+
+        except Exception as e:
+            self.debug_log(f"Errore durante ban multipli CIDR: {str(e)}")
+            return {
+                "success": False,
+                "message": f"Errore durante l'operazione: {str(e)}",
+                "successful": successful,
+                "failed": failed,
+                "results": results,
+            }

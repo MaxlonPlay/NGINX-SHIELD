@@ -186,6 +186,30 @@ class BanManager:
             self.debug_log(f"Errore controllo IP nel database: {e}")
             return False, None, None
 
+    def _is_ip_in_banned_cidr(self, ip: str) -> Tuple[bool, Optional[str], Optional[str]]:
+        """Controlla se l'IP appartiene a un CIDR già bannato (solo manuale_bans)"""
+        try:
+            conn = sqlite3.connect(self.db_file)
+            c = conn.cursor()
+
+            c.execute("SELECT ip, reason FROM manual_bans WHERE ip LIKE '%/%'")
+            cidrs = c.fetchall()
+            conn.close()
+
+            for cidr, reason in cidrs:
+                try:
+                    if ipaddress.ip_address(ip) in ipaddress.ip_network(cidr, strict=False):
+                        self.debug_log(f"IP {ip} appartiene al CIDR bannato {cidr}")
+                        return True, cidr, reason
+                except ValueError:
+                    continue
+
+            return False, None, None
+
+        except Exception as e:
+            self.debug_log(f"Errore controllo IP in CIDR bannato: {e}")
+            return False, None, None
+
     def ban_ip_manual(self, ip: str, reason: str) -> Dict[str, Any]:
 
         if not self._validate_ip(ip):
@@ -202,6 +226,15 @@ class BanManager:
                 "message": f"IP {ip} già presente nei ban {ban_type}: {ban_reason}",
                 "error_type": "already_banned",
                 "existing_ban": {"type": ban_type, "reason": ban_reason},
+            }
+
+        is_in_cidr, cidr, cidr_reason = self._is_ip_in_banned_cidr(ip)
+        if is_in_cidr:
+            return {
+                "success": False,
+                "message": f"IP {ip} appartiene al CIDR {cidr} già bannato. Motivo del ban CIDR: {cidr_reason}",
+                "error_type": "ip_in_banned_cidr",
+                "existing_ban": {"type": "manual_cidr", "cidr": cidr, "reason": cidr_reason},
             }
 
         if self.is_ip_banned_in_fail2ban(ip):

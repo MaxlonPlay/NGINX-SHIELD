@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import os
 
 LOG_FILE = "/app/nginx-logs/proxy-host-16_access.log"
-DELAY_BETWEEN_LOGS = 0.05
+DELAY_BETWEEN_LOGS = 0.03
 
 USER_AGENTS = [
     "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",

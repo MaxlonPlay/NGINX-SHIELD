@@ -293,6 +293,8 @@ def ban_ip_manual(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ):
     """🔒 PROTETTO - Banna manualmente un IP/CIDR"""
+    import ipaddress
+
     current_user = get_current_user_and_refresh_token(request, response, credentials)
 
     result = ban_manager.ban_ip_manual(ban_request.ip, ban_request.reason)
@@ -309,6 +311,8 @@ def ban_ip_manual(
             status_code = 400
         elif error_type == "already_banned":
             status_code = 409
+        elif error_type == "ip_in_banned_cidr":
+            status_code = 409
         elif error_type == "fail2ban_conflict":
             status_code = 409
         elif error_type == "fail2ban_error":
@@ -317,6 +321,23 @@ def ban_ip_manual(
             status_code = 500
 
         raise HTTPException(status_code=status_code, detail=result["message"])
+
+    try:
+        network = ipaddress.ip_network(ban_request.ip, strict=False)
+
+        if '/' in ban_request.ip:
+            ips_result = bulk_ban_manager.find_ips_in_cidr(ban_request.ip)
+            if ips_result["success"] and ips_result["ips_found"]:
+                ip_ids = [ip["id"] for ip in ips_result["ips_found"]]
+                unban_result = bulk_ban_manager.unban_ips_in_cidr(ban_request.ip, ip_ids)
+                log_manager.log_operation(
+                    "IP/CIDR bannato manualmente - IP contenuti sbannati",
+                    current_user.get("username"),
+                    f"CIDR: {ban_request.ip}, IP sbannati: {len(ip_ids)}",
+                )
+    except (ValueError, ipaddress.AddressValueError):
+
+        pass
 
     log_manager.log_operation(
         "IP/CIDR bannato manualmente",
