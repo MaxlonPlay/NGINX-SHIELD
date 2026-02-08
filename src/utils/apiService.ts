@@ -37,6 +37,7 @@ interface SystemConfig {
   MAX_REQUESTS: number;
   TIME_FRAME: number;
   JAIL_NAME: string;
+  is_docker?: boolean;
 }
 
 interface EmailConfig {

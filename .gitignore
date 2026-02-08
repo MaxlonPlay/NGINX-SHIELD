@@ -11,3 +11,4 @@ run/geo_daemon.pid
 /venv
 /src/.vs
 *.zip
+PREPARE_UP_fixed.py

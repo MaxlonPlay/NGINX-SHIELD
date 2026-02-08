@@ -675,16 +675,23 @@ export const ConfigManager = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="log_dir" className="text-slate-300">
-                      Directory Log (NON TOCCARE SE USI DOCKER)
+                      Directory Log
+                      {config.is_docker && (
+                        <span className="text-xs text-yellow-400 ml-2">
+                          (Configurabile via bind mount in Docker)
+                        </span>
+                      )}
                     </Label>
                     <Input
                       id="log_dir"
                       value={config.LOG_DIR}
-                      onChange={(e) =>
-                        updateConfig("LOG_DIR", e.target.value)
+                      onChange={(e) => updateConfig("LOG_DIR", e.target.value)}
+                      className={
+                        config.is_docker
+                          ? "bg-slate-900/30 border-slate-700 text-slate-500 cursor-not-allowed"
+                          : "bg-slate-900/50 border-slate-600 text-white"
                       }
-                      className="bg-slate-900/50 border-slate-600 text-white"
-                      disabled={isLoading}
+                      disabled={isLoading || config.is_docker}
                     />
                   </div>
                   <div className="space-y-2">

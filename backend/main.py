@@ -1666,6 +1666,9 @@ async def get_system_config(
     log_manager.log_operation("Richiesta configurazione", current_user.get("username"))
     current_config = config_manager.get_config()
 
+    is_docker = os.path.isfile("/.dockerenv") or os.getenv("DOCKER_ENV") == "true"
+    current_config["is_docker"] = is_docker
+
     return JSONResponse(content=current_config, status_code=200)
 
 
