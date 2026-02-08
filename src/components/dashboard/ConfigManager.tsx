@@ -675,13 +675,15 @@ export const ConfigManager = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="log_dir" className="text-slate-300">
-                      Directory Log
+                      Directory Log (NON TOCCARE SE USI DOCKER)
                     </Label>
                     <Input
                       id="log_dir"
                       value={config.LOG_DIR}
-                      readOnly
-                      className="bg-slate-900/30 border-slate-700 text-slate-500 cursor-not-allowed"
+                      onChange={(e) =>
+                        updateConfig("LOG_DIR", e.target.value)
+                      }
+                      className="bg-slate-900/50 border-slate-600 text-white"
                       disabled={isLoading}
                     />
                   </div>
