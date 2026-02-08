@@ -62,7 +62,7 @@ sudo tee /etc/fail2ban/jail.d/npm.local > /dev/null <<'EOF'
 enabled = true
 ignoreip = 127.0.0.1/8 192.168.192.0/24 172.16.0.1/12 10.0.0.0/8
 action = npm
-logpath = /dockers/nginx-shield/fakelogf2b.log
+logpath = /nginx-shield/fakelogf2b.log
 maxretry = 3
 bantime  = 365d
 findtime = 6h
@@ -70,6 +70,10 @@ filter = npm-docker
 EOF
 
 echo "Configuration completed."
+
+echo "Creating log file directory and log file..."
+sudo mkdir -p /nginx-shield
+sudo touch /nginx-shield/fakelogf2b.log
 
 echo "Restarting fail2ban to apply the new configurations..."
 if sudo systemctl is-active --quiet fail2ban; then

@@ -1,7 +1,6 @@
 fastapi
 uvicorn
 pydantic
-python-dotenv
 python-jose[cryptography]
 passlib[bcrypt]
 qrcode
