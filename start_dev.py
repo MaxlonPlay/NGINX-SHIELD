@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 
 PID_FILE = "server_manager.pid"
-LOG_FILE = "log/server.log"
+LOG_FILE = "data/log/server.log"
 
 
 class ServerManager:
@@ -20,7 +20,7 @@ class ServerManager:
         self .running = True
         self .detach_mode = False
         self .service_commands_dir = "service_commands"
-        os .makedirs("log", exist_ok=True)
+        os .makedirs("data/log", exist_ok=True)
         os .makedirs(self .service_commands_dir, exist_ok=True)
 
     def log_message(self, message, source="SYSTEM"):
@@ -145,7 +145,7 @@ class ServerManager:
 
         def stream_geolocate():
             try:
-                with open("log/geolocate.log", "a", encoding="utf-8")as f:
+                with open("data/log/geolocate.log", "a", encoding="utf-8")as f:
                     for line in iter(
                             self .geolocate_process .stdout .readline, ''):
                         if line and self .running:

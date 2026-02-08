@@ -14,7 +14,7 @@ from typing import Dict, Any, Optional
 from contextlib import contextmanager
 
 
-LOG_FILE_PATH = "log/system_status_log.csv"
+LOG_FILE_PATH = "data/log/system_status_log.csv"
 LOG_INTERVAL_SECONDS = 10
 RETENTION_DAYS = 30
 
@@ -47,7 +47,7 @@ logging .basicConfig(
     level=logging .WARNING,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging .FileHandler('log/system_monitor.log'),
+        logging .FileHandler('data/log/system_monitor.log'),
         logging .StreamHandler()
     ]
 )

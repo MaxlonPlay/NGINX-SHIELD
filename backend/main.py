@@ -39,7 +39,7 @@ mail_config_path = "data/conf/mail.conf"
 mail_manager = MailConfigManager(mail_config_path)
 
 
-log_dir = os .path .join(os .path .dirname(BASE_DIR), 'log')
+log_dir = os .path .join(os .path .dirname(BASE_DIR), 'data', 'log')
 log_manager_api = LogManagerAPI(log_dir=log_dir)
 
 app = FastAPI(
@@ -1443,7 +1443,7 @@ def get_log_line_count(
         request, response, credentials)
     username_from_token = current_user_from_token .get('username')
 
-    log_file_path = os .path .join(BASE_DIR, '..', 'log', 'npm_debug.log')
+    log_file_path = os .path .join(BASE_DIR, '..', 'data', 'log', 'npm_debug.log')
 
     line_count = count_file_lines(log_file_path)
 
@@ -1894,7 +1894,7 @@ def get_system_history(
         os .path .dirname(
             os .path .dirname(
                 os .path .abspath(__file__))),
-        'log/system_status_log.csv')
+        'data/log/system_status_log.csv')
 
     if not os .path .exists(csv_path):
         raise HTTPException(status_code=404, detail="File storico non trovato")

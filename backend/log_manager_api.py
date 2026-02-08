@@ -9,7 +9,7 @@ class LogManagerAPI:
     def __init__(self, log_dir: str = None):
 
         if log_dir is None:
-            log_dir = os .path .join(os .path .dirname(__file__), '..', 'log')
+            log_dir = os .path .join(os .path .dirname(__file__), '..', 'data', 'log')
 
         self .log_dir = Path(log_dir)
         self .log_dir .mkdir(parents=True, exist_ok=True)

@@ -13,7 +13,7 @@ class DebugLogger:
     @staticmethod
     def get_log_file():
         base_dir = os .path .dirname(os .path .abspath(__file__))
-        log_dir = os .path .join(os .path .dirname(base_dir), 'log')
+        log_dir = os .path .join(os .path .dirname(base_dir), 'data', 'log')
         os .makedirs(log_dir, exist_ok=True)
         return os .path .join(log_dir, 'backend_debug.log')
 

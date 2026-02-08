@@ -8,7 +8,7 @@ import time
 import json
 from datetime import datetime
 
-LOG_FILE = "log/server.log"
+LOG_FILE = "data/log/server.log"
 
 
 class ServerManager:
@@ -22,7 +22,7 @@ class ServerManager:
         self .geolocate_enabled = os .getenv(
             "DISABLE_GEOLOCATE", "false").lower()not in [
             "true", "1", "yes"]
-        os .makedirs("log", exist_ok=True)
+        os .makedirs("data/log", exist_ok=True)
         os .makedirs(self .service_commands_dir, exist_ok=True)
 
     def log_message(self, message, source="SYSTEM"):
@@ -121,7 +121,7 @@ class ServerManager:
 
         def stream_geolocate():
             try:
-                with open("log/geolocate.log", "a", encoding="utf-8")as f:
+                with open("data/log/geolocate.log", "a", encoding="utf-8")as f:
                     for line in iter(
                             self .geolocate_process .stdout .readline, ''):
                         if line and self .running:

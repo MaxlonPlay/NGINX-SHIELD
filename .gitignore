@@ -1,1 +1,10 @@
 build_docker.sh
+node_modules
+/backend/__pycache__
+/backend/whitelist/__pycache__
+/commons/__pycache__
+/functions/__pycache__
+/geolocate/core/__pycache__
+/data
+/log
+run/geo_daemon.pid

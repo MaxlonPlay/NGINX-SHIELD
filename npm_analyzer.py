@@ -31,7 +31,7 @@ WHITELIST_DB_PATH = os .path .join(
     APPLICATION_ROOT, "data", "db", "whitelist.db")
 
 
-ANALYSIS_LOG_DIR = os .path .join(APPLICATION_ROOT, "log")
+ANALYSIS_LOG_DIR = os .path .join(APPLICATION_ROOT, "data", "log")
 os .makedirs(ANALYSIS_LOG_DIR, exist_ok=True)
 
 
