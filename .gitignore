@@ -9,3 +9,4 @@ node_modules
 /log
 run/geo_daemon.pid
 /venv
+/src/.vs

@@ -159,9 +159,9 @@ export const AddWhitelistEntryForm = ({
       case "domain":
         return t("common.domain");
       case "cidr":
-        return "Rete (CIDR)";
+        return t("whitelist.types.network");
       default:
-        return "Indirizzo IP";
+        return t("whitelist.types.ip");
     }
   };
 

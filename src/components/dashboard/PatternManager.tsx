@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardContent,
@@ -19,6 +19,9 @@ import {
   Filter,
   Search,
   Loader,
+  Edit,
+  Copy,
+  X,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
@@ -35,6 +38,133 @@ interface PatternEntry {
 
 const apiClient = axios.create(AXIOS_CONFIG);
 setupAxiosInterceptors(apiClient);
+
+const PatternFormModal = ({
+  title,
+  isOpen,
+  onClose,
+  pattern,
+  setPattern,
+  onSubmit,
+  placeholderPattern,
+  placeholderDesc,
+  isEditing = false,
+}: any) => {
+  const patternInputRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (isOpen && patternInputRef.current) {
+      setTimeout(() => {
+        patternInputRef.current?.focus();
+      }, 0);
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <Card className="bg-slate-800 border-slate-700 w-full max-w-md mx-4">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center">
+            {isEditing ? (
+              <Edit className="h-5 w-5 mr-2 text-yellow-400" />
+            ) : (
+              <Plus className="h-5 w-5 mr-2 text-blue-400" />
+            )}
+            {title}
+          </CardTitle>
+          <CardDescription className="text-slate-400">
+            {isEditing
+              ? "Modifica il pattern esistente"
+              : "Aggiungi un nuovo pattern al sistema di sicurezza"}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <label className="text-slate-300 text-sm font-medium mb-2 block">
+              Pattern (Regex)
+            </label>
+            <Input
+              ref={patternInputRef}
+              placeholder={placeholderPattern}
+              value={pattern.pattern}
+              onChange={(e) =>
+                setPattern((prev: any) => ({
+                  ...prev,
+                  pattern: e.target.value,
+                }))
+              }
+              className="bg-slate-900/50 border-slate-600 text-white font-mono"
+            />
+            <p className="text-slate-500 text-xs mt-1">
+              Usa sintassi regex valida
+            </p>
+          </div>
+          <div>
+            <label className="text-slate-300 text-sm font-medium mb-2 block">
+              Descrizione
+            </label>
+            <Textarea
+              ref={descriptionRef}
+              placeholder={placeholderDesc}
+              value={pattern.description}
+              onChange={(e) =>
+                setPattern((prev: any) => ({
+                  ...prev,
+                  description: e.target.value,
+                }))
+              }
+              onKeyDown={(e) => {
+                if (
+                  e.key === "Enter" &&
+                  e.ctrlKey === false &&
+                  e.metaKey === false &&
+                  e.shiftKey === false
+                ) {
+                  e.preventDefault();
+                  onSubmit();
+                }
+              }}
+              className="bg-slate-900/50 border-slate-600 text-white"
+              rows={3}
+            />
+          </div>
+          <div className="flex space-x-2 pt-4">
+            <Button
+              onClick={onSubmit}
+              className={`${
+                isEditing
+                  ? "bg-yellow-600 hover:bg-yellow-700"
+                  : "bg-blue-600 hover:bg-blue-700"
+              } flex-1`}
+            >
+              {isEditing ? (
+                <>
+                  <Edit className="h-4 w-4 mr-2" />
+                  Modifica
+                </>
+              ) : (
+                <>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Aggiungi
+                </>
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={onClose}
+              className="bg-white text-slate-900 border-white hover:bg-slate-100 font-medium flex-1"
+            >
+              Annulla
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
 export const PatternManager = () => {
   const [patterns, setPatterns] = useState<PatternEntry[]>([]);
@@ -60,6 +190,13 @@ export const PatternManager = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [editingPattern, setEditingPattern] = useState<PatternEntry | null>(
+    null,
+  );
+  const [editFormData, setEditFormData] = useState({
+    pattern: "",
+    description: "",
+  });
   const [stats, setStats] = useState({
     user_agent: 0,
     url: 0,
@@ -180,6 +317,126 @@ export const PatternManager = () => {
     setDeleteConfirm(id);
   };
 
+  const handleEditPattern = (pattern: PatternEntry) => {
+    setEditingPattern(pattern);
+    setEditFormData({
+      pattern: pattern.pattern,
+      description: pattern.description,
+    });
+  };
+
+  const handleSaveEditPattern = async () => {
+    if (!editingPattern) return;
+
+    if (!editFormData.pattern.trim() || !editFormData.description.trim()) {
+      toast({
+        title: "Errore",
+        description: "Pattern e descrizione sono obbligatori",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      await apiClient.put(
+        `/patterns/${editingPattern.type}/${editingPattern.id}`,
+        null,
+        {
+          params: {
+            pattern_type: editingPattern.type,
+            pattern_id: editingPattern.id,
+            pattern: editFormData.pattern,
+            description: editFormData.description,
+          },
+        },
+      );
+
+      toast({
+        title: "Pattern modificato",
+        description: `Pattern "${editFormData.pattern}" modificato con successo`,
+      });
+
+      setEditingPattern(null);
+      setEditFormData({ pattern: "", description: "" });
+      await loadPatterns();
+    } catch (error) {
+      console.error("Errore modifica pattern:", error);
+      toast({
+        title: "Errore",
+        description: "Errore durante la modifica del pattern",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleCopyPatternToDangerous = async (
+    pattern: PatternEntry,
+    targetType: "dangerous_ua" | "dangerous_url",
+  ) => {
+    try {
+      await apiClient.post("/patterns", null, {
+        params: {
+          pattern_type: targetType,
+          pattern: pattern.pattern,
+          description: pattern.description,
+        },
+      });
+
+      toast({
+        title: "Pattern copiato",
+        description: `Pattern "${pattern.pattern}" aggiunto ai pattern pericolosi`,
+      });
+
+      await loadPatterns();
+    } catch (error) {
+      console.error("Errore copia pattern:", error);
+      toast({
+        title: "Errore",
+        description: "Errore durante la copia del pattern",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleRemovePatternFromDangerous = async (
+    pattern: PatternEntry,
+    dangerousType: "dangerous_ua" | "dangerous_url",
+  ) => {
+    try {
+      const dangerousPattern = patterns.find(
+        (p) => p.type === dangerousType && p.pattern === pattern.pattern,
+      );
+      if (!dangerousPattern) return;
+
+      await apiClient.delete(
+        `/patterns/${dangerousType}/${dangerousPattern.id}`,
+      );
+
+      toast({
+        title: "Pattern rimosso",
+        description: `Pattern "${pattern.pattern}" rimosso dai pattern pericolosi`,
+      });
+
+      await loadPatterns();
+    } catch (error) {
+      console.error("Errore rimozione pattern dai pericolosi:", error);
+      toast({
+        title: "Errore",
+        description: "Errore durante la rimozione del pattern",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const isPatternInDangerous = (
+    pattern: PatternEntry,
+    dangerousType: "dangerous_ua" | "dangerous_url",
+  ): boolean => {
+    return patterns.some(
+      (p) => p.type === dangerousType && p.pattern === pattern.pattern,
+    );
+  };
+
   const getFilteredPatterns = () => {
     let filtered = patterns;
 
@@ -246,97 +503,6 @@ export const PatternManager = () => {
       </p>
     </div>
   );
-
-  const PatternFormModal = ({
-    title,
-    isOpen,
-    onClose,
-    pattern,
-    setPattern,
-    onSubmit,
-    placeholderPattern,
-    placeholderDesc,
-    type,
-  }: any) => {
-    if (!isOpen) return null;
-
-    return (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-        <Card className="bg-slate-800 border-slate-700 w-full max-w-md mx-4">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center">
-              <Plus className="h-5 w-5 mr-2 text-blue-400" />
-              {title}
-            </CardTitle>
-            <CardDescription className="text-slate-400">
-              Aggiungi un nuovo pattern al sistema di sicurezza
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <label className="text-slate-300 text-sm font-medium mb-2 block">
-                Pattern (Regex)
-              </label>
-              <Input
-                placeholder={placeholderPattern}
-                value={pattern.pattern}
-                onChange={(e) =>
-                  setPattern((prev) => ({ ...prev, pattern: e.target.value }))
-                }
-                className="bg-slate-900/50 border-slate-600 text-white font-mono"
-                autoFocus
-              />
-              <p className="text-slate-500 text-xs mt-1">
-                Usa sintassi regex valida
-              </p>
-            </div>
-            <div>
-              <label className="text-slate-300 text-sm font-medium mb-2 block">
-                Descrizione
-              </label>
-              <Textarea
-                placeholder={placeholderDesc}
-                value={pattern.description}
-                onChange={(e) =>
-                  setPattern((prev) => ({
-                    ...prev,
-                    description: e.target.value,
-                  }))
-                }
-                onKeyDown={(e) => {
-                  if (
-                    e.key === "Enter" &&
-                    e.ctrlKey === false &&
-                    e.metaKey === false
-                  ) {
-                    e.preventDefault();
-                  }
-                }}
-                className="bg-slate-900/50 border-slate-600 text-white"
-                rows={3}
-              />
-            </div>
-            <div className="flex space-x-2 pt-4">
-              <Button
-                onClick={onSubmit}
-                className="bg-blue-600 hover:bg-blue-700 flex-1"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Aggiungi
-              </Button>
-              <Button
-                variant="outline"
-                onClick={onClose}
-                className="bg-white text-slate-900 border-white hover:bg-slate-100 font-medium flex-1"
-              >
-                Annulla
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  };
 
   return (
     <div className="space-y-6">
@@ -515,7 +681,13 @@ export const PatternManager = () => {
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-2">
-                          <User className="h-4 w-4 text-blue-400 flex-shrink-0" />
+                          <User
+                            className={`h-4 w-4 flex-shrink-0 ${
+                              isPatternInDangerous(pattern, "dangerous_ua")
+                                ? "text-red-500 animate-pulse"
+                                : "text-blue-400"
+                            }`}
+                          />
                           <code className="text-blue-300 bg-slate-800/50 px-2 py-1 rounded text-sm font-mono break-all">
                             {pattern.pattern}
                           </code>
@@ -530,6 +702,46 @@ export const PatternManager = () => {
                         >
                           USER-AGENT
                         </Badge>
+                        {isPatternInDangerous(pattern, "dangerous_ua") ? (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              handleRemovePatternFromDangerous(
+                                pattern,
+                                "dangerous_ua",
+                              )
+                            }
+                            className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                            title="Rimuovi da User Agent Pericolosi"
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              handleCopyPatternToDangerous(
+                                pattern,
+                                "dangerous_ua",
+                              )
+                            }
+                            className="text-orange-400 hover:text-orange-300 hover:bg-orange-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                            title="Copia in User Agent Pericolosi"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                        )}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEditPattern(pattern)}
+                          className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Modifica pattern"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -537,6 +749,7 @@ export const PatternManager = () => {
                             confirmDelete(pattern.id, pattern.pattern)
                           }
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Elimina pattern"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -595,7 +808,13 @@ export const PatternManager = () => {
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-2">
-                          <Globe className="h-4 w-4 text-green-400 flex-shrink-0" />
+                          <Globe
+                            className={`h-4 w-4 flex-shrink-0 ${
+                              isPatternInDangerous(pattern, "dangerous_url")
+                                ? "text-red-500 animate-pulse"
+                                : "text-green-400"
+                            }`}
+                          />
                           <code className="text-green-300 bg-slate-800/50 px-2 py-1 rounded text-sm font-mono break-all">
                             {pattern.pattern}
                           </code>
@@ -610,6 +829,46 @@ export const PatternManager = () => {
                         >
                           URL
                         </Badge>
+                        {isPatternInDangerous(pattern, "dangerous_url") ? (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              handleRemovePatternFromDangerous(
+                                pattern,
+                                "dangerous_url",
+                              )
+                            }
+                            className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                            title="Rimuovi da URL Pericolosi"
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              handleCopyPatternToDangerous(
+                                pattern,
+                                "dangerous_url",
+                              )
+                            }
+                            className="text-orange-400 hover:text-orange-300 hover:bg-orange-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                            title="Copia in URL Pericolosi"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                        )}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEditPattern(pattern)}
+                          className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Modifica pattern"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -617,6 +876,7 @@ export const PatternManager = () => {
                             confirmDelete(pattern.id, pattern.pattern)
                           }
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Elimina pattern"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -696,10 +956,20 @@ export const PatternManager = () => {
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => handleEditPattern(pattern)}
+                          className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Modifica pattern"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           onClick={() =>
                             confirmDelete(pattern.id, pattern.pattern)
                           }
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Elimina pattern"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -776,10 +1046,20 @@ export const PatternManager = () => {
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => handleEditPattern(pattern)}
+                          className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Modifica pattern"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           onClick={() =>
                             confirmDelete(pattern.id, pattern.pattern)
                           }
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Elimina pattern"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -878,6 +1158,21 @@ export const PatternManager = () => {
         placeholderPattern="es. /shell\\.php|.*\\.phtml"
         placeholderDesc="Descrizione del pattern..."
         type="dangerous_url"
+      />
+
+      <PatternFormModal
+        title="Modifica Pattern"
+        isOpen={editingPattern !== null}
+        onClose={() => {
+          setEditingPattern(null);
+          setEditFormData({ pattern: "", description: "" });
+        }}
+        pattern={editFormData}
+        setPattern={setEditFormData}
+        onSubmit={handleSaveEditPattern}
+        placeholderPattern="es. /admin.*|.*\\.env"
+        placeholderDesc="Descrizione del pattern..."
+        isEditing={true}
       />
     </div>
   );

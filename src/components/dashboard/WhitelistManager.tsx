@@ -28,6 +28,7 @@ import { EditWhitelistEntryForm } from "./EditWhitelistEntryForm";
 import { useToast } from "@/hooks/use-toast";
 import { authService } from "../../utils/apiService";
 import { WhitelistEntry as APIWhitelistEntry } from "../../utils/apiEndpoints";
+import { t } from "i18next";
 
 interface WhitelistEntry {
   id: string;
@@ -96,8 +97,8 @@ export const WhitelistManager = () => {
     } catch (error) {
       console.error("Errore caricamento whitelist:", error);
       toast({
-        title: "Errore",
-        description: "Impossibile caricare la whitelist",
+        title: t("common.error"),
+        description: t("whitelist.errors.cannotLoadWhitelist"),
         variant: "destructive",
       });
     }
@@ -164,8 +165,8 @@ export const WhitelistManager = () => {
       const entryToRemove = whitelistEntries.find((e) => e.id === id);
       if (!entryToRemove) {
         toast({
-          title: "Errore",
-          description: "Entry da rimuovere non trovata",
+          title: t("common.error"),
+          description: t("whitelist.errors.entryNotFound"),
           variant: "destructive",
         });
         setIsLoading(false);
@@ -179,16 +180,14 @@ export const WhitelistManager = () => {
 
       await loadWhitelist();
       toast({
-        title: "Entry rimossa",
-        description: `${entryToRemove.value} è stato rimosso dalla whitelist`,
+        title: t("whitelist.success.removed"),
+        description: `${entryToRemove.value} ${t("whitelist.success.removedInfo")}`,
       });
     } catch (error: any) {
-      console.error("Errore rimozione entry:", error);
+      console.error(t("whitelist.errors.cannotRemove"), error);
       toast({
-        title: "Errore",
-        description:
-          error.message ||
-          "Errore durante la rimozione dell'entry dalla whitelist",
+        title: t("common.error"),
+        description: error.message || t("whitelist.errors.cannotRemoveInfo"),
         variant: "destructive",
       });
     }
@@ -219,10 +218,10 @@ export const WhitelistManager = () => {
             <div>
               <CardTitle className="text-white flex items-center">
                 <SquarePen className="h-5 w-5 mr-2 text-green-400" />
-                Gestione Whitelist
+                {t("whitelist.title")}
               </CardTitle>
               <CardDescription className="text-slate-400">
-                Gestisci IP, domini e reti autorizzate
+                {t("whitelist.subtitle")}
               </CardDescription>
             </div>
             <div className="flex space-x-2">
@@ -236,7 +235,7 @@ export const WhitelistManager = () => {
                 <RefreshCw
                   className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`}
                 />
-                {isLoading ? "Caricamento..." : "Ricarica"}
+                {isLoading ? t("common.loading") : t("common.refresh")}
               </Button>
               <Button
                 onClick={() => {
@@ -247,7 +246,7 @@ export const WhitelistManager = () => {
                 disabled={isLoading}
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Aggiungi Entry
+                {t("whitelist.addEntry")}
               </Button>
             </div>
           </div>

@@ -56,6 +56,8 @@ export const ConfigManager = () => {
   const [pendingSecureConfig, setPendingSecureConfig] = useState<{
     SECURE_COOKIES: boolean;
   }>({ SECURE_COOKIES: true });
+  const [isDraggingHttpCodes, setIsDraggingHttpCodes] = useState(false);
+  const [dragToggleState, setDragToggleState] = useState<boolean | null>(null);
   const [emailConfig, setEmailConfig] = useState<EmailConfig>({
     enabled: false,
     smtp_server: "smtp.gmail.com",
@@ -88,6 +90,13 @@ export const ConfigManager = () => {
     loadConfig();
     loadSecureConfig();
     loadEmailConfig();
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mouseup", handleHttpCodeMouseUp);
+    return () => {
+      document.removeEventListener("mouseup", handleHttpCodeMouseUp);
+    };
   }, []);
 
   const loadConfig = async (showToast = false) => {
@@ -561,16 +570,46 @@ export const ConfigManager = () => {
     setShowConfirmIgnoreWhitelist(false);
   };
 
-  const toggleHttpCode = (code: number) => {
+  const toggleHttpCode = (code: number, isDragging: boolean = false) => {
     if (!config) return;
     const currentCodes = config.CODES_TO_ALLOW;
     let newCodes: number[];
-    if (currentCodes.includes(code)) {
-      newCodes = currentCodes.filter((c) => c !== code);
+
+    if (isDragging && dragToggleState !== null) {
+      if (dragToggleState) {
+        newCodes = currentCodes.filter((c) => c !== code);
+      } else {
+        newCodes = [...currentCodes, code].sort((a, b) => a - b);
+      }
     } else {
-      newCodes = [...currentCodes, code].sort((a, b) => a - b);
+      if (currentCodes.includes(code)) {
+        newCodes = currentCodes.filter((c) => c !== code);
+      } else {
+        newCodes = [...currentCodes, code].sort((a, b) => a - b);
+      }
     }
     updateConfig("CODES_TO_ALLOW", newCodes, true);
+  };
+
+  const handleHttpCodeMouseDown = (code: number) => {
+    if (!config) return;
+    setIsDraggingHttpCodes(true);
+
+    const isCurrentlyAllowed = config.CODES_TO_ALLOW.includes(code);
+    setDragToggleState(isCurrentlyAllowed);
+
+    toggleHttpCode(code, false);
+  };
+
+  const handleHttpCodeMouseEnter = (code: number) => {
+    if (isDraggingHttpCodes && dragToggleState !== null) {
+      toggleHttpCode(code, true);
+    }
+  };
+
+  const handleHttpCodeMouseUp = () => {
+    setIsDraggingHttpCodes(false);
+    setDragToggleState(null);
   };
 
   if (!config) {
@@ -710,10 +749,16 @@ export const ConfigManager = () => {
                           <Tooltip key={item.code}>
                             <TooltipTrigger asChild>
                               <Button
-                                onClick={() => toggleHttpCode(item.code)}
+                                onMouseDown={() =>
+                                  handleHttpCodeMouseDown(item.code)
+                                }
+                                onMouseEnter={() =>
+                                  handleHttpCodeMouseEnter(item.code)
+                                }
+                                onMouseUp={(e) => e.preventDefault()}
                                 disabled={isLoading}
                                 className={
-                                  `flex items-center justify-center h-7 w-11 ` +
+                                  `flex items-center justify-center h-7 w-11 select-none ` +
                                   (config.CODES_TO_ALLOW.includes(item.code)
                                     ? "bg-green-600 hover:bg-green-700 text-white border-green-700"
                                     : "bg-red-900/20 hover:bg-red-800/30 text-red-300 border-red-700")
@@ -745,10 +790,16 @@ export const ConfigManager = () => {
                           <Tooltip key={item.code}>
                             <TooltipTrigger asChild>
                               <Button
-                                onClick={() => toggleHttpCode(item.code)}
+                                onMouseDown={() =>
+                                  handleHttpCodeMouseDown(item.code)
+                                }
+                                onMouseEnter={() =>
+                                  handleHttpCodeMouseEnter(item.code)
+                                }
+                                onMouseUp={(e) => e.preventDefault()}
                                 disabled={isLoading}
                                 className={
-                                  `flex items-center justify-center h-7 w-11 ` +
+                                  `flex items-center justify-center h-7 w-11 select-none ` +
                                   (config.CODES_TO_ALLOW.includes(item.code)
                                     ? "bg-green-600 hover:bg-green-700 text-white border-green-700"
                                     : "bg-red-900/20 hover:bg-red-800/30 text-red-300 border-red-700")
@@ -782,10 +833,16 @@ export const ConfigManager = () => {
                           <Tooltip key={item.code}>
                             <TooltipTrigger asChild>
                               <Button
-                                onClick={() => toggleHttpCode(item.code)}
+                                onMouseDown={() =>
+                                  handleHttpCodeMouseDown(item.code)
+                                }
+                                onMouseEnter={() =>
+                                  handleHttpCodeMouseEnter(item.code)
+                                }
+                                onMouseUp={(e) => e.preventDefault()}
                                 disabled={isLoading}
                                 className={
-                                  `flex items-center justify-center h-7 w-11 ` +
+                                  `flex items-center justify-center h-7 w-11 select-none ` +
                                   (config.CODES_TO_ALLOW.includes(item.code)
                                     ? "bg-green-600 hover:bg-green-700 text-white border-green-700"
                                     : "bg-red-900/20 hover:bg-red-800/30 text-red-300 border-red-700")
