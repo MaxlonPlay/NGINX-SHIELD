@@ -557,8 +557,8 @@ def bulk_ban_ips_manual(
     """🔒 PROTETTO - Banna manualmente multipli IP"""
     current_user = get_current_user_and_refresh_token(request, response, credentials)
 
-    if len(ban_requests) > 10:
-        raise HTTPException(status_code=400, detail="Massimo 10 IP per richiesta bulk")
+    if len(ban_requests) > 10000:
+        raise HTTPException(status_code=400, detail="Massimo 10000 IP per richiesta bulk")
 
     results = []
     success_count = 0
