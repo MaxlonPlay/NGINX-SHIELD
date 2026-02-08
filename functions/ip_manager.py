@@ -148,7 +148,7 @@ class IPDataManager:
 
         batch_size = CLEANUP_BATCH_SIZE
         for i in range(0, len(ips_to_remove), batch_size):
-            batch = ips_to_remove[i : i + batch_size]
+            batch = ips_to_remove[i: i + batch_size]
 
             with self.ip_data_lock:
                 for ip, reason in batch:

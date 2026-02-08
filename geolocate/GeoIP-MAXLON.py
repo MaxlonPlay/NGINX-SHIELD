@@ -14,7 +14,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 DAEMON_PIDFILE = os.getenv("DAEMON_PIDFILE", "geo_daemon.pid")
 
 
@@ -188,7 +187,7 @@ def main() -> None:
             print(f"   Query/sec: {stats .get('queries_per_second', 0.0):.1f}")
             print(f"   Tempo caricamento: {stats .get('load_time', 0.0):.2f}s")
         else:
-            print(f"[ERROR] Errore: {stats .get('error','Errore sconosciuto')}")
+            print(f"[ERROR] Errore: {stats .get('error', 'Errore sconosciuto')}")
 
     elif command == "--stop":
         if not validate_pidfile():
@@ -284,10 +283,10 @@ def main() -> None:
             asn_cidrs = response.get("asn_cidrs", [])
 
             display_results(ip_address, matching_row, asn_cidrs)
-            print(f"\nTempo query (daemon): {response .get('query_time',0.0):.4f}s")
+            print(f"\nTempo query (daemon): {response .get('query_time', 0.0):.4f}s")
             print(f"Tempo totale (client + daemon): {total_time:.4f}s")
         else:
-            print(f"[ERROR] Errore: {response .get('error','Errore sconosciuto')}")
+            print(f"[ERROR] Errore: {response .get('error', 'Errore sconosciuto')}")
 
 
 if __name__ == "__main__":

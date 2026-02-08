@@ -11,7 +11,6 @@ SECRET_KEY = security_utils.generate_jwt_secret()
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-
 security = HTTPBearer(auto_error=False)
 
 

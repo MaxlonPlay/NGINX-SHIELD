@@ -39,7 +39,7 @@ class DBUpdater:
                             if total_size > 0:
                                 progress = (downloaded_size / total_size) * 100
                                 print(
-                                    f"\r[WARNING] Scaricamento: {downloaded_size /(1024 *1024):.2f}MB / {total_size /(1024 * 1024):.2f}MB ({progress:.1f}%)",
+                                    f"\r[WARNING] Scaricamento: {downloaded_size / (1024 * 1024):.2f}MB / {total_size / (1024 * 1024):.2f}MB ({progress:.1f}%)",
                                     end="",
                                 )
                             else:

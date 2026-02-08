@@ -15,20 +15,16 @@ LOG_FILE_PATH = "data/log/system_status_log.csv"
 LOG_INTERVAL_SECONDS = 10
 RETENTION_DAYS = 30
 
-
 SERVICE_CACHE_TTL = 5
 TEMP_CACHE_TTL = 2
 LOADAVG_CACHE_TTL = 10
 RAM_CACHE_TTL = 2
 
-
 NGINX_HEALTH_ENDPOINT = "http://localhost/health"
 NGINX_HEALTH_FALLBACK_TCP = True
 NGINX_PORT = 80
 
-
 os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
-
 
 if not os.path.exists(LOG_FILE_PATH):
     try:
@@ -37,7 +33,6 @@ if not os.path.exists(LOG_FILE_PATH):
             writer.writerow(["timestamp", "temperature", "cpuUsage", "ramUsage"])
     except Exception as e:
         print(f"✗ ERRORE creazione file CSV: {e}")
-
 
 logging.basicConfig(
     level=logging.WARNING,

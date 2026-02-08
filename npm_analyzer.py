@@ -24,14 +24,11 @@ from functions.signal_handler import handle_signal
 
 APPLICATION_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-
 CONFIG_FILE = os.path.join(APPLICATION_ROOT, "data", "conf", "conf.local")
 WHITELIST_DB_PATH = os.path.join(APPLICATION_ROOT, "data", "db", "whitelist.db")
 
-
 ANALYSIS_LOG_DIR = os.path.join(APPLICATION_ROOT, "data", "log")
 os.makedirs(ANALYSIS_LOG_DIR, exist_ok=True)
-
 
 LOG_FILE_WHITELISTED = os.path.join(ANALYSIS_LOG_DIR, "whitelisted.log")
 LOG_FILE_WHITELISTED_PROXY = os.path.join(
@@ -40,9 +37,7 @@ LOG_FILE_WHITELISTED_PROXY = os.path.join(
 NPM_DEBUG_LOG = os.path.join(ANALYSIS_LOG_DIR, "npm_debug.log")
 SUSPICIOUS_IP_LOG = os.path.join(ANALYSIS_LOG_DIR, "banhammer.log")
 
-
 BLOCKLIST_DB_PATH = os.path.join(APPLICATION_ROOT, "data", "db", "banned_ips.db")
-
 
 PATTERN_DEFINITION_DIR = os.path.join(APPLICATION_ROOT, "patterns")
 URL_PATTERN_PATH = os.path.join(PATTERN_DEFINITION_DIR, "url.pattern")
@@ -50,11 +45,9 @@ STATUS_MEANING_PATH = os.path.join(PATTERN_DEFINITION_DIR, "status_http.pattern"
 NGINX_ERROR_PATTERN_PATH = os.path.join(PATTERN_DEFINITION_DIR, "nginx_error.pattern")
 USER_AGENT_PATTERN_PATH = os.path.join(PATTERN_DEFINITION_DIR, "user_agent.pattern")
 
-
 THREAT_INTELLIGENCE_DIR = os.path.join(APPLICATION_ROOT, "dangerous")
 MALICIOUS_USER_AGENTS = os.path.join(THREAT_INTELLIGENCE_DIR, "user_agents.dangerous")
 MALICIOUS_INTENTS = os.path.join(THREAT_INTELLIGENCE_DIR, "intentions.dangerous")
-
 
 NUM_WORKERS = min(32, (os.cpu_count() or 1) * 4)
 BAN_BATCH_SIZE = 10
@@ -63,21 +56,17 @@ LOG_BATCH_SIZE = 50
 LOG_BATCH_TIMEOUT = 1.0
 CACHE_SIZE = 10000
 
-
 TAIL_PROCESS_HANDLERS = []
 MONITORING_THREADS = []
 SHUTDOWN_SIGNAL = threading.Event()
 monitored_files = set()
 
-
 ban_queue = Queue(maxsize=1000)
 log_queue = Queue(maxsize=5000)
-
 
 ban_lock = threading.Lock()
 log_write_lock = threading.Lock()
 stats_lock = threading.Lock()
-
 
 processing_stats = {
     "lines_processed": 0,
@@ -96,7 +85,6 @@ debug_log(
     f"Log batch size: {LOG_BATCH_SIZE}, timeout: {LOG_BATCH_TIMEOUT}s", NPM_DEBUG_LOG
 )
 
-
 config = load_config(CONFIG_FILE, NPM_DEBUG_LOG)
 
 LOG_DIR = config["LOG_DIR"]
@@ -110,23 +98,18 @@ TIME_FRAME = config["TIME_FRAME"]
 MAX_REQUESTS = config["MAX_REQUESTS"]
 JAIL_NAME = config["JAIL_NAME"]
 
-
 STATUS_MEANING_MAP = load_pattern_file(STATUS_MEANING_PATH, NPM_DEBUG_LOG)
 NGINX_ERROR_MAP = load_pattern_file(NGINX_ERROR_PATTERN_PATH, NPM_DEBUG_LOG)
 USER_AGENT_MAP = load_pattern_file(USER_AGENT_PATTERN_PATH, NPM_DEBUG_LOG)
 URL_PATTERN_MAP = load_pattern_file(URL_PATTERN_PATH, NPM_DEBUG_LOG)
 
-
 whitelist_manager = WhitelistManager(WHITELIST_DB_PATH, NPM_DEBUG_LOG)
 
-
 ip_manager = IPDataManager(TIME_FRAME, MAX_REQUESTS, NPM_DEBUG_LOG)
-
 
 user_agents_blacklist, intent_blacklist_set = load_blacklists_once(
     MALICIOUS_USER_AGENTS, MALICIOUS_INTENTS, NPM_DEBUG_LOG
 )
-
 
 DANGEROUS_INTENTS_KEYWORDS = {
     "shell",
@@ -172,7 +155,6 @@ DANGEROUS_INTENTS_KEYWORDS = {
     "test.php",
     "info.php",
 }
-
 
 FALLBACK_REGEX = re.compile(
     r'^(\d+\.\d+\.\d+\.\d+) - - \[[^\]]+\] "(.*?)" (\d{3}) \d+ "-" "([^"]*)"$'

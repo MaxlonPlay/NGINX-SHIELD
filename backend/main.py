@@ -11,7 +11,6 @@ from pydantic import BaseModel, validator
 import os
 import logging
 
-
 from .auth_manager import (
     auth_manager,
     LoginRequest,
@@ -37,10 +36,8 @@ logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-
 mail_config_path = "data/conf/mail.conf"
 mail_manager = MailConfigManager(mail_config_path)
-
 
 log_dir = os.path.join(os.path.dirname(BASE_DIR), "data", "log")
 log_manager_api = LogManagerAPI(log_dir=log_dir)
@@ -62,7 +59,6 @@ app = FastAPI(
 
 config_manager = NpmConfigManager()
 
-
 origins = []
 
 app.add_middleware(
@@ -72,7 +68,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*", "X-New-Access-Token"],
 )
-
 
 app.add_middleware(CompleteLosggingMiddleware)
 
@@ -223,11 +218,9 @@ DB_FILE = os.getenv(
 )
 CONFIG_FILE = os.path.join(BASE_DIR, "..", "data", "conf", "conf.local")
 
-
 ban_manager = BanManager(
     db_file=DB_FILE, config_file=CONFIG_FILE, debug_log_func=log_manager.log_operation
 )
-
 
 bulk_ban_manager = BulkBanManager(
     db_file=DB_FILE,
@@ -2462,7 +2455,6 @@ async def get_pending_restarts(
         message=f"Trovati {len(pending)} restart in sospeso",
     )
 
-
 dist_dir = os.path.join(os.path.dirname(BASE_DIR), "dist")
 index_file = os.path.join(dist_dir, "index.html")
 
@@ -2480,12 +2472,10 @@ async def serve_spa(full_path: str):
 
     return {"detail": "Not Found"}
 
-
 if os.path.exists(dist_dir):
     print(f"[OK] Frontend servito da {dist_dir}")
 else:
     print(f"[WARNING] Attenzione: cartella dist non trovata in {dist_dir}")
-
 
 if __name__ == "__main__":
     import uvicorn

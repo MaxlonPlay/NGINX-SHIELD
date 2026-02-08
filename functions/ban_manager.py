@@ -38,7 +38,7 @@ def get_ip_info(ip: str, NPM_DEBUG_LOG: bool) -> Dict[str, Any]:
                 )
         else:
             debug_log(
-                f"Errore HTTP { response .status_code} dal servizio geolocalizzazione per IP {ip}.",
+                f"Errore HTTP {response .status_code} dal servizio geolocalizzazione per IP {ip}.",
                 NPM_DEBUG_LOG,
             )
     except requests.exceptions.Timeout:
