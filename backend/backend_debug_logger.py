@@ -50,7 +50,7 @@ class DebugLogger:
     def security(self, message: str, details: Optional[Dict[str, Any]] = None):
         self .debug("SECURITY", message, details)
 
-    def error(self, category: str, message: str, error: Exception = None):
+    def error(self, category: str, message: str, error: Optional[Exception] = None):
         timestamp = datetime .now().strftime('%Y-%m-%d %H:%M:%S')
         error_msg = str(error)if error else ""
         log_line = f"[{timestamp}] [ERROR] [{category}] {message}"

@@ -8,3 +8,4 @@ node_modules
 /data
 /log
 run/geo_daemon.pid
+/venv
