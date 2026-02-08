@@ -1,47 +1,47 @@
 import json
 import os
 import smtplib
-from email .message import EmailMessage
+from email.message import EmailMessage
 from datetime import datetime
 from .log_writer import log_event
 
 
 def load_mail_config(base_dir=None, debug_log_path=None):
-    base_dir = base_dir or os .path .dirname(os .path .abspath(__file__))
-    config_path = os .path .join(base_dir, "..", "data", "conf", "mail.conf")
+    base_dir = base_dir or os.path.dirname(os.path.abspath(__file__))
+    config_path = os.path.join(base_dir, "..", "data", "conf", "mail.conf")
 
-    if not os .path .exists(config_path):
+    if not os.path.exists(config_path):
         if debug_log_path:
             log_event(
                 f"File di configurazione mail non trovato: {config_path}",
-                debug_log_path)
+                debug_log_path,
+            )
         return None
 
     try:
-        with open(config_path, "r")as f:
-            return json .load(f)
+        with open(config_path, "r") as f:
+            return json.load(f)
     except Exception as e:
         if debug_log_path:
-            log_event(
-                f"Errore caricamento configurazione mail: {e}",
-                debug_log_path)
+            log_event(f"Errore caricamento configurazione mail: {e}", debug_log_path)
         return None
 
 
 def send_mail(
-        ip,
-        jail_name,
-        banhammer_main_file,
-        user_agent=None,
-        domain=None,
-        http_code=None,
-        url=None):
+    ip,
+    jail_name,
+    banhammer_main_file,
+    user_agent=None,
+    domain=None,
+    http_code=None,
+    url=None,
+):
     config = load_mail_config()
 
-    if not config or not config .get("enabled", False):
+    if not config or not config.get("enabled", False):
         return
 
-    date_str = datetime .now().strftime("%Y-%m-%d %H:%M:%S")
+    date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     html_content = f"""
     <html>
@@ -142,26 +142,21 @@ def send_mail(
     """
 
     msg = EmailMessage()
-    msg .set_content(
-        f"IP bannato: {ip}\nJail: {jail_name}\nDominio: {
-            domain or 'N/D'}\nUser Agent: {
-            user_agent or 'N/D'}\nCodice HTTP: {
-            http_code or 'N/D'}\nURL: {
-            url or 'N/D'}\nData: {date_str}")
-    msg .add_alternative(html_content, subtype='html')
+    msg.set_content(
+        f"IP bannato: {ip}\nJail: {jail_name}\nDominio: {domain or 'N/D'}\nUser Agent: {user_agent or 'N/D'}\nCodice HTTP: {http_code or 'N/D'}\nURL: {url or 'N/D'}\nData: {date_str}"
+    )
+    msg.add_alternative(html_content, subtype="html")
 
-    msg["Subject"] = config .get("subject", "IP bannato")
-    msg["From"] = config .get("from")
-    msg["To"] = ", ".join(config .get("to", []))
+    msg["Subject"] = config.get("subject", "IP bannato")
+    msg["From"] = config.get("from")
+    msg["To"] = ", ".join(config.get("to", []))
 
     try:
-        with smtplib .SMTP(config["smtp_server"], config["smtp_port"])as server:
-            if config .get("use_tls", False):
-                server .starttls()
-            server .login(config["username"], config["password"])
-            server .send_message(msg)
-            log_event(
-                f"Email inviata per IP bannato {ip}",
-                banhammer_main_file)
+        with smtplib.SMTP(config["smtp_server"], config["smtp_port"]) as server:
+            if config.get("use_tls", False):
+                server.starttls()
+            server.login(config["username"], config["password"])
+            server.send_message(msg)
+            log_event(f"Email inviata per IP bannato {ip}", banhammer_main_file)
     except Exception as e:
         log_event(f"Errore invio email per IP {ip}: {e}", banhammer_main_file)

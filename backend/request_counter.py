@@ -1,8 +1,7 @@
-
 def count_file_lines(file_path: str) -> int:
 
     try:
-        with open(file_path, "r", encoding="utf-8", errors="ignore")as f:
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             return sum(1 for _ in f)
     except FileNotFoundError:
         return 0

@@ -1,16 +1,16 @@
 {"id": "dangerous_ua_001", "pattern": "sqlmap", "description": "Tool automatico per SQL injection", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_002", "pattern": "nikto", "description": "Scanner di vulnerabilità Nikto", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_ua_002", "pattern": "nikto", "description": "Scanner di vulnerabilit\u00e0 Nikto", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_003", "pattern": "nmap", "description": "Scanner di rete Nmap", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_004", "pattern": "masscan", "description": "Scanner di rete masscan (molto veloce)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_005", "pattern": "acunetix", "description": "Scanner di vulnerabilità commerciale Acunetix", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_006", "pattern": "nessus", "description": "Scanner di vulnerabilità commerciale Nessus", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_007", "pattern": "openvas", "description": "Scanner di vulnerabilità OpenVAS", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_ua_005", "pattern": "acunetix", "description": "Scanner di vulnerabilit\u00e0 commerciale Acunetix", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_ua_006", "pattern": "nessus", "description": "Scanner di vulnerabilit\u00e0 commerciale Nessus", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_ua_007", "pattern": "openvas", "description": "Scanner di vulnerabilit\u00e0 OpenVAS", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_010", "pattern": "havij", "description": "Tool automatico per SQL injection", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_011", "pattern": "sqlninja", "description": "Tool per SQL injection", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_012", "pattern": "sqlsus", "description": "Tool per SQL injection", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_020", "pattern": "metasploit", "description": "Framework di penetration testing Metasploit", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_021", "pattern": "burp", "description": "Burp Suite (tool penetration testing)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_022", "pattern": "zaproxy", "description": "OWASP ZAP (scanner vulnerabilità)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_ua_022", "pattern": "zaproxy", "description": "OWASP ZAP (scanner vulnerabilit\u00e0)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_030", "pattern": "dirbuster", "description": "Tool di scansione directory", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_031", "pattern": "dirb", "description": "Tool di brute force directory", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_032", "pattern": "gobuster", "description": "Tool di directory brute force", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
@@ -36,6 +36,6 @@
 {"id": "dangerous_ua_093", "pattern": "spider", "description": "User-Agent generico di spider", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_100", "pattern": "nmap scripting engine", "description": "Nmap NSE (modulo script Nmap)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_101", "pattern": "masscan/", "description": "Masscan scanner", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_110", "pattern": "nuclei", "description": "Scanner vulnerabilità Nuclei", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_ua_110", "pattern": "nuclei", "description": "Scanner vulnerabilit\u00e0 Nuclei", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_111", "pattern": "httpx", "description": "Tool httpx per HTTP probing", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_112", "pattern": "subfinder", "description": "Tool subdomain enumeration", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}

@@ -1,9 +1,7 @@
-
 import random
 import time
 from datetime import datetime, timedelta
 import os
-
 
 LOG_FILE = "/app/nginx-logs/proxy-host-16_access.log"
 DELAY_BETWEEN_LOGS = 0.05
@@ -29,7 +27,7 @@ USER_AGENTS = [
 
 def generate_random_ip():
     ip_pools = [
-        lambda:f"{
+        lambda: f"{
             random .randint(
                 1,
                 223)}.{
@@ -42,21 +40,21 @@ def generate_random_ip():
             random .randint(
                 1,
                 254)}",
-        lambda:f"124.156.{
+        lambda: f"124.156.{
             random .randint(
                 0,
                 255)}.{
             random .randint(
                 1,
                 254)}",
-        lambda:f"117.62.{
+        lambda: f"117.62.{
             random .randint(
                 0,
                 255)}.{
             random .randint(
                 1,
                 254)}",
-        lambda:f"17.241.{
+        lambda: f"17.241.{
             random .randint(
                 0,
                 255)}.{
@@ -64,7 +62,7 @@ def generate_random_ip():
                 1,
                 254)}",
     ]
-    return random .choice(ip_pools)()
+    return random.choice(ip_pools)()
 
 
 PATHS = [
@@ -108,7 +106,7 @@ HTTP_CODES = [
 
 def weighted_choice(choices):
     total = sum(weight for _, weight in choices)
-    r = random .uniform(0, total)
+    r = random.uniform(0, total)
     upto = 0
     for choice, weight in choices:
         if upto + weight >= r:
@@ -128,46 +126,46 @@ DOMAINS = ["test.com"]
 
 def generate_log_line():
 
-    now = datetime .now()
-    timestamp = now .strftime("%d/%b/%Y:%H:%M:%S +0000")
+    now = datetime.now()
+    timestamp = now.strftime("%d/%b/%Y:%H:%M:%S +0000")
 
     http_code = weighted_choice(HTTP_CODES)
 
-    method = random .choices(METHODS, weights=[70, 15, 5, 3, 3, 4])[0]
+    method = random.choices(METHODS, weights=[70, 15, 5, 3, 3, 4])[0]
 
-    protocol = random .choice(PROTOCOLS)
+    protocol = random.choice(PROTOCOLS)
 
-    domain = random .choice(DOMAINS)
+    domain = random.choice(DOMAINS)
 
-    path = random .choice(PATHS)
+    path = random.choice(PATHS)
 
     client_ip = generate_random_ip()
 
     if http_code == 301 or http_code == 302:
-        length = random .randint(150, 200)
+        length = random.randint(150, 200)
     elif http_code == 403:
-        length = random .randint(1800, 2000)
+        length = random.randint(1800, 2000)
     elif http_code == 404:
-        length = random .randint(500, 800)
+        length = random.randint(500, 800)
     elif http_code == 200:
-        length = random .randint(1000, 50000)
+        length = random.randint(1000, 50000)
     else:
-        length = random .randint(100, 1000)
+        length = random.randint(100, 1000)
 
-    if random .random() < 0.3:
+    if random.random() < 0.3:
         gzip = f"{random .uniform(1.5, 3.5):.2f}"
     else:
         gzip = "-"
 
     backend_ip = f"10.8.10.{random .randint(100, 120)}"
 
-    user_agent = random .choice(USER_AGENTS)
+    user_agent = random.choice(USER_AGENTS)
 
     referrer = '"-"'
 
     log_line = (
         f'[{timestamp}] - - {http_code} - {method} {protocol} {domain} "{path}" '
-        f'[Client {client_ip}] [Length {length}] [Gzip {gzip}] [Sent-to {backend_ip}] '
+        f"[Client {client_ip}] [Length {length}] [Gzip {gzip}] [Sent-to {backend_ip}] "
         f'"{user_agent}" {referrer}'
     )
 
@@ -179,20 +177,20 @@ def main():
     print(f"Delay tra i log: {DELAY_BETWEEN_LOGS} secondi")
     print("Premi Ctrl+C per fermare\n")
 
-    os .makedirs(os .path .dirname(LOG_FILE), exist_ok=True)
+    os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 
     try:
-        with open(LOG_FILE, 'a')as f:
+        with open(LOG_FILE, "a") as f:
             counter = 0
             while True:
                 log_line = generate_log_line()
-                f .write(log_line + '\n')
-                f .flush()
+                f.write(log_line + "\n")
+                f.flush()
 
                 counter += 1
                 print(f"[{counter}] {log_line}")
 
-                time .sleep(DELAY_BETWEEN_LOGS)
+                time.sleep(DELAY_BETWEEN_LOGS)
 
     except KeyboardInterrupt:
         print(f"\n\nGenerati {counter} log. Terminato.")
