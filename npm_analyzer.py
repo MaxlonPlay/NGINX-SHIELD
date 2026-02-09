@@ -337,7 +337,7 @@ def process_and_check_ban_optimized(
         return
 
     if is_dangerous(
-        user_agent_full, intent, user_agents_blacklist, intent_blacklist_set
+        user_agent_full, url, user_agents_blacklist, intent_blacklist_set
     ):
         debug_log(f"IP: {ip}, BLACKLIST. BAN IMMEDIATO.", NPM_DEBUG_LOG)
         ban_queue.put(
