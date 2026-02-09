@@ -15,6 +15,7 @@ import AutomaticBansList from "./ip-management/AutomaticBansList";
 import ManualBansList from "./ip-management/ManualBansList";
 import { BanEntry } from "./ip-management/types";
 import { createCIDRBanReason } from "./ip-management/banUtils";
+import IPInfoSection from "./ip-management/IPInfoSection";
 
 export const IPManagement = () => {
   const [automaticBans, setAutomaticBans] = useState<BanEntry[]>([]);
@@ -372,6 +373,13 @@ export const IPManagement = () => {
 
   return (
     <div className="space-y-6">
+      <IPInfoSection 
+        onBanSuccess={() => {
+          loadBannedIPs();
+          loadTotalManualBansCount();
+        }}
+      />
+
       <ManualBanForm
         isLoading={isLoading}
         onBanSuccess={() => {
