@@ -551,6 +551,15 @@ def get_ip_geo_info(
     """🔒 PROTETTO - Recupera informazioni di geolocalizzazione per un IP"""
     current_user = get_current_user_and_refresh_token(request, response, credentials)
 
+    is_docker = os.path.isfile("/.dockerenv") or os.getenv("DOCKER_ENV") == "true"
+    disable_geolocate = os.getenv("DISABLE_GEOLOCATE", "false").lower() in ["true", "1", "yes"]
+    
+    if is_docker and disable_geolocate:
+        raise HTTPException(
+            status_code=400, 
+            detail="Geolocalizzazione disabilitata in Docker. DISABLE_GEOLOCATE=true non è compatibile con la funzione di ricerca IP."
+        )
+
     if not ban_manager._validate_ip(ip):
         raise HTTPException(status_code=400, detail="Indirizzo IP non valido")
 
