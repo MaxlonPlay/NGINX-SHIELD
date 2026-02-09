@@ -553,10 +553,10 @@ def get_ip_geo_info(
 
     is_docker = os.path.isfile("/.dockerenv") or os.getenv("DOCKER_ENV") == "true"
     disable_geolocate = os.getenv("DISABLE_GEOLOCATE", "false").lower() in ["true", "1", "yes"]
-    
+
     if is_docker and disable_geolocate:
         raise HTTPException(
-            status_code=400, 
+            status_code=400,
             detail="Geolocalizzazione disabilitata in Docker. DISABLE_GEOLOCATE=true non è compatibile con la funzione di ricerca IP."
         )
 

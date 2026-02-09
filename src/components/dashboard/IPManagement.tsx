@@ -373,7 +373,7 @@ export const IPManagement = () => {
 
   return (
     <div className="space-y-6">
-      <IPInfoSection 
+      <IPInfoSection
         onBanSuccess={() => {
           loadBannedIPs();
           loadTotalManualBansCount();

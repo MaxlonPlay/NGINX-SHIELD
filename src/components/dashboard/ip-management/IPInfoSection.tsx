@@ -24,98 +24,96 @@ const IPInfoSection: FC<IPInfoSectionProps> = ({ onBanSuccess }) => {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Validazione IP (semplice)
   const isValidIP = (ip: string): boolean => {
-    const ipv4Regex =
-      /^(\d{1,3}\.){3}\d{1,3}$|^([a-f0-9:]+:+)+[a-f0-9]+$/i;
+    const ipv4Regex = /^(\d{1,3}\.){3}\d{1,3}$|^([a-f0-9:]+:+)+[a-f0-9]+$/i;
     return ipv4Regex.test(ip.trim());
   };
 
-  const fetchIPInfo = useCallback(async (ip: string) => {
-    const trimmedIP = ip.trim();
+  const fetchIPInfo = useCallback(
+    async (ip: string) => {
+      const trimmedIP = ip.trim();
 
-    if (!trimmedIP) {
-      setError("Inserisci un indirizzo IP");
-      return;
-    }
-
-    if (!isValidIP(trimmedIP)) {
-      setError("Formato IP non valido");
-      toast({
-        title: "Errore",
-        description: "Inserisci un IP valido (IPv4 o IPv6)",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      // Fetch geografiche informazioni
-      const geoResponse = await fetch(
-        `/api/bans/geo-info/${encodeURIComponent(trimmedIP)}`,
-      );
-
-      if (!geoResponse.ok) {
-        const errorData = await geoResponse.json();
-        throw new Error(errorData.detail || "Impossibile ottenere informazioni geografiche");
+      if (!trimmedIP) {
+        setError("Inserisci un indirizzo IP");
+        return;
       }
 
-      const geoData = await geoResponse.json();
+      if (!isValidIP(trimmedIP)) {
+        setError("Formato IP non valido");
+        toast({
+          title: "Errore",
+          description: "Inserisci un IP valido (IPv4 o IPv6)",
+          variant: "destructive",
+        });
+        return;
+      }
 
-      // Fetch informazioni ban
-      let banData = null;
+      setIsLoading(true);
+      setError(null);
+
       try {
-        const banResponse = await fetch(
-          `/api/bans/check/${encodeURIComponent(trimmedIP)}`,
+        const geoResponse = await fetch(
+          `/api/bans/geo-info/${encodeURIComponent(trimmedIP)}`,
         );
-        if (banResponse.ok) {
-          const banResponseData = await banResponse.json();
-          banData = banResponseData.data;
+
+        if (!geoResponse.ok) {
+          const errorData = await geoResponse.json();
+          throw new Error(
+            errorData.detail || "Impossibile ottenere informazioni geografiche",
+          );
         }
+
+        const geoData = await geoResponse.json();
+
+        let banData = null;
+        try {
+          const banResponse = await fetch(
+            `/api/bans/check/${encodeURIComponent(trimmedIP)}`,
+          );
+          if (banResponse.ok) {
+            const banResponseData = await banResponse.json();
+            banData = banResponseData.data;
+          }
+        } catch (err) {
+          console.warn("Impossibile verificare status ban:", err);
+        }
+
+        const combinedInfo = {
+          ip: trimmedIP,
+          ...geoData.data,
+          ...(banData && {
+            banned_in_database: banData.banned_in_database,
+            banned_in_fail2ban: banData.banned_in_fail2ban,
+            ban_type: banData.ban_type,
+            ban_reason: banData.ban_reason,
+            status: banData.status,
+          }),
+        };
+
+        setIpInfo(combinedInfo);
+
+        toast({
+          title: "Informazioni Caricate",
+          description: `Informazioni per ${trimmedIP} caricate con successo`,
+        });
       } catch (err) {
-        // Se la chiamata ban fallisce, continuiamo comunque con le info geografiche
-        console.warn("Impossibile verificare status ban:", err);
+        const errorMessage =
+          err instanceof Error ? err.message : "Errore sconosciuto";
+        setError(errorMessage);
+
+        toast({
+          title: "Errore",
+          description: errorMessage,
+          variant: "destructive",
+        });
+
+        setIpInfo(null);
+      } finally {
+        setIsLoading(false);
       }
-
-      // Combina i dati
-      const combinedInfo = {
-        ip: trimmedIP,
-        ...geoData.data,
-        // Ban info
-        ...(banData && {
-          banned_in_database: banData.banned_in_database,
-          banned_in_fail2ban: banData.banned_in_fail2ban,
-          ban_type: banData.ban_type,
-          ban_reason: banData.ban_reason,
-          status: banData.status,
-        }),
-      };
-
-      setIpInfo(combinedInfo);
-
-      toast({
-        title: "Informazioni Caricate",
-        description: `Informazioni per ${trimmedIP} caricate con successo`,
-      });
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Errore sconosciuto";
-      setError(errorMessage);
-
-      toast({
-        title: "Errore",
-        description: errorMessage,
-        variant: "destructive",
-      });
-
-      setIpInfo(null);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [toast]);
+    },
+    [toast],
+  );
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -195,17 +193,21 @@ const IPInfoSection: FC<IPInfoSectionProps> = ({ onBanSuccess }) => {
               )}
             </div>
 
-            {error && (
-              <p className="text-xs text-red-400">{error}</p>
-            )}
+            {error && <p className="text-xs text-red-400">{error}</p>}
           </form>
         </CardContent>
       </Card>
 
-      {ipInfo && <IPInfoCard info={ipInfo} isLoading={isLoading} onBanCIDR={handleBanCIDR} onWhitelistSuccess={() => {
-        // Opzionale: ricaricare dati dopo aggiunta whitelist
-        fetchIPInfo(ipInfo.ip);
-      }} />}
+      {ipInfo && (
+        <IPInfoCard
+          info={ipInfo}
+          isLoading={isLoading}
+          onBanCIDR={handleBanCIDR}
+          onWhitelistSuccess={() => {
+            fetchIPInfo(ipInfo.ip);
+          }}
+        />
+      )}
     </div>
   );
 };

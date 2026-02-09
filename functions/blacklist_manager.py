@@ -66,7 +66,7 @@ def is_dangerous(user_agent_full, url, user_agents_blacklist, intent_blacklist_s
         except re.error:
             if bad_ua in ua:
                 return True
-    
+
     for bad_intent in intent_blacklist_set:
         try:
             if re.search(bad_intent, url_lower, re.IGNORECASE):
