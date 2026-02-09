@@ -111,51 +111,6 @@ user_agents_blacklist, intent_blacklist_set = load_blacklists_once(
     MALICIOUS_USER_AGENTS, MALICIOUS_INTENTS, NPM_DEBUG_LOG
 )
 
-DANGEROUS_INTENTS_KEYWORDS = {
-    "shell",
-    "backdoor",
-    "webshell",
-    "c99",
-    "r57",
-    "b374k",
-    "exploit",
-    "injection",
-    "xss",
-    "rce",
-    "lfi",
-    "rfi",
-    "sqli",
-    "upload",
-    "web shell",
-    "file upload",
-    "phpmyadmin",
-    "wordpress",
-    "wp-admin",
-    "wp-login",
-    "admin panel",
-    "admin login",
-    "login panel",
-    "cpanel",
-    "plesk",
-    "webmin",
-    "sql dump",
-    "backup.sql",
-    "database dump",
-    "config.php",
-    "configuration",
-    ".env",
-    "credential",
-    "password",
-    "cgi-bin",
-    "git",
-    "svn",
-    ".git",
-    "composer.json",
-    "phpinfo",
-    "test.php",
-    "info.php",
-}
-
 FALLBACK_REGEX = re.compile(
     r'^(\d+\.\d+\.\d+\.\d+) - - \[[^\]]+\] "(.*?)" (\d{3}) \d+ "-" "([^"]*)"$'
 )
@@ -173,17 +128,6 @@ PROXY_METHOD_URL_REGEX_ALT = re.compile(r"- (\w+) https? [^ ]+ \"([^\"]+)\"")
 PROXY_UA_REGEX = re.compile(r'"([^"]+)"')
 
 debug_log("Regex precompilate per parsing ottimizzato", NPM_DEBUG_LOG)
-
-
-@lru_cache(maxsize=CACHE_SIZE)
-def cached_intent_check(text_lower):
-    """Cache per check intent pericolosi - evita controlli ripetuti"""
-    result = any(keyword in text_lower for keyword in DANGEROUS_INTENTS_KEYWORDS)
-    if result:
-        update_stats("cache_hits")
-    else:
-        update_stats("cache_misses")
-    return result
 
 
 @lru_cache(maxsize=CACHE_SIZE)
@@ -366,7 +310,7 @@ def stats_reporter():
         )
         debug_log(f"Ban eseguiti: {stats['bans_executed']}", NPM_DEBUG_LOG)
         debug_log(f"Cache hit rate: {stats['cache_hit_rate']:.1f}%", NPM_DEBUG_LOG)
-        debug_log(f"Cache info: {cached_intent_check .cache_info()}", NPM_DEBUG_LOG)
+        debug_log(f"Cache info: {cached_pattern_match.cache_info()}", NPM_DEBUG_LOG)
 
     debug_log("Stats reporter terminato", NPM_DEBUG_LOG)
 
@@ -380,12 +324,6 @@ def process_and_check_ban_optimized(
 
     meaning = get_status_meaning(code, STATUS_MEANING_MAP)
 
-    intent_lower = intent.lower() if intent else ""
-    url_lower = url.lower() if url else ""
-
-    is_dangerous_intent = cached_intent_check(intent_lower) if intent_lower else False
-    is_dangerous_url = cached_intent_check(url_lower) if url_lower else False
-
     error_count, is_banned = ip_manager.update_ip_data(ip, code, CODES_TO_ALLOW)
 
     base_log = (
@@ -396,24 +334,6 @@ def process_and_check_ban_optimized(
     )
 
     if is_banned:
-        return
-
-    if is_dangerous_intent or is_dangerous_url:
-        debug_log(f"IP: {ip}, INTENT PERICOLOSO. BAN IMMEDIATO.", NPM_DEBUG_LOG)
-
-        ban_queue.put(
-            (
-                ip,
-                JAIL_NAME,
-                BLOCKLIST_DB_PATH,
-                NPM_DEBUG_LOG,
-                user_agent_full,
-                domain,
-                code,
-                url,
-            )
-        )
-        log_queue.put(base_log + " [BAN IMMEDIATO - INTENT PERICOLOSO DA PATTERN]")
         return
 
     if is_dangerous(
