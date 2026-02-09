@@ -72,8 +72,8 @@ Il flusso tipico:
 ## Installazione e Avvio
 
 ### Requisiti
-- Python 3.8+
-- Node.js 18+
+- Python 3.13+
+- Node.js 20+
 - Docker (opzionale, per deploy containerizzato)
 
 ### 1. Backend Python e front react
