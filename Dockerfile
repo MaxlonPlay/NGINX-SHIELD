@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM python:3.12-slim
+FROM python:3.12-slim
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends fail2ban && \
