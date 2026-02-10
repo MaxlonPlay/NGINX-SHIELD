@@ -13,9 +13,29 @@ def load_config(CONFIG_PATH, NPM_DEBUG_LOG):
         "JAIL_NAME",
     ]
 
+    DEFAULT_CONFIG = {
+        "LOG_DIR": "/app/nginx-logs",
+        "IGNORE_WHITELIST": False,
+        "ENABLE_WHITELIST_LOG": True,
+        "CODES_TO_ALLOW": [101, 200, 201, 202, 204, 206, 302, 304, 413, 499],
+        "MAX_REQUESTS": 3,
+        "TIME_FRAME": 3600,
+        "JAIL_NAME": "npm-docker"
+    }
+
     if not os.path.isfile(CONFIG_PATH):
-        debug_log(f"[ERRORE] File config non trovato: {CONFIG_PATH}", NPM_DEBUG_LOG)
-        exit(f"[ERRORE FATALE] File config non trovato: {CONFIG_PATH}")
+        try:
+            config_dir = os.path.dirname(CONFIG_PATH)
+            os.makedirs(config_dir, exist_ok=True)
+            
+            with open(CONFIG_PATH, "w") as f:
+                json.dump(DEFAULT_CONFIG, f, indent=2)
+            
+            debug_log(f"[INFO] File config creato automaticamente: {CONFIG_PATH}", NPM_DEBUG_LOG)
+            debug_log(f"[INFO] Usando configurazione di default", NPM_DEBUG_LOG)
+        except Exception as e:
+            debug_log(f"[ERRORE] Impossibile creare file config: {e}", NPM_DEBUG_LOG)
+            exit(f"[ERRORE FATALE] Impossibile creare file config: {e}")
 
     try:
         with open(CONFIG_PATH, "r") as f:
