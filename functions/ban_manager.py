@@ -8,7 +8,7 @@ from commons.country_codes import get_country_name
 from typing import Dict, Any
 
 
-def get_ip_info(ip: str, NPM_DEBUG_LOG: bool) -> Dict[str, Any]:
+def get_ip_info(ip: str, NPM_DEBUG_LOG: bool, lang: str = "en") -> Dict[str, Any]:
     try:
         url = f"http://localhost:8881/{ip}"
         response = requests.get(url, timeout=5)
@@ -23,7 +23,7 @@ def get_ip_info(ip: str, NPM_DEBUG_LOG: bool) -> Dict[str, Any]:
                 )
 
                 country_code = result.get("country")
-                country = get_country_name(country_code) if country_code else None
+                country = get_country_name(country_code, lang) if country_code else None
 
                 return {
                     "network": result.get("network"),

@@ -258,12 +258,20 @@ export const SystemStatus = ({
   const services = systemStatus
     ? [
         {
-          name: "Monitoraggio minacce",
+          name: t("systemStatus.services.threatMonitoring"),
           status: systemStatus.pythonScript,
           icon: Activity,
         },
-        { name: "Fail2Ban", status: systemStatus.fail2ban, icon: Wifi },
-        { name: "Nginx", status: systemStatus.nginx, icon: Server },
+        {
+          name: t("systemStatus.services.fail2ban"),
+          status: systemStatus.fail2ban,
+          icon: Wifi,
+        },
+        {
+          name: t("systemStatus.services.nginx"),
+          status: systemStatus.nginx,
+          icon: Server,
+        },
       ]
     : [];
 
@@ -273,7 +281,7 @@ export const SystemStatus = ({
         <CardTitle className="text-white flex items-center justify-between">
           <div className="flex items-center">
             <Server className="h-5 w-5 mr-2 text-green-400" />
-            Stato Sistema
+            {t("systemStatus.title")}
           </div>
 
           {}
@@ -290,7 +298,7 @@ export const SystemStatus = ({
               <span>
                 {isAutoRefreshEnabled
                   ? `Auto (${autoRefreshInterval / 1000}s)`
-                  : "Manuale"}
+                  : "Manual"}
               </span>
             </div>
 
@@ -300,11 +308,11 @@ export const SystemStatus = ({
               className="px-2 py-1 text-xs bg-slate-700 hover:bg-slate-600 rounded border border-slate-600 transition-colors"
               title={
                 isAutoRefreshEnabled
-                  ? "Passa a modalità manuale"
-                  : "Attiva auto-refresh"
+                  ? t("systemStatus.switchToManual")
+                  : t("systemStatus.enableAutoRefresh")
               }
             >
-              {isAutoRefreshEnabled ? "Auto" : "Man"}
+              {isAutoRefreshEnabled ? "Auto" : "Manual"}
             </button>
 
             {}
@@ -323,10 +331,10 @@ export const SystemStatus = ({
           </div>
         </CardTitle>
         <CardDescription className="text-slate-400 flex items-center justify-between">
-          <span>Monitoraggio servizi critici</span>
+          <span>{t("systemStatus.description")}</span>
           {lastUpdate && (
             <span className="text-xs">
-              Ultimo controllo: {lastUpdate.toLocaleTimeString()}
+              {t("systemStatus.lastCheck")}: {lastUpdate.toLocaleTimeString()}
             </span>
           )}
         </CardDescription>
@@ -348,12 +356,16 @@ export const SystemStatus = ({
                   {service.status ? (
                     <>
                       <CheckCircle className="h-4 w-4 text-green-400" />
-                      <span className="text-green-400 text-sm">Attivo</span>
+                      <span className="text-green-400 text-sm">
+                        {t("systemStatus.services.active")}
+                      </span>
                     </>
                   ) : (
                     <>
                       <AlertCircle className="h-4 w-4 text-red-400" />
-                      <span className="text-red-400 text-sm">Errore</span>
+                      <span className="text-red-400 text-sm">
+                        {t("systemStatus.services.error")}
+                      </span>
                     </>
                   )}
                 </div>
@@ -365,7 +377,9 @@ export const SystemStatus = ({
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3">
                   <Cpu className="h-5 w-5 text-slate-400" />
-                  <span className="text-slate-300">Uso CPU</span>
+                  <span className="text-slate-300">
+                    {t("systemStatus.metrics.cpu")}
+                  </span>
                 </div>
                 <span
                   className={`text-sm ${getStatusTextColor(systemStatus.cpuUsage, "cpu")}`}
@@ -388,7 +402,9 @@ export const SystemStatus = ({
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3">
                   <MemoryStick className="h-5 w-5 text-slate-400" />
-                  <span className="text-slate-300">Uso RAM</span>
+                  <span className="text-slate-300">
+                    {t("systemStatus.metrics.ram")}
+                  </span>
                 </div>
                 <span
                   className={`text-sm ${getStatusTextColor(systemStatus.ramUsage, "ram")}`}
@@ -411,7 +427,9 @@ export const SystemStatus = ({
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3">
                   <Thermometer className="h-5 w-5 text-slate-400" />
-                  <span className="text-slate-300">Temperatura</span>
+                  <span className="text-slate-300">
+                    {t("systemStatus.metrics.temperature")}
+                  </span>
                 </div>
                 <span
                   className={`text-sm ${getStatusTextColor(systemStatus.temperature, "temperature")}`}

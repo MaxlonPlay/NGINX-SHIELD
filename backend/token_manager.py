@@ -100,7 +100,7 @@ class TokenManager:
 
         return {
             "success": True,
-            "message": "Login riuscito",
+            "message": "Login successful.",
             "requires_password_change": auth_result["requires_password_change"],
             "is_first_login": auth_result["is_first_login"],
             "access_token": token,

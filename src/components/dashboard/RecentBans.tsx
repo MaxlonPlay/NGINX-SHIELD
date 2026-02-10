@@ -25,6 +25,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { fetchBans, unbanIP } from "@/utils/banManager";
+import { t } from "i18next";
 
 interface BanEntry {
   ip: string;
@@ -143,10 +144,10 @@ export const RecentBans = ({ onFilterClick }: RecentBansProps) => {
           <div className="flex-grow">
             <CardTitle className="text-white flex items-center">
               <Shield className="h-5 w-5 mr-2 text-red-400" />
-              Ban Automatici Recenti
+              {t("recentBans.title")}
             </CardTitle>
             <CardDescription className="text-slate-400">
-              Ultimi IP bannati automaticamente dal sistema
+              {t("recentBans.description")}
             </CardDescription>
           </div>
 
@@ -200,18 +201,18 @@ export const RecentBans = ({ onFilterClick }: RecentBansProps) => {
               {searchQuery ? (
                 <>
                   <Filter className="h-5 w-5 mx-auto mb-2 text-slate-500" />
-                  Nessun ban trovato per "{searchQuery}"
+                  {t("recentBans.noResults")}"{searchQuery}"
                   <Button
                     onClick={() => setSearchQuery("")}
                     variant="ghost"
                     size="sm"
                     className="mt-2 text-slate-400 hover:text-slate-300 block mx-auto"
                   >
-                    Rimuovi filtro
+                    {t("recentBans.removeFilter")}
                   </Button>
                 </>
               ) : (
-                "Nessun ban automatico recente"
+                <>{t("recentBans.noBans")}</>
               )}
             </div>
           ) : (

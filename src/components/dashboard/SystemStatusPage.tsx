@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -169,12 +170,13 @@ const PeriodSelector = ({
   onPeriodChange,
   isLoading,
 }: PeriodSelectorProps) => {
+  const { t } = useTranslation();
   const periods = [
-    { label: "Ultima ora", value: 1 },
-    { label: "Ultime 6h", value: 6 },
-    { label: "Ultime 12h", value: 12 },
-    { label: "Ultime 24h", value: 24 },
-    { label: "Ultimi 7g", value: 24 * 7 },
+    { label: t("systemStatus.periods.lastHour"), value: 1 },
+    { label: t("systemStatus.periods.last6h"), value: 6 },
+    { label: t("systemStatus.periods.last12h"), value: 12 },
+    { label: t("systemStatus.periods.last24h"), value: 24 },
+    { label: t("systemStatus.periods.last7d"), value: 24 * 7 },
   ];
 
   return (
@@ -200,6 +202,7 @@ const PeriodSelector = ({
 };
 
 export const SystemStatusPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [systemStatus, setSystemStatus] = useState<SystemStatusData | null>(
@@ -241,8 +244,10 @@ export const SystemStatusPage = () => {
 
         if (response.data.success || response.success) {
           toast({
-            title: "Riavvio richiesto",
-            description: `Il servizio '${serviceName}' verrà riavviato tra pochi secondi...`,
+            title: t("systemStatus.restart.restartRequested"),
+            description: t("systemStatus.restart.restartingDesc", {
+              service: serviceName,
+            }),
             variant: "default",
           });
 
@@ -256,9 +261,9 @@ export const SystemStatusPage = () => {
       } catch (err: any) {
         const message =
           err?.response?.data?.detail ||
-          "Errore durante il riavvio del servizio";
+          t("systemStatus.errors.restartErrorDesc");
         toast({
-          title: "Errore",
+          title: t("systemStatus.errors.restartError"),
           description: message,
           variant: "destructive",
         });
@@ -284,8 +289,8 @@ export const SystemStatusPage = () => {
 
         if (pending.length === 0) {
           toast({
-            title: "Servizi riavviati",
-            description: "Tutti i servizi sono stati riavviati con successo",
+            title: t("systemStatus.restart.restarted"),
+            description: t("systemStatus.restart.restartedDesc"),
             variant: "default",
           });
         }
@@ -303,10 +308,12 @@ export const SystemStatusPage = () => {
       setSystemStatus(data);
     } catch (err) {
       const message =
-        err instanceof SystemStatusError ? err.message : "Errore sconosciuto";
+        err instanceof SystemStatusError
+          ? err.message
+          : t("systemStatus.errors.unknown");
       setError(message);
       toast({
-        title: "Errore",
+        title: t("systemStatus.errors.title"),
         description: message,
         variant: "destructive",
       });
@@ -324,10 +331,12 @@ export const SystemStatusPage = () => {
         setHistoryData(data);
       } catch (err) {
         const message =
-          err instanceof SystemStatusError ? err.message : "Errore sconosciuto";
+          err instanceof SystemStatusError
+            ? err.message
+            : t("systemStatus.errors.unknown");
         setError(message);
         toast({
-          title: "Errore",
+          title: t("systemStatus.errors.title"),
           description: message,
           variant: "destructive",
         });
@@ -391,21 +400,21 @@ export const SystemStatusPage = () => {
               <DialogHeader>
                 <DialogTitle className="text-white flex items-center gap-2">
                   <AlertCircle className="h-5 w-5 text-orange-400" />
-                  Conferma Riavvio Backend
+                  {t("systemStatus.restart.confirmTitle")}
                 </DialogTitle>
                 <DialogDescription className="text-slate-300 space-y-3 mt-4">
                   <p>
-                    <strong>Attenzione!</strong> Il backend gestisce tutte le
-                    API e le funzionalità dell'applicazione.
+                    <strong>{t("systemStatus.restart.warning")}</strong>{" "}
+                    {t("systemStatus.restart.backendDesc")}
                   </p>
-                  <p>Se procedi al riavvio:</p>
+                  <p>{t("systemStatus.restart.stopProcessing")}</p>
                   <ul className="list-disc list-inside space-y-1 ml-2 text-slate-400">
-                    <li>Verrai disconnesso dalla sessione corrente</li>
-                    <li>Dovrai eseguire nuovamente il login</li>
-                    <li>Tutti i dati non salvati andranno persi</li>
+                    <li>{t("systemStatus.restart.consequences.logout")}</li>
+                    <li>{t("systemStatus.restart.consequences.relogin")}</li>
+                    <li>{t("systemStatus.restart.consequences.dataLoss")}</li>
                   </ul>
                   <p className="font-semibold text-slate-300">
-                    Sei sicuro di voler proseguire?
+                    {t("systemStatus.restart.confirm")}
                   </p>
                 </DialogDescription>
               </DialogHeader>
@@ -415,7 +424,7 @@ export const SystemStatusPage = () => {
                   variant="outline"
                   className="border-slate-600 text-slate-300 hover:bg-slate-800"
                 >
-                  Annulla
+                  {t("systemStatus.restart.cancel")}
                 </Button>
                 <Button
                   onClick={() => {
@@ -424,7 +433,7 @@ export const SystemStatusPage = () => {
                   }}
                   className="bg-orange-600 hover:bg-orange-700 text-white"
                 >
-                  Sì, Riavvia Backend
+                  {t("systemStatus.restart.confirmBackend")}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -434,7 +443,7 @@ export const SystemStatusPage = () => {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                 <Activity className="h-6 w-6 text-green-400" />
-                Stato Tempo Reale
+                {t("systemStatus.realtimeStatus")}
               </h2>
               <Button
                 onClick={fetchRealtimeData}
@@ -445,7 +454,7 @@ export const SystemStatusPage = () => {
                 <RefreshCw
                   className={`h-4 w-4 mr-2 ${realtimeLoading ? "animate-spin" : ""}`}
                 />
-                Aggiorna
+                {t("systemStatus.update")}
               </Button>
             </div>
 
@@ -462,7 +471,7 @@ export const SystemStatusPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <MetricCard
-                title="CPU"
+                title={t("systemStatus.metrics.cpu")}
                 value={
                   systemStatus
                     ? formatUsagePercentage(systemStatus.cpuUsage)
@@ -476,7 +485,7 @@ export const SystemStatusPage = () => {
                 dataKey="cpuUsage"
               />
               <MetricCard
-                title="Memoria RAM"
+                title={t("systemStatus.metrics.ram")}
                 value={
                   systemStatus
                     ? formatUsagePercentage(systemStatus.ramUsage)
@@ -490,7 +499,7 @@ export const SystemStatusPage = () => {
                 dataKey="ramUsage"
               />
               <MetricCard
-                title="Temperatura"
+                title={t("systemStatus.metrics.temperature")}
                 value={
                   systemStatus
                     ? formatTemperature(systemStatus.temperature)
@@ -506,69 +515,75 @@ export const SystemStatusPage = () => {
               <Card className="bg-slate-800/50 border-slate-700 relative overflow-hidden md:col-span-2 lg:col-span-1">
                 <CardContent className="pt-6">
                   <h3 className="text-slate-300 font-semibold mb-4 text-sm">
-                    Stato Completo
+                    {t("systemStatus.overview.title")}
                   </h3>
                   <div className="space-y-3 text-sm">
                     <div>
-                      <p className="text-slate-400 mb-2">Servizi:</p>
+                      <p className="text-slate-400 mb-2">
+                        {t("systemStatus.overview.servicesLabel")}
+                      </p>
                       <div className="space-y-1 ml-2">
                         <div className="flex items-center justify-between">
                           <span className="text-slate-400">
-                            Monitoraggio minacce
+                            {t("systemStatus.services.threatMonitoring")}
                           </span>
                           <div className="flex items-center gap-1">
                             {systemStatus?.pythonScript ? (
                               <>
                                 <CheckCircle className="h-3.5 w-3.5 text-green-400" />
                                 <span className="text-green-400 text-xs">
-                                  Attivo
+                                  {t("systemStatus.services.active")}
                                 </span>
                               </>
                             ) : (
                               <>
                                 <AlertCircle className="h-3.5 w-3.5 text-red-400" />
                                 <span className="text-red-400 text-xs">
-                                  Errore
+                                  {t("systemStatus.services.error")}
                                 </span>
                               </>
                             )}
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-400">Fail2Ban</span>
+                          <span className="text-slate-400">
+                            {t("systemStatus.services.fail2ban")}
+                          </span>
                           <div className="flex items-center gap-1">
                             {systemStatus?.fail2ban ? (
                               <>
                                 <CheckCircle className="h-3.5 w-3.5 text-green-400" />
                                 <span className="text-green-400 text-xs">
-                                  Attivo
+                                  {t("systemStatus.services.active")}
                                 </span>
                               </>
                             ) : (
                               <>
                                 <AlertCircle className="h-3.5 w-3.5 text-red-400" />
                                 <span className="text-red-400 text-xs">
-                                  Errore
+                                  {t("systemStatus.services.error")}
                                 </span>
                               </>
                             )}
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-400">Nginx</span>
+                          <span className="text-slate-400">
+                            {t("systemStatus.services.nginx")}
+                          </span>
                           <div className="flex items-center gap-1">
                             {systemStatus?.nginx ? (
                               <>
                                 <CheckCircle className="h-3.5 w-3.5 text-green-400" />
                                 <span className="text-green-400 text-xs">
-                                  Attivo
+                                  {t("systemStatus.services.active")}
                                 </span>
                               </>
                             ) : (
                               <>
                                 <AlertCircle className="h-3.5 w-3.5 text-red-400" />
                                 <span className="text-red-400 text-xs">
-                                  Errore
+                                  {t("systemStatus.services.error")}
                                 </span>
                               </>
                             )}
@@ -578,10 +593,14 @@ export const SystemStatusPage = () => {
                     </div>
 
                     <div className="border-t border-slate-700 pt-3">
-                      <p className="text-slate-400 mb-2">Metriche:</p>
+                      <p className="text-slate-400 mb-2">
+                        {t("systemStatus.overview.metricsLabel")}
+                      </p>
                       <div className="space-y-1 ml-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-400">CPU</span>
+                          <span className="text-slate-400">
+                            {t("systemStatus.overview.cpuLabel")}
+                          </span>
                           <div className="flex items-center gap-1">
                             <span
                               className={`text-xs font-semibold ${
@@ -603,7 +622,9 @@ export const SystemStatusPage = () => {
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-400">RAM</span>
+                          <span className="text-slate-400">
+                            {t("systemStatus.overview.ramLabel")}
+                          </span>
                           <div className="flex items-center gap-1">
                             <span
                               className={`text-xs font-semibold ${
@@ -625,7 +646,9 @@ export const SystemStatusPage = () => {
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-400">Temp</span>
+                          <span className="text-slate-400">
+                            {t("systemStatus.overview.tempLabel")}
+                          </span>
                           <div className="flex items-center gap-1">
                             <span
                               className={`text-xs font-semibold ${
@@ -663,7 +686,7 @@ export const SystemStatusPage = () => {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                 <RotateCcw className="h-6 w-6 text-blue-400" />
-                Gestione Servizi
+                {t("systemStatus.services.title")}
               </h2>
             </div>
 
@@ -672,7 +695,9 @@ export const SystemStatusPage = () => {
                 <CardContent className="pt-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-white">Backend</h3>
+                      <h3 className="font-semibold text-white">
+                        {t("systemStatus.services.backend")}
+                      </h3>
                       <div className="flex items-center gap-2">
                         {systemStatus?.pythonScript ? (
                           <CheckCircle className="h-4 w-4 text-green-400" />
@@ -682,7 +707,7 @@ export const SystemStatusPage = () => {
                       </div>
                     </div>
                     <p className="text-xs text-slate-400">
-                      API e logica applicativa
+                      {t("systemStatus.serviceDescriptions.backend")}
                     </p>
                     <Button
                       onClick={() => handleRestartService("backend")}
@@ -697,8 +722,8 @@ export const SystemStatusPage = () => {
                         className={`h-3.5 w-3.5 mr-2 ${restartingServices.has("backend") ? "animate-spin" : ""}`}
                       />
                       {pendingRestarts.includes("backend")
-                        ? "In riavvio..."
-                        : "Riavvia"}
+                        ? t("systemStatus.restart.restarting")
+                        : t("systemStatus.restart.button")}
                     </Button>
                   </div>
                 </CardContent>
@@ -708,13 +733,15 @@ export const SystemStatusPage = () => {
                 <CardContent className="pt-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-white">Frontend</h3>
+                      <h3 className="font-semibold text-white">
+                        {t("systemStatus.services.frontend")}
+                      </h3>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400" />
                       </div>
                     </div>
                     <p className="text-xs text-slate-400">
-                      Interfaccia web e UI
+                      {t("systemStatus.serviceDescriptions.frontend")}
                     </p>
                     <Button
                       onClick={() => handleRestartService("frontend")}
@@ -729,8 +756,8 @@ export const SystemStatusPage = () => {
                         className={`h-3.5 w-3.5 mr-2 ${restartingServices.has("frontend") ? "animate-spin" : ""}`}
                       />
                       {pendingRestarts.includes("frontend")
-                        ? "In riavvio..."
-                        : "Riavvia"}
+                        ? t("systemStatus.restart.restarting")
+                        : t("systemStatus.restart.button")}
                     </Button>
                   </div>
                 </CardContent>
@@ -740,13 +767,15 @@ export const SystemStatusPage = () => {
                 <CardContent className="pt-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-white">Analyzer</h3>
+                      <h3 className="font-semibold text-white">
+                        {t("systemStatus.services.analyzer")}
+                      </h3>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400" />
                       </div>
                     </div>
                     <p className="text-xs text-slate-400">
-                      Analizzatore di minacce
+                      {t("systemStatus.serviceDescriptions.analyzer")}
                     </p>
                     <Button
                       onClick={() => handleRestartService("analyzer")}
@@ -761,8 +790,8 @@ export const SystemStatusPage = () => {
                         className={`h-3.5 w-3.5 mr-2 ${restartingServices.has("analyzer") ? "animate-spin" : ""}`}
                       />
                       {pendingRestarts.includes("analyzer")
-                        ? "In riavvio..."
-                        : "Riavvia"}
+                        ? t("systemStatus.restart.restarting")
+                        : t("systemStatus.restart.button")}
                     </Button>
                   </div>
                 </CardContent>
@@ -772,13 +801,15 @@ export const SystemStatusPage = () => {
                 <CardContent className="pt-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-white">Geolocate</h3>
+                      <h3 className="font-semibold text-white">
+                        {t("systemStatus.services.geolocate")}
+                      </h3>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400" />
                       </div>
                     </div>
                     <p className="text-xs text-slate-400">
-                      Localizzazione geografica
+                      {t("systemStatus.serviceDescriptions.geolocate")}
                     </p>
                     <Button
                       onClick={() => handleRestartService("geolocate")}
@@ -793,8 +824,8 @@ export const SystemStatusPage = () => {
                         className={`h-3.5 w-3.5 mr-2 ${restartingServices.has("geolocate") ? "animate-spin" : ""}`}
                       />
                       {pendingRestarts.includes("geolocate")
-                        ? "In riavvio..."
-                        : "Riavvia"}
+                        ? t("systemStatus.restart.restarting")
+                        : t("systemStatus.restart.button")}
                     </Button>
                   </div>
                 </CardContent>
@@ -806,7 +837,7 @@ export const SystemStatusPage = () => {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                 <Server className="h-6 w-6 text-blue-400" />
-                Storico
+                {t("systemStatus.history.title")}
               </h2>
             </div>
 
@@ -826,7 +857,7 @@ export const SystemStatusPage = () => {
                   <div className="flex flex-col items-center gap-3">
                     <Loader2 className="h-8 w-8 animate-spin text-blue-400" />
                     <p className="text-slate-400">
-                      Caricamento dati storici...
+                      {t("systemStatus.history.loading")}
                     </p>
                   </div>
                 </CardContent>
@@ -836,7 +867,7 @@ export const SystemStatusPage = () => {
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Activity className="h-5 w-5 text-green-400" />
-                    Storico del sistema
+                    {t("systemStatus.history.systemHistoryTitle")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -868,7 +899,7 @@ export const SystemStatusPage = () => {
                         type="monotone"
                         dataKey="cpuUsage"
                         stroke="#3b82f6"
-                        name="CPU %"
+                        name={t("systemStatus.history.chartLabels.cpu")}
                         dot={false}
                         strokeWidth={2}
                       />
@@ -876,7 +907,7 @@ export const SystemStatusPage = () => {
                         type="monotone"
                         dataKey="ramUsage"
                         stroke="#a855f7"
-                        name="RAM %"
+                        name={t("systemStatus.history.chartLabels.ram")}
                         dot={false}
                         strokeWidth={2}
                       />
@@ -884,7 +915,7 @@ export const SystemStatusPage = () => {
                         type="monotone"
                         dataKey="temperature"
                         stroke="#f97316"
-                        name="Temperatura °C"
+                        name={t("systemStatus.history.chartLabels.temperature")}
                         dot={false}
                         strokeWidth={2}
                       />
@@ -897,9 +928,7 @@ export const SystemStatusPage = () => {
                 <CardContent className="pt-6">
                   <div className="flex items-center gap-2 text-slate-400">
                     <AlertCircle className="h-5 w-5" />
-                    <span>
-                      Nessun dato storico disponibile per il periodo selezionato
-                    </span>
+                    <span>{t("systemStatus.history.noData")}</span>
                   </div>
                 </CardContent>
               </Card>

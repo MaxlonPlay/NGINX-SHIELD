@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -62,6 +63,7 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
   onBanCIDR,
   onBanMultipleCIDRs,
 }) => {
+  const { t } = useTranslation();
   const scrollContainerRef = useInfiniteScroll({
     onLoadMore: onLoadMore,
     hasMore: hasMoreAutomatic,
@@ -102,12 +104,11 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
           <div>
             <CardTitle className="text-white flex items-center">
               <Shield className="h-5 w-5 mr-2 text-blue-400 flex-shrink-0" />
-              IP Bannati Automaticamente Visualizzati: {
-                automaticBans.length
-              } / {totalAutomaticBansCount || 0}
+              {t("ipManagement.automaticBansDisplayed")} {automaticBans.length}{" "}
+              / {totalAutomaticBansCount || 0}
             </CardTitle>
             <CardDescription className="text-slate-400">
-              Lista degli IP bannati automaticamente dal sistema.
+              {t("ipManagement.automaticBansDescription")}
             </CardDescription>
           </div>
           {automaticBans.length > 0 && (
@@ -119,7 +120,7 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
               className="text-red-400 hover:text-red-300 hover:bg-red-900/20 transition-colors duration-200 ease-in-out"
             >
               <Gavel className="h-4 w-4 mr-1" />
-              Banna Tutti i CIDR
+              {t("ipManagement.banAllCIDRs")}
             </Button>
           )}
         </CardHeader>
@@ -133,15 +134,16 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
             automaticBans.length === 0 &&
             totalAutomaticBansCount === 0 ? (
               <div className="text-center text-slate-400 py-8 flex items-center justify-center">
-                <Loader2 className="animate-spin h-5 w-5 mr-2" /> Caricamento...
+                <Loader2 className="animate-spin h-5 w-5 mr-2" />{" "}
+                {t("common.loading")}
               </div>
             ) : automaticBans.length === 0 && totalAutomaticBansCount === 0 ? (
               <div className="text-center text-slate-400 py-8">
-                Nessun IP automatico trovato.
+                {t("ipManagement.noAutomaticBans")}
               </div>
             ) : automaticBans.length === 0 && totalAutomaticBansCount > 0 ? (
               <div className="text-center text-slate-400 py-8">
-                Nessun IP automatico trovato con i criteri di ricerca attuali.
+                {t("ipManagement.noAutomaticBansWithFilters")}
               </div>
             ) : (
               automaticBans.map((ban, index) => (
@@ -161,15 +163,15 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
             )}
             {loadingMoreAutomatic && hasMoreAutomatic && (
               <div className="text-center text-slate-400 py-4 flex items-center justify-center">
-                <Loader2 className="animate-spin h-5 w-5 mr-2" /> Caricando
-                altri ban automatici...
+                <Loader2 className="animate-spin h-5 w-5 mr-2" />{" "}
+                {t("ipManagement.loadingMoreAutomatic")}
               </div>
             )}
             {!hasMoreAutomatic &&
               automaticBans.length > 0 &&
               !loadingMoreAutomatic && (
                 <div className="text-center text-slate-500 py-4 text-sm">
-                  Fine della lista dei ban automatici.
+                  {t("ipManagement.endOfAutomaticList")}
                 </div>
               )}
           </div>
@@ -183,21 +185,19 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
             <CardHeader className="pb-4">
               <CardTitle className="text-white flex items-center">
                 <Gavel className="h-6 w-6 mr-2 text-yellow-400" />
-                Conferma Ban di Massa
+                {t("cidrBan.confirmMassBanTitle")}
               </CardTitle>
               <CardDescription className="text-slate-400">
-                Sei sicuro di voler bannare le seguenti{" "}
-                <span className="text-yellow-400 font-semibold">
-                  {uniqueCIDRs.length}
-                </span>{" "}
-                reti CIDR?
+                {t("cidrBan.confirmMassBanDescription", {
+                  count: uniqueCIDRs.length,
+                })}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 max-h-[500px] overflow-y-auto">
                 <h4 className="text-white font-semibold mb-3 flex items-center">
                   <Network className="h-4 w-4 mr-2 text-blue-400" />
-                  Elenco Reti da Bannare
+                  {t("cidrBan.networksList")}
                 </h4>
                 <div className="space-y-3">
                   {uniqueCIDRs.map((cidrData) => (
@@ -214,8 +214,8 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
                       <div className="flex flex-wrap gap-2 text-xs">
                         {cidrData.asn && (
                           <span className="flex items-center bg-slate-700/50 text-slate-300 px-2 py-1 rounded">
-                            <MapPin className="h-3 w-3 mr-1" /> ASN:{" "}
-                            {cidrData.asn}
+                            <MapPin className="h-3 w-3 mr-1" />{" "}
+                            {t("banEntry.asn")} {cidrData.asn}
                           </span>
                         )}
                         {cidrData.organization && (
@@ -242,7 +242,7 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
                   disabled={isBanningMass}
                   className="text-slate-400 hover:text-slate-300 hover:bg-slate-700 transition-colors duration-200"
                 >
-                  Annulla
+                  {t("common.cancel")}
                 </Button>
                 <Button
                   onClick={handlePerformMassBan}
@@ -252,12 +252,12 @@ const AutomaticBansList: FC<AutomaticBansListProps> = ({
                   {isBanningMass ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Bannando...
+                      {t("common.banning")}
                     </>
                   ) : (
                     <>
                       <Gavel className="h-4 w-4 mr-2" />
-                      Conferma Ban
+                      {t("buttons.confirmBan")}
                     </>
                   )}
                 </Button>

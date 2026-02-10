@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -46,6 +47,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export const ConfigManager = () => {
+  const { t } = useTranslation();
   const [config, setConfig] = useState<SystemConfig | null>(null);
   const [secureConfig, setSecureConfig] = useState<{ SECURE_COOKIES: boolean }>(
     { SECURE_COOKIES: true },
@@ -106,17 +108,16 @@ export const ConfigManager = () => {
       setConfig(loadedConfig);
       if (showToast) {
         toast({
-          title: "Configurazione caricata",
-          description:
-            "La configurazione è stata caricata con successo dal backend.",
+          title: t("config.configLoaded"),
+          description: t("config.configLoadedDesc"),
         });
       }
     } catch (error: any) {
       console.error("Errore caricamento configurazione:", error);
       if (showToast) {
         toast({
-          title: "Errore",
-          description: `Impossibile caricare la configurazione: ${error.message}`,
+          title: t("common.error"),
+          description: `${t("config.cannotLoadConfig")}: ${error.message}`,
           variant: "destructive",
         });
       }
@@ -137,9 +138,8 @@ export const ConfigManager = () => {
         setPendingSecureConfig(config);
         if (showToast) {
           toast({
-            title: "Configurazione sicurezza caricata",
-            description:
-              "La configurazione di sicurezza è stata caricata con successo.",
+            title: t("config.secureConfigLoaded"),
+            description: t("config.secureConfigLoadedDesc"),
           });
         }
       }
@@ -147,8 +147,8 @@ export const ConfigManager = () => {
       console.error("Errore caricamento configurazione sicurezza:", error);
       if (showToast) {
         toast({
-          title: "Errore",
-          description: `Impossibile caricare la configurazione di sicurezza: ${error.message}`,
+          title: t("common.error"),
+          description: `${t("config.cannotLoadSecureConfig")}: ${error.message}`,
           variant: "destructive",
         });
       }
@@ -164,9 +164,8 @@ export const ConfigManager = () => {
         setEmailConfig(response.config);
         if (showToast) {
           toast({
-            title: "Configurazione email caricata",
-            description:
-              "La configurazione email è stata caricata con successo.",
+            title: t("config.emailConfigLoaded"),
+            description: t("config.emailConfigLoadedDesc"),
           });
         }
       }
@@ -174,8 +173,8 @@ export const ConfigManager = () => {
       console.error("Errore caricamento configurazione email:", error);
       if (showToast) {
         toast({
-          title: "Errore",
-          description: `Impossibile caricare la configurazione email: ${error.message}`,
+          title: t("common.error"),
+          description: `${t("config.cannotLoadEmailConfig")}: ${error.message}`,
           variant: "destructive",
         });
       }
@@ -191,15 +190,14 @@ export const ConfigManager = () => {
         loadEmailConfig(false),
       ]);
       toast({
-        title: "Configurazioni caricate",
-        description:
-          "Tutte le configurazioni sono state caricate con successo.",
+        title: t("config.allConfigsLoaded"),
+        description: t("config.allConfigsLoadedDesc"),
       });
     } catch (error: any) {
       console.error("Errore caricamento configurazioni:", error);
       toast({
-        title: "Errore",
-        description: `Impossibile caricare le configurazioni: ${error.message}`,
+        title: t("common.error"),
+        description: `${t("config.cannotLoadConfigs")}: ${error.message}`,
         variant: "destructive",
       });
     }
@@ -211,17 +209,16 @@ export const ConfigManager = () => {
     const numMaxRequests = parseInt(maxRequestsValue.toString());
     if (isNaN(numMaxRequests) || numMaxRequests <= 0) {
       toast({
-        title: "Errore di validazione",
-        description:
-          "Il campo 'Max Richieste' deve essere un numero positivo (maggiore di 0).",
+        title: t("common.error"),
+        description: t("config.validation.maxRequestsPositive"),
         variant: "destructive",
       });
       return;
     }
     if (maxRequestsValue.toString().length > 3) {
       toast({
-        title: "Errore di validazione",
-        description: "Il campo 'Max Richieste' non può superare 3 cifre.",
+        title: t("common.error"),
+        description: t("config.validation.maxRequestsDigits"),
         variant: "destructive",
       });
       return;
@@ -230,15 +227,14 @@ export const ConfigManager = () => {
     try {
       await authService.updateSystemConfig(config);
       toast({
-        title: "Configurazione salvata",
-        description:
-          "Le modifiche sono state salvate e sincronizzate con il sistema.",
+        title: t("common.success"),
+        description: t("config.configSavedSync"),
       });
     } catch (error: any) {
       console.error("Errore salvataggio configurazione:", error);
       toast({
-        title: "Errore",
-        description: `Errore durante il salvataggio della configurazione: ${error.message}`,
+        title: t("common.error"),
+        description: `${t("config.errorSavingConfig")}: ${error.message}`,
         variant: "destructive",
       });
     }
@@ -249,45 +245,40 @@ export const ConfigManager = () => {
     if (emailConfig.enabled) {
       if (!emailConfig.smtp_server.trim()) {
         toast({
-          title: "Errore di validazione",
-          description:
-            "Il server SMTP è obbligatorio quando le notifiche email sono abilitate.",
+          title: t("common.error"),
+          description: t("config.validation.smtpRequired"),
           variant: "destructive",
         });
         return;
       }
       if (!emailConfig.username.trim()) {
         toast({
-          title: "Errore di validazione",
-          description:
-            "Il nome utente è obbligatorio quando le notifiche email sono abilitate.",
+          title: t("common.error"),
+          description: t("config.validation.usernameRequired"),
           variant: "destructive",
         });
         return;
       }
       if (!emailConfig.password.trim()) {
         toast({
-          title: "Errore di validazione",
-          description:
-            "La password è obbligatoria quando le notifiche email sono abilitate.",
+          title: t("common.error"),
+          description: t("config.validation.passwordRequired"),
           variant: "destructive",
         });
         return;
       }
       if (!emailConfig.from.trim()) {
         toast({
-          title: "Errore di validazione",
-          description:
-            "L'indirizzo mittente è obbligatorio quando le notifiche email sono abilitate.",
+          title: t("common.error"),
+          description: t("config.validation.fromRequired"),
           variant: "destructive",
         });
         return;
       }
       if (emailConfig.to.length === 0) {
         toast({
-          title: "Errore di validazione",
-          description:
-            "Almeno un destinatario è obbligatorio quando le notifiche email sono abilitate.",
+          title: t("common.error"),
+          description: t("config.validation.recipientRequired"),
           variant: "destructive",
         });
         return;
@@ -298,15 +289,15 @@ export const ConfigManager = () => {
       const response = await authService.updateMailConfig(emailConfig);
       if (response.success) {
         toast({
-          title: "Configurazione email salvata",
+          title: t("common.success"),
           description: response.message,
         });
       }
     } catch (error: any) {
       console.error("Errore salvataggio configurazione email:", error);
       toast({
-        title: "Errore",
-        description: `Errore durante il salvataggio della configurazione email: ${error.message}`,
+        title: t("common.error"),
+        description: `${t("config.errorSavingEmailConfig")}: ${error.message}`,
         variant: "destructive",
       });
     }
@@ -324,8 +315,8 @@ export const ConfigManager = () => {
       await authService.updateSecureConfig(pendingSecureConfig);
 
       toast({
-        title: "Riavvio richiesto",
-        description: "Il backend verrà riavviato tra pochi secondi...",
+        title: t("config.restartRequired"),
+        description: t("config.restartRequiredDesc"),
         variant: "default",
       });
 
@@ -333,10 +324,9 @@ export const ConfigManager = () => {
     } catch (err: any) {
       setSecureConfig(previousSecureConfig);
       const message =
-        err?.response?.data?.detail ||
-        "Errore durante il salvataggio della configurazione";
+        err?.response?.data?.detail || t("config.errorDuringSaving");
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: message,
         variant: "destructive",
       });
@@ -354,18 +344,16 @@ export const ConfigManager = () => {
     try {
       await authService.updateSecureConfig(pendingSecureConfig);
       toast({
-        title: "Modifiche salvate",
-        description:
-          "Le modifiche alle impostazioni di sicurezza sono state salvate. Avranno effetto al prossimo riavvio del backend.",
+        title: t("config.changesSaved"),
+        description: t("config.changesSavedDesc"),
         variant: "default",
       });
     } catch (err: any) {
       setSecureConfig(previousSecureConfig);
       const message =
-        err?.response?.data?.detail ||
-        "Errore durante il salvataggio della configurazione";
+        err?.response?.data?.detail || t("config.errorDuringSaving");
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: message,
         variant: "destructive",
       });
@@ -385,14 +373,14 @@ export const ConfigManager = () => {
       const response = await authService.updateSecureConfig(secureConfig);
       if (response.success) {
         toast({
-          title: "Configurazione sicurezza salvata",
+          title: t("config.secureCookieSavedSuccessfully"),
           description: response.message,
         });
       }
     } catch (error: any) {
       console.error("Errore salvataggio configurazione sicurezza:", error);
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: `Errore durante il salvataggio: ${error.message}`,
         variant: "destructive",
       });
@@ -412,8 +400,8 @@ export const ConfigManager = () => {
 
   const confirmDisableSecureCookies = () => {
     toast({
-      title: "Attenzione",
-      description: "Procedi alla conferma per disabilitare i cookie sicuri.",
+      title: t("common.warning"),
+      description: t("config.proceedToDisableSecureCookies"),
       variant: "default",
     });
     setShowSecureCookiesWarning(false);
@@ -463,8 +451,8 @@ export const ConfigManager = () => {
           .updateSystemConfig(newConfig)
           .then(() => {
             toast({
-              title: "Configurazione salvata automaticamente",
-              description: "La modifica è stata salvata.",
+              title: t("config.autoSavedSuccessfully"),
+              description: t("config.changedSaved"),
             });
           })
           .catch((error: any) => {
@@ -473,8 +461,8 @@ export const ConfigManager = () => {
               error,
             );
             toast({
-              title: "Errore",
-              description: `Errore durante il salvataggio automatico della configurazione: ${error.message}`,
+              title: t("common.error"),
+              description: `${t("config.errorAutoSaving")}: ${error.message}`,
               variant: "destructive",
             });
           });
@@ -499,16 +487,15 @@ export const ConfigManager = () => {
       });
       if (response.success) {
         toast({
-          title: "Configurazione email aggiornata",
-          description:
-            "Lo stato delle notifiche email è stato salvato con successo.",
+          title: t("config.emailNotificationsUpdated"),
+          description: t("config.emailNotificationsUpdatedDesc"),
         });
       }
     } catch (error: any) {
       console.error("Errore durante l'aggiornamento automatico:", error);
       toast({
-        title: "Attenzione",
-        description: `Compila tutti i campi`,
+        title: t("common.warning"),
+        description: t("config.completeAllFields"),
         variant: "destructive",
       });
     }
@@ -549,17 +536,16 @@ export const ConfigManager = () => {
         .updateSystemConfig(newConfig)
         .then(() => {
           toast({
-            title: "Attenzione",
-            description:
-              "L'opzione 'Ignora whitelist' è stata abilitata e salvata. Tutti gli IP saranno soggetti a monitoraggio.",
+            title: t("common.warning"),
+            description: t("config.ignoreWhitelistEnabledMessage"),
             variant: "destructive",
           });
         })
         .catch((error: any) => {
           console.error("Errore salvataggio automatico configurazione:", error);
           toast({
-            title: "Errore",
-            description: `Errore durante il salvataggio automatico della configurazione: ${error.message}`,
+            title: t("common.error"),
+            description: `${t("config.errorAutoSaving")}: ${error.message}`,
             variant: "destructive",
           });
         });
@@ -617,8 +603,8 @@ export const ConfigManager = () => {
       <div className="flex items-center justify-center p-8">
         <div className="text-slate-400">
           {isLoading
-            ? "Caricamento configurazione..."
-            : "Configurazione non disponibile"}
+            ? t("config.loadingConfig")
+            : t("config.configNotAvailable")}
         </div>
       </div>
     );
@@ -637,10 +623,10 @@ export const ConfigManager = () => {
                 <div>
                   <CardTitle className="text-white flex items-center">
                     <Settings className="h-5 w-5 mr-2 text-blue-400" />
-                    Configurazione Sistema
+                    {t("config.title")}
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Gestisci i parametri del sistema NGINX Shield
+                    {t("config.description")}
                   </CardDescription>
                 </div>
                 <div className="flex space-x-2">
@@ -654,7 +640,7 @@ export const ConfigManager = () => {
                     <RefreshCw
                       className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`}
                     />
-                    Ricarica
+                    {t("common.refresh")}
                   </Button>
                   <Button
                     onClick={saveConfig}
@@ -662,7 +648,7 @@ export const ConfigManager = () => {
                     className="bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     <Save className="h-4 w-4 mr-2" />
-                    Salva
+                    {t("common.save")}
                   </Button>
                 </div>
               </div>
@@ -670,15 +656,15 @@ export const ConfigManager = () => {
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-white">
-                  Configurazione Base
+                  {t("config.basicConfiguration")}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="log_dir" className="text-slate-300">
-                      Directory Log
+                      {t("config.logDirectory")}
                       {config.is_docker && (
                         <span className="text-xs text-yellow-400 ml-2">
-                          (Configurabile via bind mount in Docker)
+                          ({t("config.dockerBindMount")})
                         </span>
                       )}
                     </Label>
@@ -696,7 +682,7 @@ export const ConfigManager = () => {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="jail_name" className="text-slate-300">
-                      Nome Jail Fail2Ban
+                      {t("config.jailName")}
                     </Label>
                     <Input
                       id="jail_name"
@@ -712,7 +698,7 @@ export const ConfigManager = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="max_requests" className="text-slate-300">
-                      Max Richieste
+                      {t("config.maxRequests")}
                     </Label>
                     <Input
                       id="max_requests"
@@ -728,7 +714,7 @@ export const ConfigManager = () => {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="time_frame" className="text-slate-300">
-                      Finestra Temporale (secondi)
+                      {t("config.timeFrame")}
                     </Label>
                     <Input
                       id="time_frame"
@@ -747,11 +733,10 @@ export const ConfigManager = () => {
                     <div className="space-y-2 p-4 bg-slate-900/30 rounded-lg border border-slate-700">
                       <h3 className="text-lg font-medium text-white flex items-center">
                         <CheckCircle className="h-5 w-5 mr-2 text-green-400" />
-                        Codici HTTP a Bassa Criticità
+                        {t("config.lowCriticalityCodes")}
                       </h3>
                       <p className="text-xs text-slate-500 mb-2">
-                        Questi codici indicano solitamente interazioni riuscite
-                        o informative. Selezionali per consentirli.
+                        {t("config.lowCriticalityDesc")}
                       </p>
                       <div className="flex flex-wrap gap-2 justify-center">
                         {lowCriticalityCodes.map((item) => (
@@ -788,11 +773,10 @@ export const ConfigManager = () => {
                     <div className="space-y-2 p-4 bg-slate-900/30 rounded-lg border border-slate-700">
                       <h3 className="text-lg font-medium text-white flex items-center">
                         <AlertTriangle className="h-5 w-5 mr-2 text-yellow-400" />
-                        Codici HTTP a Media Criticità
+                        {t("config.mediumCriticalityCodes")}
                       </h3>
                       <p className="text-xs text-slate-500 mb-2">
-                        Gestisci questi codici HTTP con cautela, specialmente se
-                        sospetti abusi. Attenzione ai possibili falsi positivi.
+                        {t("config.mediumCriticalityDesc")}
                       </p>
                       <div className="flex flex-wrap gap-2 justify-center">
                         {mediumCriticalityCodes.map((item) => (
@@ -829,13 +813,10 @@ export const ConfigManager = () => {
                     <div className="space-y-2 p-4 bg-slate-900/30 rounded-lg border border-slate-700">
                       <h3 className="text-lg font-medium text-white flex items-center">
                         <AlertTriangle className="h-5 w-5 mr-2 text-red-400" />
-                        Codici HTTP ad Alta Criticità
+                        {t("config.highCriticalityCodes")}
                       </h3>
                       <p className="text-xs text-slate-500 mb-2">
-                        Questi codici indicano problemi o potenziali attacchi.
-                        Deselezionali se vuoi che scatenino il ban, o
-                        selezionali se li consideri normali per la tua
-                        applicazione (es. 404 per risorse mancanti).
+                        {t("config.highCriticalityDesc")}
                       </p>
                       <div className="flex flex-wrap gap-2 justify-center">
                         {highCriticalityCodes.map((item) => (
@@ -874,16 +855,16 @@ export const ConfigManager = () => {
               </div>
               <div className="space-y-4 mt-6">
                 <h3 className="text-lg font-medium text-white">
-                  Opzioni Sistema
+                  {t("config.systemOptions")}
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-slate-900/30 rounded-lg">
                     <div className="flex-1">
                       <Label className="text-slate-300 text-sm font-medium">
-                        Log Whitelist
+                        {t("config.logWhitelist")}
                       </Label>
                       <p className="text-xs text-slate-500 mt-1">
-                        Registra le attività degli IP in whitelist
+                        {t("config.logWhitelistDesc")}
                       </p>
                     </div>
                     <Switch
@@ -898,14 +879,13 @@ export const ConfigManager = () => {
                   <div className="flex items-center justify-between p-3 bg-red-900/20 border border-red-700 rounded-lg">
                     <div className="flex-1">
                       <Label className="text-red-300 text-sm font-medium">
-                        Ignora Whitelist
+                        {t("config.ignoreWhitelist")}
                       </Label>
                       <p className="text-xs text-red-400 mt-1">
-                        Se abilitato, il sistema monitorerà e bannerà anche gli
-                        IP presenti nella whitelist.
+                        {t("config.ignoreWhitelistDesc")}
                         <span className="font-bold text-red-200">
                           {" "}
-                          **Usare con cautela!**
+                          {t("config.useWithCaution")}
                         </span>
                       </p>
                     </div>
@@ -920,18 +900,16 @@ export const ConfigManager = () => {
               </div>
               <div className="space-y-4 mt-6">
                 <h3 className="text-lg font-medium text-white">
-                  Configurazione Sicurezza
+                  {t("config.securityConfiguration")}
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-slate-900/30 rounded-lg border border-slate-700">
                     <div className="flex-1">
                       <Label className="text-slate-300 text-sm font-medium">
-                        Cookie Sicuri (HTTPS/Proxy)
+                        {t("config.secureCookies")}
                       </Label>
                       <p className="text-xs text-slate-500 mt-1">
-                        Quando abilitato: i cookie funzionano solo dietro proxy
-                        HTTPS. Quando disabilitato: i cookie funzionano anche su
-                        HTTP diretto.
+                        {t("config.secureCookiesDesc")}
                       </p>
                     </div>
                     <Switch
@@ -945,10 +923,7 @@ export const ConfigManager = () => {
                     <div className="p-3 bg-red-900/20 border border-red-700 rounded-lg flex items-start gap-3">
                       <AlertTriangle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
                       <p className="text-sm text-red-300">
-                        <span className="font-bold">HTTP Enabled:</span> Cookies
-                        are not secure. The system accepts direct HTTP
-                        connections via IP. Change this setting for enhanced
-                        security.
+                        {t("config.httpEnabledWarning")}
                       </p>
                     </div>
                   )}
@@ -956,7 +931,7 @@ export const ConfigManager = () => {
               </div>
               <div className="space-y-4 mt-6">
                 <h3 className="text-lg font-medium text-white">
-                  Notifiche Email
+                  {t("config.emailNotifications")}
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-slate-900/30 rounded-lg border border-slate-700">
@@ -964,11 +939,11 @@ export const ConfigManager = () => {
                       <div className="flex items-center">
                         <Mail className="h-4 w-4 mr-2 text-blue-400" />
                         <Label className="text-slate-300 text-sm font-medium">
-                          Abilita Notifiche Email
+                          {t("config.enableEmailNotifications")}
                         </Label>
                       </div>
                       <p className="text-xs text-slate-500 mt-1">
-                        Ricevi notifiche email quando vengono bannati nuovi IP
+                        {t("config.enableEmailNotificationsDesc")}
                       </p>
                     </div>
                     <div className="flex items-center space-x-3">
@@ -999,7 +974,7 @@ export const ConfigManager = () => {
                     <div className="p-4 bg-slate-900/40 rounded-lg border border-slate-600 space-y-4">
                       <div className="flex items-center justify-between mb-4">
                         <h4 className="text-md font-medium text-white">
-                          Configurazione Server SMTP
+                          {t("config.smtpServerConfig")}
                         </h4>
                         <div className="flex space-x-2">
                           <Button
@@ -1012,7 +987,7 @@ export const ConfigManager = () => {
                             <RefreshCw
                               className={`h-4 w-4 mr-2 ${isEmailLoading ? "animate-spin" : ""}`}
                             />
-                            Ricarica
+                            {t("common.refresh")}
                           </Button>
                           <Button
                             onClick={saveEmailConfig}
@@ -1021,7 +996,7 @@ export const ConfigManager = () => {
                             className="bg-green-600 hover:bg-green-700 text-white"
                           >
                             <Save className="h-4 w-4 mr-2" />
-                            Salva Email Config
+                            {t("config.saveEmailConfig")}
                           </Button>
                         </div>
                       </div>
@@ -1031,7 +1006,7 @@ export const ConfigManager = () => {
                             htmlFor="smtp_server"
                             className="text-slate-300"
                           >
-                            Server SMTP *
+                            {t("config.smtpServer")} *
                           </Label>
                           <Input
                             id="smtp_server"
@@ -1046,7 +1021,7 @@ export const ConfigManager = () => {
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="smtp_port" className="text-slate-300">
-                            Porta SMTP
+                            {t("config.smtpPort")}
                           </Label>
                           <Input
                             id="smtp_port"
@@ -1072,7 +1047,7 @@ export const ConfigManager = () => {
                           disabled={isEmailLoading}
                         />
                         <Label className="text-slate-300 text-sm">
-                          Usa TLS/STARTTLS
+                          {t("config.useTlsStarttls")}
                         </Label>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1081,7 +1056,7 @@ export const ConfigManager = () => {
                             htmlFor="email_username"
                             className="text-slate-300"
                           >
-                            Nome utente *
+                            {t("config.smtpUsername")} *
                           </Label>
                           <Input
                             id="email_username"
@@ -1099,7 +1074,7 @@ export const ConfigManager = () => {
                             htmlFor="email_password"
                             className="text-slate-300"
                           >
-                            Password *
+                            {t("common.password")} *
                           </Label>
                           <Input
                             id="email_password"
@@ -1116,7 +1091,7 @@ export const ConfigManager = () => {
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="email_from" className="text-slate-300">
-                          Indirizzo mittente *
+                          {t("config.senderAddress")} *
                         </Label>
                         <Input
                           id="email_from"
@@ -1130,7 +1105,9 @@ export const ConfigManager = () => {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-slate-300">Destinatari *</Label>
+                        <Label className="text-slate-300">
+                          {t("config.recipients")} *
+                        </Label>
                         <div className="space-y-2">
                           <div className="flex space-x-2">
                             <Input
@@ -1139,7 +1116,7 @@ export const ConfigManager = () => {
                                 setNewEmailRecipient(e.target.value)
                               }
                               className="bg-slate-900/50 border-slate-600 text-white flex-1"
-                              placeholder="Aggiungi indirizzo email destinatario"
+                              placeholder={t("config.addEmailRecipient")}
                               onKeyPress={(e) =>
                                 e.key === "Enter" && addEmailRecipient()
                               }
@@ -1184,7 +1161,7 @@ export const ConfigManager = () => {
                           htmlFor="email_subject"
                           className="text-slate-300"
                         >
-                          Oggetto email
+                          {t("config.emailSubjectLabel")}
                         </Label>
                         <Input
                           id="email_subject"
@@ -1193,7 +1170,7 @@ export const ConfigManager = () => {
                             updateEmailConfig("subject", e.target.value)
                           }
                           className="bg-slate-900/50 border-slate-600 text-white"
-                          placeholder="IP bannato"
+                          placeholder={t("config.bannedIpPlaceholder")}
                           disabled={isEmailLoading}
                         />
                       </div>
@@ -1213,16 +1190,13 @@ export const ConfigManager = () => {
             <AlertDialogContent className="bg-slate-800 border-slate-700 text-white">
               <AlertDialogHeader>
                 <AlertDialogTitle className="text-red-400">
-                  Attenzione
+                  {t("common.warning")}
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-slate-300">
-                  Sei sicuro di voler abilitare l'opzione **Ignora Whitelist**?
-                  Questo farà sì che il sistema monitori e possa bannare anche
-                  gli IP che hai esplicitamente aggiunto alla whitelist.
+                  {t("config.confirmIgnoreWhitelist")}
                   <br />
                   <br />
-                  Questa azione può portare a blocchi indesiderati di servizi o
-                  utenti legittimi.
+                  {t("config.ignoreWhitelistWarning")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -1230,13 +1204,13 @@ export const ConfigManager = () => {
                   onClick={cancelIgnoreWhitelist}
                   className="bg-white text-slate-900 border-white hover:bg-slate-100 font-medium"
                 >
-                  Annulla
+                  {t("common.cancel")}
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={confirmIgnoreWhitelist}
                   className="bg-red-600 hover:bg-red-700 text-white"
                 >
-                  Conferma e Abilita
+                  {t("config.confirmAndEnable")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -1248,21 +1222,18 @@ export const ConfigManager = () => {
             <AlertDialogContent className="bg-slate-800 border-slate-700 text-white">
               <AlertDialogHeader>
                 <AlertDialogTitle className="text-yellow-400">
-                  Attenzione sicurezza
+                  {t("config.securityWarning")}
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-slate-300">
-                  Stai per disabilitare i cookie sicuri. Questo significa:
+                  {t("config.disableSecureCookiesWarning")}
                   <br />
-                  <br />
-                  ✓ I cookie funzioneranno su HTTP diretto (accesso via IP)
-                  <br />
-                  ✗ Il sistema NON sarà protetto dietro un proxy HTTPS
-                  <br />
-                  ✗ Non idoneo se si vuole esporre il servizio pubblicamente
+                  <br />✓ {t("config.disableSecureCookiesPoint1")}
+                  <br />✗ {t("config.disableSecureCookiesPoint2")}
+                  <br />✗ {t("config.disableSecureCookiesPoint3")}
                   <br />
                   <br />
                   <span className="font-bold text-red-300">
-                    Usa questa opzione solo se sai cosa stai facendo!
+                    {t("config.useOnlyIfYouKnow")}
                   </span>
                 </AlertDialogDescription>
               </AlertDialogHeader>
@@ -1271,13 +1242,13 @@ export const ConfigManager = () => {
                   onClick={handleSecureConfigDialogClose}
                   className="bg-white text-slate-900 border-white hover:bg-slate-100 font-medium"
                 >
-                  Mantieni Sicuro
+                  {t("config.keepSecure")}
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={confirmDisableSecureCookies}
                   className="bg-red-600 hover:bg-red-700 text-white"
                 >
-                  Disabilita
+                  {t("config.disable")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -1289,22 +1260,20 @@ export const ConfigManager = () => {
             <AlertDialogContent className="bg-slate-800 border-slate-700 text-white">
               <AlertDialogHeader>
                 <AlertDialogTitle className="text-blue-400">
-                  Applicare le modifiche
+                  {t("config.applyChanges")}
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-slate-300">
-                  Le modifiche alle impostazioni di sicurezza (Cookie Sicuri)
-                  avranno effetto immediato, si consiglia comunque un riavvio
-                  del backend ma non è obbligatorio.
+                  {t("config.applyChangesDesc1")}
                   <br />
                   <br />
-                  Vuoi riavviare il backend{" "}
-                  <span className="font-semibold">ora</span> o{" "}
-                  <span className="font-semibold">dopo</span>?
+                  {t("config.applyChangesDesc2")}
+                  <span className="font-semibold">{t("config.now")}</span>{" "}
+                  {t("common.or")}{" "}
+                  <span className="font-semibold">{t("config.later")}</span>?
                   <br />
                   <br />
                   <span className="text-yellow-300">
-                    Se scegli "Ora", verrai disconnesso e dovrai eseguire
-                    nuovamente il login.
+                    {t("config.applyChangesWarning")}
                   </span>
                 </AlertDialogDescription>
               </AlertDialogHeader>
@@ -1313,19 +1282,19 @@ export const ConfigManager = () => {
                   onClick={handleSecureConfigDialogClose}
                   className="bg-slate-600 text-white border-slate-700 hover:bg-slate-700 font-medium"
                 >
-                  Annulla
+                  {t("common.cancel")}
                 </AlertDialogCancel>
                 <Button
                   onClick={handleRestartBackendLater}
                   className="bg-slate-700 text-white border-slate-600 hover:bg-slate-600 font-medium"
                 >
-                  Riavvia Dopo
+                  {t("config.restartLater")}
                 </Button>
                 <AlertDialogAction
                   onClick={handleRestartBackendNow}
                   className="bg-blue-600 hover:bg-blue-700 text-white"
                 >
-                  Riavvia Ora
+                  {t("config.restartNow")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

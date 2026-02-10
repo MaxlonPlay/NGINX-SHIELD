@@ -36,6 +36,8 @@ logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+GEOIP_LANG = os.getenv("GEOIP_LANG", "en")
+
 mail_config_path = "data/conf/mail.conf"
 mail_manager = MailConfigManager(mail_config_path)
 
@@ -219,7 +221,7 @@ DB_FILE = os.getenv(
 CONFIG_FILE = os.path.join(BASE_DIR, "..", "data", "conf", "conf.local")
 
 ban_manager = BanManager(
-    db_file=DB_FILE, config_file=CONFIG_FILE, debug_log_func=log_manager.log_operation
+    db_file=DB_FILE, config_file=CONFIG_FILE, debug_log_func=log_manager.log_operation, geoip_lang=GEOIP_LANG
 )
 
 bulk_ban_manager = BulkBanManager(

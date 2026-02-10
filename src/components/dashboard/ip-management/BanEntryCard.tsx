@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   AlertTriangle,
@@ -44,6 +45,7 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
   setConfirmingUnban,
   onBanCIDR,
 }) => {
+  const { t } = useTranslation();
   const isConfirming =
     confirmingUnban?.ip === ban.ip && confirmingUnban?.type === ban.type;
   const [confirmingCIDR, setConfirmingCIDR] = useState<{
@@ -93,7 +95,7 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
               <span
                 className="text-white font-mono text-sm bg-slate-700 px-2 py-1 rounded cursor-pointer hover:bg-slate-600 transition-colors"
                 onClick={() => onFilterClick(ban.ip)}
-                title="Clicca per filtrare per questo IP"
+                title={t("banEntry.clickToFilterIP")}
               >
                 {ban.ip}
               </span>
@@ -105,28 +107,32 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                 }`}
                 onClick={() =>
                   onFilterClick(
-                    ban.type === "automatic" ? "Automatico" : "Manuale",
+                    ban.type === "automatic"
+                      ? t("banEntry.automatic")
+                      : t("banEntry.manual"),
                   )
                 }
-                title="Clicca per filtrare per tipo di ban"
+                title={t("banEntry.clickToFilterType")}
               >
-                {ban.type === "automatic" ? "Automatico" : "Manuale"}
+                {ban.type === "automatic"
+                  ? t("banEntry.automatic")
+                  : t("banEntry.manual")}
               </span>
               {ban.httpCode && (
                 <span
                   className="text-xs px-2 py-1 rounded bg-yellow-900/50 text-yellow-300 cursor-pointer hover:bg-yellow-900/70 transition-colors"
                   onClick={() => onFilterClick(`${ban.httpCode}`)}
-                  title="Clicca per filtrare per questo codice HTTP"
+                  title={t("banEntry.clickToFilterHTTPCode")}
                 >
-                  HTTP {ban.httpCode}
+                  {t("banEntry.httpCode")} {ban.httpCode}
                 </span>
               )}
               <span
                 className="text-xs px-2 py-1 rounded bg-green-900/50 text-green-300 cursor-pointer hover:bg-green-900/70 transition-colors"
                 onClick={() => onFilterClick(ban.reason)}
-                title="Clicca per filtrare per questo motivo"
+                title={t("banEntry.clickToFilterReason")}
               >
-                Motivo: {ban.reason}
+                {t("banEntry.reason")} {ban.reason}
               </span>
             </div>
             {ban.type === "automatic" && (
@@ -135,63 +141,63 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                   <span
                     className="text-xs px-2 py-1 rounded bg-orange-900/50 text-orange-300 cursor-pointer hover:bg-orange-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.domain)}
-                    title="Clicca per filtrare per questo dominio"
+                    title={t("banEntry.clickToFilterDomain")}
                   >
-                    Dominio: {ban.domain}
+                    {t("common.domain")}: {ban.domain}
                   </span>
                 )}
                 {ban.urlPath && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-cyan-900/50 text-cyan-300 cursor-pointer hover:bg-cyan-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.urlPath)}
-                    title="Clicca per filtrare per questo percorso URL"
+                    title={t("banEntry.clickToFilterURLPath")}
                   >
-                    URL Path: {ban.urlPath}
+                    {t("banEntry.urlPath")} {ban.urlPath}
                   </span>
                 )}
                 {ban.userAgent && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-pink-900/50 text-pink-300 cursor-pointer hover:bg-pink-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.userAgent)}
-                    title="Clicca per filtrare per questo User Agent"
+                    title={t("banEntry.clickToFilterUserAgent")}
                   >
-                    User Agent: {ban.userAgent}
+                    {t("banEntry.userAgent")} {ban.userAgent}
                   </span>
                 )}
                 {ban.network && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-purple-900/50 text-purple-300 cursor-pointer hover:bg-purple-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.network)}
-                    title="Clicca per filtrare per questo network"
+                    title={t("banEntry.clickToFilterNetwork")}
                   >
-                    Network: {ban.network}
+                    {t("banEntry.network")} {ban.network}
                   </span>
                 )}
                 {ban.asn && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-indigo-900/50 text-indigo-300 cursor-pointer hover:bg-indigo-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.asn)}
-                    title="Clicca per filtrare per questo ASN"
+                    title={t("banEntry.clickToFilterASN")}
                   >
-                    ASN: {ban.asn}
+                    {t("banEntry.asn")} {ban.asn}
                   </span>
                 )}
                 {ban.organization && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-teal-900/50 text-teal-300 cursor-pointer hover:bg-teal-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.organization)}
-                    title="Clicca per filtrare per questa organizzazione"
+                    title={t("banEntry.clickToFilterOrganization")}
                   >
-                    Organizzazione: {ban.organization}
+                    {t("banEntry.organization")} {ban.organization}
                   </span>
                 )}
                 {ban.country && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-lime-900/50 text-lime-300 cursor-pointer hover:bg-lime-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.country)}
-                    title="Clicca per filtrare per questo paese"
+                    title={t("banEntry.clickToFilterCountry")}
                   >
-                    Paese: {ban.country}
+                    {t("banEntry.country")} {ban.country}
                   </span>
                 )}
               </div>
@@ -202,44 +208,48 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                   <span
                     className="text-xs px-2 py-1 rounded bg-purple-900/50 text-purple-300 cursor-pointer hover:bg-purple-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.network)}
-                    title="Clicca per filtrare per questo network"
+                    title={t("banEntry.clickToFilterNetwork")}
                   >
-                    Network: {ban.network}
+                    {t("banEntry.network")} {ban.network}
                   </span>
                 )}
                 {ban.asn && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-indigo-900/50 text-indigo-300 cursor-pointer hover:bg-indigo-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.asn)}
-                    title="Clicca per filtrare per questo ASN"
+                    title={t("banEntry.clickToFilterASN")}
                   >
-                    ASN: {ban.asn}
+                    {t("banEntry.asn")} {ban.asn}
                   </span>
                 )}
                 {ban.organization && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-teal-900/50 text-teal-300 cursor-pointer hover:bg-teal-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.organization)}
-                    title="Clicca per filtrare per questa organizzazione"
+                    title={t("banEntry.clickToFilterOrganization")}
                   >
-                    Organizzazione: {ban.organization}
+                    {t("banEntry.organization")} {ban.organization}
                   </span>
                 )}
                 {ban.country && (
                   <span
                     className="text-xs px-2 py-1 rounded bg-lime-900/50 text-lime-300 cursor-pointer hover:bg-lime-900/70 transition-colors"
                     onClick={() => onFilterClick(ban.country)}
-                    title="Clicca per filtrare per questo paese"
+                    title={t("banEntry.clickToFilterCountry")}
                   >
-                    Paese: {ban.country}
+                    {t("banEntry.country")} {ban.country}
                   </span>
                 )}
               </div>
             )}
             <p className="text-slate-500 text-xs mt-2">
-              Bannato: {new Date(ban.timestamp).toLocaleDateString("it-IT")}{" "}
+              {t("banEntry.bannedAt")}{" "}
+              {new Date(ban.timestamp).toLocaleDateString("it-IT")}{" "}
               {new Date(ban.timestamp).toLocaleTimeString("it-IT")} (
-              {getTimeAgo(ban.timestamp)})
+              {getTimeAgo(ban.timestamp, (key, options) =>
+                t(`time.${key}`, options),
+              )}
+              )
             </p>
           </div>
         </div>
@@ -253,7 +263,7 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
               className="text-red-400 hover:text-red-300 hover:bg-red-900/20 transition-colors duration-200 ease-in-out"
             >
               <Shield className="h-4 w-4 mr-1" />
-              Banna CIDR
+              {t("banEntry.banCIDR")}
             </Button>
           )}
           {isConfirming ? (
@@ -265,7 +275,7 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                 disabled={isLoading}
                 className="text-red-400 hover:text-red-300 hover:bg-red-900/20 transition-colors duration-200 ease-in-out"
               >
-                Conferma
+                {t("common.confirm")}
               </Button>
               <Button
                 variant="ghost"
@@ -273,7 +283,7 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                 onClick={() => setConfirmingUnban(null)}
                 className="text-slate-400 hover:text-slate-300 transition-colors duration-200 ease-in-out"
               >
-                Annulla
+                {t("common.cancel")}
               </Button>
             </>
           ) : (
@@ -285,7 +295,7 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
               className="text-green-400 hover:text-green-300 hover:bg-green-900/20 transition-colors duration-200 ease-in-out"
             >
               <Trash2 className="h-4 w-4 mr-1" />
-              Sblocca
+              {t("banEntry.unblock")}
             </Button>
           )}
         </div>
@@ -298,10 +308,10 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
             <CardHeader className="pb-4">
               <CardTitle className="text-white flex items-center">
                 <Shield className="h-6 w-6 mr-2 text-yellow-400" />
-                Conferma Ban CIDR
+                {t("cidrBan.confirmBanTitle")}
               </CardTitle>
               <CardDescription className="text-slate-400">
-                Sei sicuro di voler bannare l'intera rete CIDR?
+                {t("cidrBan.confirmBanDescription")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -316,14 +326,16 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                   {confirmingCIDR.asn && (
                     <div className="flex items-center text-slate-300 text-sm">
                       <MapPin className="h-4 w-4 mr-2 text-slate-400 flex-shrink-0" />
-                      <span className="font-medium">ASN:</span>
+                      <span className="font-medium">{t("banEntry.asn")}</span>
                       <span className="ml-2">{confirmingCIDR.asn}</span>
                     </div>
                   )}
                   {confirmingCIDR.organization && (
                     <div className="flex items-center text-slate-300 text-sm">
                       <Building className="h-4 w-4 mr-2 text-slate-400 flex-shrink-0" />
-                      <span className="font-medium">Organizzazione:</span>
+                      <span className="font-medium">
+                        {t("banEntry.organization")}
+                      </span>
                       <span className="ml-2">
                         {confirmingCIDR.organization}
                       </span>
@@ -332,7 +344,9 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                   {confirmingCIDR.country && (
                     <div className="flex items-center text-slate-300 text-sm">
                       <Globe className="h-4 w-4 mr-2 text-slate-400 flex-shrink-0" />
-                      <span className="font-medium">Paese:</span>
+                      <span className="font-medium">
+                        {t("banEntry.country")}
+                      </span>
                       <span className="ml-2">{confirmingCIDR.country}</span>
                     </div>
                   )}
@@ -345,7 +359,7 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                   disabled={isBanningCIDR}
                   className="text-slate-400 hover:text-slate-300 hover:bg-slate-700 transition-colors duration-200"
                 >
-                  Annulla
+                  {t("common.cancel")}
                 </Button>
                 <Button
                   onClick={handlePerformCIDRBan}
@@ -355,12 +369,12 @@ const BanEntryCard: FC<BanEntryCardProps> = ({
                   {isBanningCIDR ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Bannando...
+                      {t("common.banning")}
                     </>
                   ) : (
                     <>
                       <Shield className="h-4 w-4 mr-2" />
-                      Conferma Ban
+                      {t("buttons.confirmBan")}
                     </>
                   )}
                 </Button>

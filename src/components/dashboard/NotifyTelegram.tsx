@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,6 +40,7 @@ interface NotifyTelegramProps {
 export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
   onReloadAll,
 }) => {
+  const { t } = useTranslation();
   const [telegramConfig, setTelegramConfig] = useState<TelegramConfig>({
     enabled: false,
     bot_token: "",
@@ -69,9 +71,8 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
     setTimeout(() => {
       setIsTelegramLoading(false);
       toast({
-        title: "Configurazione Telegram aggiornata",
-        description:
-          "Lo stato delle notifiche Telegram è stato salvato con successo.",
+        title: t("telegram.messages.enabledSuccess"),
+        description: t("telegram.messages.enabledSuccessDesc"),
       });
     }, 500);
   };
@@ -87,8 +88,8 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
   const saveTelegramConfig = async () => {
     if (!telegramConfig.bot_token || !telegramConfig.chat_id) {
       toast({
-        title: "Errore di validazione",
-        description: "Bot Token e Chat ID sono obbligatori.",
+        title: t("telegram.messages.validationError"),
+        description: t("telegram.messages.requiredFieldsError"),
         variant: "destructive",
       });
       return;
@@ -99,8 +100,8 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
     setTimeout(() => {
       setIsTelegramLoading(false);
       toast({
-        title: "Configurazione Telegram salvata",
-        description: "La configurazione Telegram è stata salvata con successo.",
+        title: t("telegram.messages.configSavedSuccess"),
+        description: t("telegram.messages.configSavedSuccessDesc"),
       });
     }, 500);
   };
@@ -108,8 +109,8 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
   const testTelegramConnection = async () => {
     if (!telegramConfig.bot_token || !telegramConfig.chat_id) {
       toast({
-        title: "Errore di validazione",
-        description: "Bot Token e Chat ID sono obbligatori per il test.",
+        title: t("telegram.messages.validationError"),
+        description: t("telegram.messages.requiredFieldsError"),
         variant: "destructive",
       });
       return;
@@ -120,8 +121,8 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
     setTimeout(() => {
       setIsTelegramLoading(false);
       toast({
-        title: "Test riuscito",
-        description: "Il messaggio di test è stato inviato con successo!",
+        title: t("telegram.messages.testSuccess"),
+        description: t("telegram.messages.testSuccessDesc"),
       });
     }, 500);
   };
@@ -129,7 +130,7 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
   return (
     <div className="space-y-4 mt-6">
       <h3 className="text-lg font-medium text-white">
-        Notifiche Telegram (WORK IN PROGRESS)
+        {t("telegram.workInProgress")}
       </h3>
       <div className="space-y-3">
         <div className="flex items-center justify-between p-3 bg-slate-900/30 rounded-lg border border-slate-700">
@@ -137,12 +138,11 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
             <div className="flex items-center">
               <Send className="h-4 w-4 mr-2 text-blue-400" />
               <Label className="text-slate-300 text-sm font-medium">
-                Abilita Notifiche Telegram
+                {t("telegram.enableNotifications")}
               </Label>
             </div>
             <p className="text-xs text-slate-500 mt-1">
-              Ricevi notifiche tramite bot Telegram quando vengono bannati nuovi
-              IP
+              {t("telegram.enableNotificationsDesc")}
             </p>
           </div>
           <div className="flex items-center space-x-3">
@@ -173,7 +173,7 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
           <div className="p-4 bg-slate-900/40 rounded-lg border border-slate-600 space-y-4">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-md font-medium text-white">
-                Configurazione Bot Telegram
+                {t("telegram.configurationTitle")}
               </h4>
               <div className="flex space-x-2">
                 <Button
@@ -186,7 +186,7 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                   <RefreshCw
                     className={`h-4 w-4 mr-2 ${isTelegramLoading ? "animate-spin" : ""}`}
                   />
-                  Ricarica
+                  {t("telegram.reload")}
                 </Button>
                 <Button
                   onClick={testTelegramConnection}
@@ -196,7 +196,7 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                   className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                 >
                   <Send className="h-4 w-4 mr-2" />
-                  Testa
+                  {t("telegram.test")}
                 </Button>
                 <Button
                   onClick={saveTelegramConfig}
@@ -205,7 +205,7 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                   className="bg-green-600 hover:bg-green-700 text-white"
                 >
                   <Save className="h-4 w-4 mr-2" />
-                  Salva Telegram Config
+                  {t("telegram.saveConfig")}
                 </Button>
               </div>
             </div>
@@ -213,12 +213,12 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
             {}
             <div className="space-y-4">
               <h5 className="text-sm font-medium text-slate-300">
-                Credenziali Bot
+                {t("telegram.credentials.title")}
               </h5>
               <div className="grid grid-cols-1 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="bot_token" className="text-slate-300">
-                    Bot Token *
+                    {t("telegram.credentials.botToken")}
                   </Label>
                   <div className="relative">
                     <Input
@@ -229,7 +229,9 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                         updateTelegramConfig("bot_token", e.target.value)
                       }
                       className="bg-slate-900/50 border-slate-600 text-white pr-10"
-                      placeholder="123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
+                      placeholder={t(
+                        "telegram.credentials.botTokenPlaceholder",
+                      )}
                       disabled={isTelegramLoading}
                     />
                     <button
@@ -246,20 +248,20 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                     </button>
                   </div>
                   <p className="text-xs text-slate-500">
-                    Ottieni il token dal{" "}
+                    {t("telegram.credentials.botTokenHelp")}{" "}
                     <a
                       href="https://t.me/BotFather"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-400 hover:underline"
                     >
-                      @BotFather
+                      {t("telegram.credentials.botTokenHelpLink")}
                     </a>
                   </p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="chat_id" className="text-slate-300">
-                    Chat ID *
+                    {t("telegram.credentials.chatId")}
                   </Label>
                   <div className="relative">
                     <Input
@@ -270,7 +272,7 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                         updateTelegramConfig("chat_id", e.target.value)
                       }
                       className="bg-slate-900/50 border-slate-600 text-white pr-10"
-                      placeholder="-1001234567890"
+                      placeholder={t("telegram.credentials.chatIdPlaceholder")}
                       disabled={isTelegramLoading}
                     />
                     <button
@@ -287,7 +289,7 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                     </button>
                   </div>
                   <p className="text-xs text-slate-500">
-                    ID della chat o gruppo dove ricevere le notifiche
+                    {t("telegram.credentials.chatIdHelp")}
                   </p>
                 </div>
               </div>
@@ -296,16 +298,16 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
             {}
             <div className="space-y-4 pt-4 border-t border-slate-600">
               <h5 className="text-sm font-medium text-slate-300">
-                Tipologia Notifiche
+                {t("telegram.notifications.title")}
               </h5>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 bg-slate-900/30 rounded-lg">
                   <div className="flex-1">
                     <Label className="text-slate-300 text-sm font-medium">
-                      Notifiche in Tempo Reale
+                      {t("telegram.notifications.realtimeTitle")}
                     </Label>
                     <p className="text-xs text-slate-500 mt-1">
-                      Ricevi una notifica immediata ad ogni ban di un IP
+                      {t("telegram.notifications.realtimeDesc")}
                     </p>
                   </div>
                   <Switch
@@ -319,10 +321,10 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                 <div className="flex items-center justify-between p-3 bg-slate-900/30 rounded-lg">
                   <div className="flex-1">
                     <Label className="text-slate-300 text-sm font-medium">
-                      Report Giornaliero
+                      {t("telegram.notifications.dailyReportTitle")}
                     </Label>
                     <p className="text-xs text-slate-500 mt-1">
-                      Ricevi un riepilogo giornaliero dei ban effettuati
+                      {t("telegram.notifications.dailyReportDesc")}
                     </p>
                   </div>
                   <Switch
@@ -336,10 +338,10 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                 <div className="flex items-center justify-between p-3 bg-slate-900/30 rounded-lg">
                   <div className="flex-1">
                     <Label className="text-slate-300 text-sm font-medium">
-                      Report Settimanale
+                      {t("telegram.notifications.weeklyReportTitle")}
                     </Label>
                     <p className="text-xs text-slate-500 mt-1">
-                      Ricevi un riepilogo settimanale dei ban effettuati
+                      {t("telegram.notifications.weeklyReportDesc")}
                     </p>
                   </div>
                   <Switch
@@ -356,17 +358,16 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
             {}
             <div className="space-y-4 pt-4 border-t border-slate-600">
               <h5 className="text-sm font-medium text-slate-300">
-                Controllo Remoto
+                {t("telegram.remoteControl.title")}
               </h5>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 bg-slate-900/30 rounded-lg">
                   <div className="flex-1">
                     <Label className="text-slate-300 text-sm font-medium">
-                      Abilita Comandi Bot
+                      {t("telegram.remoteControl.enableCommands")}
                     </Label>
                     <p className="text-xs text-slate-500 mt-1">
-                      Permetti di bannare e sbannare IP direttamente dalla chat
-                      Telegram
+                      {t("telegram.remoteControl.enableCommandsDesc")}
                     </p>
                   </div>
                   <Switch
@@ -380,36 +381,68 @@ export const NotifyTelegram: React.FC<NotifyTelegramProps> = ({
                 {telegramConfig.commands_enabled && (
                   <div className="p-3 bg-blue-900/20 border border-blue-700 rounded-lg">
                     <p className="text-xs text-blue-300 mb-2 font-medium">
-                      Comandi disponibili:
+                      {t("telegram.remoteControl.availableCommands")}
                     </p>
                     <ul className="text-xs text-blue-300 space-y-1 ml-4">
                       <li>
                         •{" "}
                         <code className="bg-slate-900/50 px-1 rounded">
-                          /ban [IP]
+                          {
+                            t("telegram.remoteControl.banCommand").split(
+                              " - ",
+                            )[0]
+                          }
                         </code>{" "}
-                        - Banna un indirizzo IP
+                        -{" "}
+                        {t("telegram.remoteControl.banCommand").split(" - ")[1]}
                       </li>
                       <li>
                         •{" "}
                         <code className="bg-slate-900/50 px-1 rounded">
-                          /unban [IP]
+                          {
+                            t("telegram.remoteControl.unbanCommand").split(
+                              " - ",
+                            )[0]
+                          }
                         </code>{" "}
-                        - Sbanna un indirizzo IP
+                        -{" "}
+                        {
+                          t("telegram.remoteControl.unbanCommand").split(
+                            " - ",
+                          )[1]
+                        }
                       </li>
                       <li>
                         •{" "}
                         <code className="bg-slate-900/50 px-1 rounded">
-                          /list
+                          {
+                            t("telegram.remoteControl.listCommand").split(
+                              " - ",
+                            )[0]
+                          }
                         </code>{" "}
-                        - Mostra gli IP attualmente bannati
+                        -{" "}
+                        {
+                          t("telegram.remoteControl.listCommand").split(
+                            " - ",
+                          )[1]
+                        }
                       </li>
                       <li>
                         •{" "}
                         <code className="bg-slate-900/50 px-1 rounded">
-                          /stats
+                          {
+                            t("telegram.remoteControl.statsCommand").split(
+                              " - ",
+                            )[0]
+                          }
                         </code>{" "}
-                        - Mostra statistiche sistema
+                        -{" "}
+                        {
+                          t("telegram.remoteControl.statsCommand").split(
+                            " - ",
+                          )[1]
+                        }
                       </li>
                     </ul>
                   </div>

@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -23,6 +24,7 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
   onBanSuccess,
   onReloadRequest,
 }) => {
+  const { t } = useTranslation();
   const [newIP, setNewIP] = useState("");
   const [banReason, setBanReason] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,8 +47,8 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
     const trimmedIP = newIP.trim();
     if (!trimmedIP) {
       toast({
-        title: "Errore di Validazione",
-        description: "L'indirizzo IP è obbligatorio.",
+        title: t("manualBan.validationError"),
+        description: t("manualBan.errors.ipRequired"),
         variant: "destructive",
       });
       return;
@@ -54,9 +56,8 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
 
     if (!validateIP(trimmedIP)) {
       toast({
-        title: "Errore di Validazione",
-        description:
-          "Formato IP non valido (es. 192.168.1.1, 192.168.1.0/24, o IPv6).",
+        title: t("manualBan.validationError"),
+        description: t("manualBan.errors.invalidIP"),
         variant: "destructive",
       });
       return;
@@ -65,9 +66,8 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
     const reason = banReason.trim();
     if (reason && reason.length < 3) {
       toast({
-        title: "Errore di Validazione",
-        description:
-          "Il motivo del ban, se inserito, deve essere di almeno 3 caratteri.",
+        title: t("manualBan.validationError"),
+        description: t("manualBan.errors.reasonTooShort"),
         variant: "destructive",
       });
       return;
@@ -76,7 +76,7 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
     setIsSubmitting(true);
 
     try {
-      const finalReason = reason || "Ban manuale dal pannello";
+      const finalReason = reason || t("manualBan.defaultReason");
 
       console.log(
         `Tentativo ban IP: ${trimmedIP} con motivo: "${finalReason}"`,
@@ -88,8 +88,8 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
       setBanReason("");
 
       toast({
-        title: "Operazione Completata",
-        description: `L'IP ${trimmedIP} è stato bannato con successo.`,
+        title: t("manualBan.success.title"),
+        description: t("manualBan.success.description", { ip: trimmedIP }),
         variant: "default",
       });
 
@@ -107,7 +107,7 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
       }
 
       toast({
-        title: "Operazione Fallita",
+        title: t("manualBan.error.title"),
         description: description,
         variant: "destructive",
       });
@@ -134,18 +134,17 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
       <CardHeader>
         <CardTitle className="text-white flex items-center">
           <Ban className="h-5 w-5 mr-2 text-red-400" />
-          Ban Manuale IP
+          {t("manualBan.title")}
         </CardTitle>
         <CardDescription className="text-slate-400">
-          Banna un IP o un intervallo CIDR manualmente. Il motivo è opzionale ma
-          raccomandato.
+          {t("manualBan.description")}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="md:col-span-1">
             <Input
-              placeholder="IP o CIDR (es. 192.168.1.1)"
+              placeholder={t("manualBan.ipPlaceholder")}
               value={newIP}
               onChange={(e) => setNewIP(e.target.value)}
               className="bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-400"
@@ -157,13 +156,15 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
               }}
             />
             {newIP.trim() && !validateIP(newIP.trim()) && (
-              <p className="text-xs text-red-400 mt-1">Formato IP non valido</p>
+              <p className="text-xs text-red-400 mt-1">
+                {t("manualBan.invalidIPFormat")}
+              </p>
             )}
           </div>
 
           <div className="md:col-span-1">
             <Input
-              placeholder="Motivo del ban (opzionale, min. 3 caratteri)"
+              placeholder={t("manualBan.reasonPlaceholder")}
               value={banReason}
               onChange={(e) => setBanReason(e.target.value)}
               className="bg-slate-900/50 border-slate-600 text-white placeholder:text-slate-400"
@@ -175,7 +176,9 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
               }}
             />
             {banReason.trim() && banReason.trim().length < 3 && (
-              <p className="text-xs text-red-400 mt-1">Minimo 3 caratteri</p>
+              <p className="text-xs text-red-400 mt-1">
+                {t("manualBan.minCharacters")}
+              </p>
             )}
           </div>
 
@@ -186,10 +189,10 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
           >
             <Ban className="h-4 w-4 mr-2" />
             {isSubmitting
-              ? "Bannando..."
+              ? t("manualBan.banning")
               : isLoading
-                ? "Caricamento..."
-                : "Banna IP"}
+                ? t("manualBan.loading")
+                : t("manualBan.banButton")}
           </Button>
 
           <Button
@@ -201,7 +204,7 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
             <RefreshCw
               className={`h-4 w-4 mr-2 ${isLoading || isSubmitting ? "animate-spin" : ""}`}
             />
-            Ricarica Dati
+            {t("manualBan.reloadData")}
           </Button>
         </div>
 
@@ -209,7 +212,7 @@ const ManualBanForm: FC<ManualBanFormProps> = ({
         {isSubmitting && (
           <div className="mt-3 flex items-center text-sm text-slate-400">
             <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-            Invio richiesta di ban in corso...
+            {t("manualBan.sendingRequest")}
           </div>
         )}
       </CardContent>

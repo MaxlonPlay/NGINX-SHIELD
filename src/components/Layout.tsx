@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Shield,
   ListCheck,
@@ -11,7 +12,16 @@ import {
   Monitor,
   UserRoundCog,
   Filter,
+  Languages,
+  Check,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { Dashboard } from "./dashboard/Dashboard";
 import { WhitelistManager } from "./dashboard/WhitelistManager";
 import { ConfigManager } from "./dashboard/ConfigManager";
@@ -26,47 +36,75 @@ interface LayoutProps {
 }
 
 export const Layout = ({ onLogout }: LayoutProps) => {
+  const { t, i18n } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState("/");
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+
+  const availableLanguages = [
+    { code: "it", name: "Italiano", flag: "🇮🇹" },
+    { code: "en", name: "English", flag: "🇬🇧" },
+    { code: "es", name: "Español", flag: "🇪🇸" },
+    { code: "fr", name: "Français", flag: "🇫🇷" },
+    { code: "de", name: "Deutsch", flag: "🇩🇪" },
+    { code: "ar", name: "العربية", flag: "🇸🇦" },
+    { code: "ch", name: "中文", flag: "🇨🇳" },
+    { code: "ja", name: "日本語", flag: "🇯🇵" },
+    { code: "ru", name: "Русский", flag: "🇷🇺" },
+    { code: "pt", name: "Português", flag: "🇵🇹" },
+  ];
+
+  const changeLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    setCurrentLang(langCode);
+    localStorage.setItem("nginxshield_language", langCode);
+  };
+
+  const getCurrentLanguage = () => {
+    return (
+      availableLanguages.find((lang) => lang.code === currentLang) ||
+      availableLanguages[0]
+    );
+  };
 
   const navigationItems = [
     {
-      name: "Panoramica",
+      name: t("layout.dashboard"),
       path: "/",
       icon: Shield,
     },
     {
-      name: "Gestione IP",
+      name: t("layout.ipManagement"),
       path: "/ip-management",
       icon: Ban,
     },
     {
-      name: "Whitelist",
+      name: t("layout.whitelist"),
       path: "/whitelist",
       icon: ListCheck,
     },
     {
-      name: "Configurazione",
+      name: t("layout.config"),
       path: "/config",
       icon: Settings,
     },
     {
-      name: "Pattern Manager",
+      name: t("layout.patternManager"),
       path: "/patterns",
       icon: Filter,
     },
     {
-      name: "Log Sistema",
+      name: t("layout.logViewer"),
       path: "/logs",
       icon: FileText,
     },
     {
-      name: "Stato Sistema",
+      name: t("layout.systemStatus"),
       path: "/system-status",
       icon: Monitor,
     },
     {
-      name: "Account",
+      name: t("layout.account"),
       path: "/account",
       icon: UserRoundCog,
     },
@@ -146,7 +184,9 @@ export const Layout = ({ onLogout }: LayoutProps) => {
             className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors"
           >
             <LogOut className="h-5 w-5" />
-            {sidebarOpen && <span className="font-medium">Logout</span>}
+            {sidebarOpen && (
+              <span className="font-medium">{t("auth.logout")}</span>
+            )}
           </button>
         </div>
 
@@ -174,13 +214,47 @@ export const Layout = ({ onLogout }: LayoutProps) => {
                   ?.name || "Dashboard"}
               </h2>
               <p className="text-slate-400 text-sm">
-                Sistema di protezione automatica per server web
+                {t("layout.systemProtectionDescription")}
               </p>
             </div>
             <div className="flex items-center space-x-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 px-2 text-slate-400 hover:text-white hover:bg-slate-700/50"
+                  >
+                    <Languages className="h-4 w-4 mr-1" />
+                    <span className="text-xs">{getCurrentLanguage().flag}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-slate-800 border-slate-700 w-32"
+                >
+                  {availableLanguages.map((lang) => (
+                    <DropdownMenuItem
+                      key={lang.code}
+                      onClick={() => changeLanguage(lang.code)}
+                      className="text-slate-300 hover:text-white hover:bg-slate-700/50 cursor-pointer flex items-center justify-between py-1"
+                    >
+                      <div className="flex items-center">
+                        <span className="text-sm mr-2">{lang.flag}</span>
+                        <span className="text-xs">{lang.name}</span>
+                      </div>
+                      {currentLang === lang.code && (
+                        <Check className="h-3 w-3 text-green-400" />
+                      )}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               <div className="flex items-center space-x-2 text-sm">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-slate-400">Sistema attivo</span>
+                <span className="text-slate-400">
+                  {t("layout.systemActive")}
+                </span>
               </div>
             </div>
           </div>

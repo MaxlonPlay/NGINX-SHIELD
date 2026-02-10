@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,6 +46,7 @@ interface TOTPStatus {
 export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
   className,
 }) => {
+  const { t } = useTranslation();
   const [totpStatus, setTotpStatus] = useState<TOTPStatus>({
     totp_enabled: false,
     totp_configured: false,
@@ -93,9 +95,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
     } catch (error) {
       console.error("Errore nel caricamento dello stato TOTP:", error);
       toast({
-        title: "Errore",
-        description:
-          "Impossibile caricare lo stato del 2FA. Riprova più tardi.",
+        title: t("common.error"),
+        description: t("totp.errors.loadingStatus"),
         variant: "destructive",
       });
     } finally {
@@ -126,8 +127,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
   const handleEnableTotp = async () => {
     if (!currentPassword) {
       toast({
-        title: "Errore",
-        description: "Inserisci la password corrente per continuare.",
+        title: t("common.error"),
+        description: t("totp.setup.passwordPlaceholder"),
         variant: "destructive",
       });
       return;
@@ -141,16 +142,15 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
       setShowSetupModal(true);
 
       toast({
-        title: "Successo",
-        description:
-          "QR Code generato. Configura la tua app di autenticazione e inserisci il codice di verifica.",
+        title: t("common.success"),
+        description: t("totp.errors.qrGenerated"),
       });
     } catch (error) {
       console.error("Errore durante la generazione del TOTP:", error);
       const errorMessage =
         error instanceof Error ? error.message : "Errore sconosciuto";
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: errorMessage,
         variant: "destructive",
       });
@@ -162,8 +162,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
   const handleVerifyTotp = async () => {
     if (!verificationCode || verificationCode.length !== 6) {
       toast({
-        title: "Errore",
-        description: "Inserisci un codice di verifica valido di 6 cifre.",
+        title: t("common.error"),
+        description: t("totp.errors.invalidVerification"),
         variant: "destructive",
       });
       return;
@@ -171,8 +171,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
 
     if (!verificationCode) {
       toast({
-        title: "Errore",
-        description: "Codice di verifica richiesto.",
+        title: t("common.error"),
+        description: t("totp.errors.verificationRequired"),
         variant: "destructive",
       });
       return;
@@ -191,17 +191,15 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
       await loadTotpStatus();
 
       toast({
-        title: "Successo",
-        description: "Autenticazione a due fattori abilitata con successo!",
+        title: t("common.success"),
+        description: t("totp.success.enabled"),
       });
     } catch (error) {
       console.error("Errore durante la verifica del TOTP:", error);
       const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Codice di verifica non valido";
+        error instanceof Error ? error.message : t("totp.errors.invalidTotp");
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: errorMessage,
         variant: "destructive",
       });
@@ -213,9 +211,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
   const handleDisableTotp = async () => {
     if (!disablePassword || !disableCode) {
       toast({
-        title: "Errore",
-        description:
-          "Inserisci la password corrente e il codice TOTP per disabilitare il 2FA.",
+        title: t("common.error"),
+        description: t("totp.errors.disableError"),
         variant: "destructive",
       });
       return;
@@ -223,8 +220,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
 
     if (disableCode.length !== 6) {
       toast({
-        title: "Errore",
-        description: "Inserisci un codice TOTP valido di 6 cifre.",
+        title: t("common.error"),
+        description: t("totp.errors.invalidTotpLength"),
         variant: "destructive",
       });
       return;
@@ -245,17 +242,15 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
       await loadTotpStatus();
 
       toast({
-        title: "Successo",
-        description: "Autenticazione a due fattori disabilitata.",
+        title: t("common.success"),
+        description: t("totp.success.disabled"),
       });
     } catch (error) {
       console.error("Errore durante la disabilitazione del TOTP:", error);
       const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Errore durante la disabilitazione";
+        error instanceof Error ? error.message : t("totp.errors.disableError");
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: errorMessage,
         variant: "destructive",
       });
@@ -271,8 +266,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
   const handleConfirmRegenerateBackupCodes = async () => {
     if (!regeneratePassword || !regenerateCode) {
       toast({
-        title: "Errore",
-        description: "Inserisci la password e il codice TOTP.",
+        title: t("common.error"),
+        description: t("totp.errors.regenerateError"),
         variant: "destructive",
       });
       return;
@@ -280,8 +275,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
 
     if (regenerateCode.length !== 6) {
       toast({
-        title: "Errore",
-        description: "Codice TOTP non valido.",
+        title: t("common.error"),
+        description: t("totp.errors.invalidTotp"),
         variant: "destructive",
       });
       return;
@@ -300,8 +295,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
       setRegenerateCode("");
 
       toast({
-        title: "Successo",
-        description: "Codici di backup rigenerati con successo.",
+        title: t("common.success"),
+        description: t("totp.success.backupCodesRegenerated"),
       });
     } catch (error) {
       console.error(
@@ -309,11 +304,9 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
         error,
       );
       const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Errore durante la rigenerazione";
+        error instanceof Error ? error.message : t("totp.errors.disableError");
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: errorMessage,
         variant: "destructive",
       });
@@ -327,14 +320,14 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
       await navigator.clipboard.writeText(text);
       setCopied(true);
       toast({
-        title: "Copiato",
-        description: "Testo copiato negli appunti.",
+        title: t("common.success"),
+        description: t("totp.success.copied"),
       });
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       toast({
-        title: "Errore",
-        description: "Impossibile copiare negli appunti.",
+        title: t("common.error"),
+        description: t("totp.errors.clipboardError"),
         variant: "destructive",
       });
     }
@@ -363,8 +356,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
     document.body.removeChild(element);
 
     toast({
-      title: "Download completato",
-      description: "I codici di backup sono stati scaricati.",
+      title: t("common.success"),
+      description: t("totp.success.downloaded"),
     });
   };
 
@@ -395,9 +388,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
           <CardContent className="p-6">
             <div className="flex items-center justify-center">
               <Loader2 className="h-8 w-8 animate-spin text-blue-400" />
-              <span className="ml-2 text-slate-300">
-                Caricamento stato 2FA...
-              </span>
+              <span className="ml-2 text-slate-300">{t("totp.loading")}</span>
             </div>
           </CardContent>
         </Card>
@@ -415,12 +406,12 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
             ) : (
               <Shield className="h-5 w-5 mr-2 text-yellow-400" />
             )}
-            Autenticazione a Due Fattori (TOTP)
+            {t("totp.title")}
           </CardTitle>
           <CardDescription className="text-slate-400">
             {totpStatus.totp_enabled
-              ? "L'autenticazione a due fattori è attiva e protegge il tuo account."
-              : "Aggiungi un livello extra di sicurezza al tuo account con l'autenticazione a due fattori."}
+              ? t("totp.activeDescription")
+              : t("totp.inactiveDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -432,13 +423,16 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                   <>
                     <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
                     <div>
-                      <span className="text-green-400 font-medium">Attivo</span>
+                      <span className="text-green-400 font-medium">
+                        {t("totp.status.active")}
+                      </span>
                       {totpStatus.activated_at && (
                         <p className="text-xs text-slate-400 mt-1">
-                          Attivato il{" "}
-                          {new Date(
-                            totpStatus.activated_at,
-                          ).toLocaleDateString()}
+                          {t("totp.activatedAt", {
+                            date: new Date(
+                              totpStatus.activated_at,
+                            ).toLocaleDateString(),
+                          })}
                         </p>
                       )}
                     </div>
@@ -446,7 +440,9 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                 ) : (
                   <>
                     <XCircle className="h-5 w-5 text-red-400 mr-2" />
-                    <span className="text-red-400 font-medium">Disattivo</span>
+                    <span className="text-red-400 font-medium">
+                      {t("totp.status.inactive")}
+                    </span>
                   </>
                 )}
               </div>
@@ -465,12 +461,12 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                         {isRegeneratingCodes ? (
                           <>
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Rigenerando...
+                            {t("totp.regenerating")}
                           </>
                         ) : (
                           <>
                             <RefreshCw className="h-4 w-4 mr-2" />
-                            Rigenera Codici
+                            {t("totp.regenerateBackupCodes")}
                           </>
                         )}
                       </Button>
@@ -482,7 +478,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                       className="bg-red-600 hover:bg-red-700"
                     >
                       <ShieldX className="h-4 w-4 mr-2" />
-                      Disattiva 2FA
+                      {t("totp.disable.button")}
                     </Button>
                   </>
                 ) : (
@@ -493,7 +489,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                       size="sm"
                     >
                       <ShieldCheck className="h-4 w-4 mr-2" />
-                      Attiva 2FA
+                      {t("totp.enable")}
                     </Button>
                   )
                 )}
@@ -506,20 +502,22 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
             <div className="mb-6 p-4 bg-slate-900/50 rounded-lg border border-slate-600">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
                 <QrCode className="h-5 w-5 mr-2 text-blue-400" />
-                Configurazione Autenticazione a Due Fattori
+                {t("totp.setup.title")}
               </h3>
 
               <div className="space-y-4">
                 {}
                 <div className="space-y-2">
-                  <Label className="text-slate-300">Password corrente</Label>
+                  <Label className="text-slate-300">
+                    {t("totp.setup.currentPassword")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="setup-password-input"
                       type={showPassword ? "text" : "password"}
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
-                      placeholder="Inserisci la tua password corrente"
+                      placeholder={t("totp.setup.passwordPlaceholder")}
                       className="bg-slate-900/50 border-slate-600 text-white pr-10"
                     />
                     <Button
@@ -552,12 +550,12 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                   {isEnabling ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Generando QR Code...
+                      {t("totp.setup.generatingQR")}
                     </>
                   ) : (
                     <>
                       <QrCode className="h-4 w-4 mr-2" />
-                      Genera QR Code
+                      {t("totp.setup.generateQR")}
                     </>
                   )}
                 </Button>
@@ -566,14 +564,8 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                 {qrCodeUrl && (
                   <>
                     <div className="text-slate-300 text-sm">
-                      <p className="mb-2">
-                        1. Scarica un'app di autenticazione come Google
-                        Authenticator, Authy o Microsoft Authenticator
-                      </p>
-                      <p className="mb-4">
-                        2. Scansiona il codice QR con l'app o inserisci
-                        manualmente la chiave segreta
-                      </p>
+                      <p className="mb-2">{t("totp.setup.instruction1")}</p>
+                      <p className="mb-4">{t("totp.setup.instruction2")}</p>
                     </div>
 
                     {}
@@ -588,7 +580,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     {}
                     <div className="space-y-2">
                       <Label className="text-slate-300">
-                        Chiave segreta (configurazione manuale)
+                        {t("totp.setup.secretKeyLabel")}
                       </Label>
                       <div className="flex items-center space-x-2">
                         <Input
@@ -615,7 +607,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     {}
                     <div className="space-y-2">
                       <Label className="text-slate-300">
-                        Codice di verifica dall'app
+                        {t("totp.setup.verificationCodeLabel")}
                       </Label>
                       <div className="flex items-center space-x-2">
                         <Input
@@ -625,7 +617,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                               e.target.value.replace(/\D/g, "").slice(0, 6),
                             )
                           }
-                          placeholder="123456"
+                          placeholder={t("totp.setup.codePlaceholder")}
                           className="bg-slate-900/50 border-slate-600 text-white font-mono text-center"
                           maxLength={6}
                         />
@@ -641,12 +633,12 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                           {isVerifying ? (
                             <>
                               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                              Verificando...
+                              {t("totp.setup.verifying")}
                             </>
                           ) : (
                             <>
                               <Key className="h-4 w-4 mr-2" />
-                              Attiva
+                              {t("totp.setup.activate")}
                             </>
                           )}
                         </Button>
@@ -660,7 +652,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                   variant="outline"
                   className="w-full bg-white text-slate-900 border-white hover:bg-slate-100 font-medium"
                 >
-                  Annulla
+                  {t("totp.setup.cancel")}
                 </Button>
               </div>
             </div>
@@ -671,31 +663,29 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
             <div className="mb-6 p-4 bg-red-900/20 rounded-lg border border-red-600">
               <h3 className="text-lg font-semibold text-red-400 mb-4 flex items-center">
                 <ShieldX className="h-5 w-5 mr-2" />
-                Disabilita Autenticazione a Due Fattori
+                {t("totp.disable.title")}
               </h3>
 
               <div className="space-y-4">
                 <div className="text-red-200 text-sm mb-4">
                   <p className="flex items-center mb-2">
-                    <AlertTriangle className="h-4 w-4 mr-2" /> Stai per
-                    disabilitare l'autenticazione a due fattori. Il tuo account
-                    sarà meno sicuro.
+                    <AlertTriangle className="h-4 w-4 mr-2" />{" "}
+                    {t("totp.disable.warning")}
                   </p>
-                  <p>
-                    Per confermare, inserisci la tua password corrente e un
-                    codice TOTP valido.
-                  </p>
+                  <p>{t("totp.disable.confirmation")}</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-slate-300">Password corrente</Label>
+                  <Label className="text-slate-300">
+                    {t("totp.disable.passwordLabel")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="disable-password-input"
                       type={showDisablePassword ? "text" : "password"}
                       value={disablePassword}
                       onChange={(e) => setDisablePassword(e.target.value)}
-                      placeholder="Password corrente"
+                      placeholder={t("totp.setup.passwordPlaceholder")}
                       className="bg-slate-900/50 border-slate-600 text-white pr-10"
                     />
                     <Button
@@ -721,7 +711,9 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-slate-300">Codice TOTP</Label>
+                  <Label className="text-slate-300">
+                    {t("totp.disable.codeLabel")}
+                  </Label>
                   <Input
                     value={disableCode}
                     onChange={(e) =>
@@ -729,7 +721,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                         e.target.value.replace(/\D/g, "").slice(0, 6),
                       )
                     }
-                    placeholder="123456"
+                    placeholder={t("totp.setup.codePlaceholder")}
                     className="bg-slate-900/50 border-slate-600 text-white font-mono text-center"
                     maxLength={6}
                   />
@@ -749,12 +741,12 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     {isDisabling ? (
                       <>
                         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Disattivando...
+                        {t("totp.disable.disabling")}
                       </>
                     ) : (
                       <>
                         <ShieldX className="h-4 w-4 mr-2" />
-                        Disattiva 2FA
+                        {t("totp.disable.button")}
                       </>
                     )}
                   </Button>
@@ -763,7 +755,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     variant="outline"
                     className="flex-1 bg-white text-slate-900 border-white hover:bg-slate-100 font-medium"
                   >
-                    Annulla
+                    {t("totp.setup.cancel")}
                   </Button>
                 </div>
               </div>
@@ -775,26 +767,25 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
             <div className="mb-6 p-4 bg-blue-900/20 rounded-lg border border-blue-600">
               <h3 className="text-lg font-semibold text-blue-400 mb-4 flex items-center">
                 <RefreshCw className="h-5 w-5 mr-2" />
-                Rigenera Codici di Backup
+                {t("totp.regenerate.title")}
               </h3>
 
               <div className="space-y-4">
                 <div className="text-blue-200 text-sm mb-4">
-                  <p>
-                    Per rigenerare i codici di backup, inserisci la tua password
-                    corrente e il codice TOTP.
-                  </p>
+                  <p>{t("totp.regenerate.description")}</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-slate-300">Password corrente</Label>
+                  <Label className="text-slate-300">
+                    {t("totp.regenerate.passwordLabel")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="regenerate-password-input"
                       type={showRegeneratePassword ? "text" : "password"}
                       value={regeneratePassword}
                       onChange={(e) => setRegeneratePassword(e.target.value)}
-                      placeholder="Password corrente"
+                      placeholder={t("totp.setup.passwordPlaceholder")}
                       className="bg-slate-900/50 border-slate-600 text-white pr-10"
                     />
                     <Button
@@ -820,7 +811,9 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-slate-300">Codice TOTP</Label>
+                  <Label className="text-slate-300">
+                    {t("totp.regenerate.codeLabel")}
+                  </Label>
                   <Input
                     value={regenerateCode}
                     onChange={(e) =>
@@ -828,7 +821,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                         e.target.value.replace(/\D/g, "").slice(0, 6),
                       )
                     }
-                    placeholder="123456"
+                    placeholder={t("totp.setup.codePlaceholder")}
                     className="bg-slate-900/50 border-slate-600 text-white font-mono text-center"
                     maxLength={6}
                   />
@@ -847,12 +840,12 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     {isRegeneratingCodes ? (
                       <>
                         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Rigenerando...
+                        {t("totp.regenerate.regenerating")}
                       </>
                     ) : (
                       <>
                         <RefreshCw className="h-4 w-4 mr-2" />
-                        Rigenera
+                        {t("totp.regenerate.button")}
                       </>
                     )}
                   </Button>
@@ -861,7 +854,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     variant="outline"
                     className="flex-1 bg-white text-slate-900 border-white hover:bg-slate-100 font-medium"
                   >
-                    Annulla
+                    {t("totp.setup.cancel")}
                   </Button>
                 </div>
               </div>
@@ -873,31 +866,31 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
             <div className="mb-6 p-4 bg-amber-900/20 rounded-lg border border-amber-600">
               <h3 className="text-lg font-semibold text-amber-400 mb-4 flex items-center">
                 <AlertTriangle className="h-5 w-5 mr-2" />
-                Codici di Backup - Salvali Immediatamente!
+                {t("totp.backupCodes.title")}
               </h3>
 
               <div className="space-y-3">
                 <div className="p-3 bg-amber-900/30 rounded border border-amber-700">
                   <p className="text-amber-200 text-sm font-medium mb-2 flex items-center">
                     <AlertTriangle className="h-4 w-4 mr-2" />
-                    IMPORTANTE: Salva questi codici in un posto sicuro!
+                    {t("totp.backupCodes.warning")}
                   </p>
                   <ul className="text-amber-200 text-sm space-y-1">
                     <li className="flex items-center">
-                      <CheckCircle className="h-3 w-3 mr-2" /> Questi codici
-                      possono essere usati una sola volta
+                      <CheckCircle className="h-3 w-3 mr-2" />{" "}
+                      {t("totp.backupCodes.info1")}
                     </li>
                     <li className="flex items-center">
-                      <CheckCircle className="h-3 w-3 mr-2" /> Usali solo se
-                      perdi l'accesso alla tua app di autenticazione
+                      <CheckCircle className="h-3 w-3 mr-2" />{" "}
+                      {t("totp.backupCodes.info2")}
                     </li>
                     <li className="flex items-center">
-                      <AlertTriangle className="h-3 w-3 mr-2" /> Non
-                      condividerli con nessuno
+                      <AlertTriangle className="h-3 w-3 mr-2" />{" "}
+                      {t("totp.backupCodes.info3")}
                     </li>
                     <li className="flex items-center">
-                      <CheckCircle className="h-3 w-3 mr-2" /> Conservali in un
-                      password manager o stampa una copia fisica
+                      <CheckCircle className="h-3 w-3 mr-2" />{" "}
+                      {t("totp.backupCodes.info4")}
                     </li>
                   </ul>
                 </div>
@@ -924,7 +917,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     className="bg-amber-500 hover:bg-amber-600 text-white"
                   >
                     <Copy className="h-4 w-4 mr-2" />
-                    Copia Tutti i Codici
+                    {t("totp.backupCodes.copyAll")}
                   </Button>
                   <Button
                     onClick={downloadBackupCodes}
@@ -932,7 +925,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     className="bg-blue-500 hover:bg-blue-600 text-white"
                   >
                     <Download className="h-4 w-4 mr-2" />
-                    Scarica File .txt
+                    {t("totp.backupCodes.downloadTxt")}
                   </Button>
                   <Button
                     onClick={() => setShowBackupCodes(false)}
@@ -940,7 +933,7 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
                     className="bg-green-500 hover:bg-green-600 text-white"
                   >
                     <CheckCircle className="h-4 w-4 mr-2" />
-                    Ho Salvato i Codici
+                    {t("totp.backupCodes.saved")}
                   </Button>
                 </div>
               </div>
@@ -953,27 +946,26 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
               <div className="p-4 bg-green-900/20 rounded-lg border border-green-700">
                 <h4 className="text-green-400 font-medium flex items-center mb-2">
                   <CheckCircle className="h-4 w-4 mr-2" />
-                  Il tuo account è protetto
+                  {t("totp.protectionInfo.title")}
                 </h4>
                 <div className="text-green-200 text-sm space-y-1">
                   <p className="flex items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" /> Autenticazione a
-                    due fattori attiva
+                    <CheckCircle className="h-4 w-4 mr-2" />{" "}
+                    {t("totp.protectionInfo.line1")}
                   </p>
                   <p className="flex items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" /> Codici TOTP
-                    richiesti per l'accesso
+                    <CheckCircle className="h-4 w-4 mr-2" />{" "}
+                    {t("totp.protectionInfo.line2")}
                   </p>
                   {totpStatus.has_backup_codes && (
                     <p className="flex items-center">
-                      <CheckCircle className="h-4 w-4 mr-2" /> Codici di backup
-                      disponibili
+                      <CheckCircle className="h-4 w-4 mr-2" />{" "}
+                      {t("totp.protectionInfo.line3")}
                     </p>
                   )}
                   <p className="text-green-300 mt-2 flex items-center">
                     <Lock className="h-3 w-3 inline mr-1" />
-                    Ricorda: mantieni sempre aggiornata la tua app di
-                    autenticazione
+                    {t("totp.protectionInfo.reminder")}
                   </p>
                 </div>
               </div>
@@ -981,20 +973,20 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
               <div className="p-4 bg-yellow-900/20 rounded-lg border border-yellow-700">
                 <h4 className="text-yellow-400 font-medium flex items-center mb-2">
                   <AlertTriangle className="h-4 w-4 mr-2" />
-                  Migliora la sicurezza del tuo account
+                  {t("totp.securityTip.title")}
                 </h4>
                 <div className="text-yellow-200 text-sm space-y-1">
                   <p className="flex items-center">
-                    <AlertTriangle className="h-4 w-4 mr-2" /> L'autenticazione
-                    a due fattori aggiunge un livello extra di protezione
+                    <AlertTriangle className="h-4 w-4 mr-2" />{" "}
+                    {t("totp.securityTip.line1")}
                   </p>
                   <p className="flex items-center">
-                    <AlertTriangle className="h-4 w-4 mr-2" /> Protegge il tuo
-                    account anche se qualcuno scopre la tua password
+                    <AlertTriangle className="h-4 w-4 mr-2" />{" "}
+                    {t("totp.securityTip.line2")}
                   </p>
                   <p className="flex items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" /> È gratuita e
-                    richiede solo un'app sul tuo smartphone
+                    <CheckCircle className="h-4 w-4 mr-2" />{" "}
+                    {t("totp.securityTip.line3")}
                   </p>
                 </div>
               </div>
@@ -1003,27 +995,29 @@ export const TOTPConfiguration: React.FC<TOTPConfigurationProps> = ({
             {}
             <div className="p-4 bg-slate-900/30 rounded-lg border border-slate-700">
               <h4 className="text-slate-300 font-medium mb-2">
-                App di autenticazione consigliate:
+                {t("totp.recommendedApps")}
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
                 <div className="text-slate-400 p-2 bg-slate-800/50 rounded">
                   <span className="font-medium text-slate-300">
-                    Google Authenticator
+                    {t("totp.appGoogle")}
                   </span>
                   <br />
-                  iOS / Android
+                  {t("totp.appPlatforms")}
                 </div>
                 <div className="text-slate-400 p-2 bg-slate-800/50 rounded">
                   <span className="font-medium text-slate-300">
-                    Microsoft Authenticator
+                    {t("totp.appMicrosoft")}
                   </span>
                   <br />
-                  iOS / Android
+                  {t("totp.appPlatforms")}
                 </div>
                 <div className="text-slate-400 p-2 bg-slate-800/50 rounded">
-                  <span className="font-medium text-slate-300">Authy</span>
+                  <span className="font-medium text-slate-300">
+                    {t("totp.appAuthy")}
+                  </span>
                   <br />
-                  Multi-dispositivo
+                  {t("totp.appMultiDevice")}
                 </div>
               </div>
             </div>

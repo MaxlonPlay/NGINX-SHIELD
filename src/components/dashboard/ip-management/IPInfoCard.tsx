@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,11 +55,12 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
     cidr: string;
   } | null>(null);
   const { toast } = useToast();
+  const { t } = useTranslation();
   if (isLoading) {
     return (
       <Card className="bg-slate-800/50 border-slate-700">
         <CardHeader>
-          <CardTitle className="text-white">Informazioni IP</CardTitle>
+          <CardTitle className="text-white">{t("ipInfo.title")}</CardTitle>
         </CardHeader>
         <CardContent className="flex items-center justify-center py-8">
           <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
@@ -71,10 +73,10 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
     return (
       <Card className="bg-slate-800/50 border-slate-700">
         <CardHeader>
-          <CardTitle className="text-white">Informazioni IP</CardTitle>
+          <CardTitle className="text-white">{t("ipInfo.title")}</CardTitle>
         </CardHeader>
         <CardContent className="text-center py-8 text-slate-400">
-          Inserisci un IP per visualizzare le informazioni
+          {t("ipInfo.noIPProvided")}
         </CardContent>
       </Card>
     );
@@ -86,8 +88,8 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
       : "bg-green-900/50 text-green-300";
   const statusText =
     info.banned_in_database || info.banned_in_fail2ban
-      ? `Bannato (${info.ban_type || "Sconosciuto"})`
-      : "Non Bannato";
+      ? `Bannato (${info.ban_type || t("ipInfo.bannedUnknown").replace("Bannato ", "")})`
+      : t("ipInfo.notBanned");
 
   const handleBanCIDRClick = async () => {
     if (!info?.network || !onBanCIDR) return;
@@ -103,7 +105,7 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
       await onBanCIDR(info.network, reason);
       setConfirmingAction(null);
     } catch (error) {
-      console.error("Errore nel ban del CIDR:", error);
+      console.error(t("ipInfo.banCIDRError"), error);
     } finally {
       setIsBanningCIDR(false);
     }
@@ -117,21 +119,25 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
       await authService.addWhitelistEntry({
         type: "cidr",
         value: info.network,
-        description: `CIDR da ricerca info - ASN: ${info.asn || "N/A"}, Org: ${info.organization || "N/A"}, Paese: ${info.country || "N/A"}`,
+        description: t("ipInfo.whitelistDescription", {
+          asn: info.asn || "N/A",
+          organization: info.organization || "N/A",
+          country: info.country || "N/A",
+        }),
       });
 
       toast({
-        title: "Aggiunto alla Whitelist",
-        description: `${info.network} è stato aggiunto alla whitelist`,
+        title: t("ipInfo.addedToWhitelist"),
+        description: `${info.network} ${t("ipInfo.addingToWhitelist")}`,
       });
 
       setConfirmingAction(null);
       onWhitelistSuccess?.();
     } catch (error: any) {
-      console.error("Errore aggiunta whitelist:", error);
-      const errorMsg = error?.message || "Errore nell'aggiunta alla whitelist";
+      console.error(t("ipInfo.whitelistError"), error);
+      const errorMsg = error?.message || t("ipInfo.whitelistError");
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: errorMsg,
         variant: "destructive",
       });
@@ -163,7 +169,9 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
             <div className="flex items-center gap-2 flex-shrink-0">
               <Globe className="w-4 h-4 text-blue-400 flex-shrink-0" />
               <div>
-                <p className="text-xs text-slate-400 font-medium">IP</p>
+                <p className="text-xs text-slate-400 font-medium">
+                  {t("ipInfo.labels.ip")}
+                </p>
                 <p className="text-xs font-mono font-semibold text-slate-100 whitespace-nowrap">
                   {info.ip}
                 </p>
@@ -178,7 +186,9 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
               <div className="flex items-center gap-2 flex-shrink-0">
                 <MapPin className="w-4 h-4 text-orange-400 flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-slate-400 font-medium">Paese</p>
+                  <p className="text-xs text-slate-400 font-medium">
+                    {t("ipInfo.labels.country")}
+                  </p>
                   <p className="text-xs font-semibold text-slate-100 whitespace-nowrap">
                     {info.country}
                   </p>
@@ -196,7 +206,9 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
               <div className="flex items-center gap-2 flex-shrink-0">
                 <Network className="w-4 h-4 text-purple-400 flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-slate-400 font-medium">Network</p>
+                  <p className="text-xs text-slate-400 font-medium">
+                    {t("ipInfo.labels.network")}
+                  </p>
                   <p className="text-xs font-mono font-semibold text-slate-100 whitespace-nowrap">
                     {info.network}
                   </p>
@@ -214,7 +226,7 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
                         }
                         disabled={isBanningCIDR || isAddingWhitelist}
                         className="h-6 w-6 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-800/50 text-white flex-shrink-0"
-                        title="Ban CIDR"
+                        title={t("ipInfo.banCIDRButton")}
                       >
                         <Ban className="w-3 h-3" />
                       </Button>
@@ -228,7 +240,7 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
                         }
                         disabled={isAddingWhitelist || isBanningCIDR}
                         className="h-6 w-6 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-800/50 text-white flex-shrink-0"
-                        title="Aggiungi CIDR a whitelist"
+                        title={t("ipInfo.addToWhitelistButton")}
                       >
                         <Shield className="w-3 h-3" />
                       </Button>
@@ -248,7 +260,9 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
               <div className="flex items-center gap-2 flex-shrink-0">
                 <Globe className="w-4 h-4 text-green-400 flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-slate-400 font-medium">ASN</p>
+                  <p className="text-xs text-slate-400 font-medium">
+                    {t("ipInfo.labels.asn")}
+                  </p>
                   <p className="text-xs font-semibold text-slate-100 whitespace-nowrap">
                     {info.asn}
                   </p>
@@ -266,7 +280,9 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
               <div className="flex items-center gap-2 flex-shrink-0">
                 <Building className="w-4 h-4 text-cyan-400 flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-slate-400 font-medium">Org</p>
+                  <p className="text-xs text-slate-400 font-medium">
+                    {t("ipInfo.labels.org")}
+                  </p>
                   <p className="text-xs font-semibold text-slate-100 whitespace-nowrap truncate max-w-xs">
                     {info.organization}
                   </p>
@@ -281,22 +297,29 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
               <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium text-red-300 flex items-center">
-                  <AlertTriangle className="w-3 h-3 mr-1" /> Ban Status
+                  <AlertTriangle className="w-3 h-3 mr-1" />{" "}
+                  {t("ipInfo.banStatus")}
                 </p>
                 <div className="text-xs text-red-300/90 space-y-1 mt-1">
                   {info.banned_in_database && (
                     <p className="flex items-center">
-                      <Database className="w-3 h-3 mr-1" /> Database: Bannato
+                      <Database className="w-3 h-3 mr-1" />{" "}
+                      {t("ipInfo.databaseBanned")}
                     </p>
                   )}
                   {info.banned_in_fail2ban && (
                     <p className="flex items-center">
-                      <Lock className="w-3 h-3 mr-1" /> Fail2ban: Bannato
+                      <Lock className="w-3 h-3 mr-1" />{" "}
+                      {t("ipInfo.fail2banBanned")}
                     </p>
                   )}
-                  {info.status && <p>• Status: {info.status}</p>}
+                  {info.status && (
+                    <p>• {t("ipInfo.status", { status: info.status })}</p>
+                  )}
                   {info.ban_reason && (
-                    <p className="mt-2">Motivo: {info.ban_reason}</p>
+                    <p className="mt-2">
+                      {t("ipInfo.reason", { ban_reason: info.ban_reason })}
+                    </p>
                   )}
                 </div>
               </div>
@@ -317,8 +340,8 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
                   <Info className="h-6 w-6 mr-2 text-blue-400" />
                 )}
                 {confirmingAction.type === "ban"
-                  ? "Conferma Ban CIDR"
-                  : "Aggiungi a Whitelist"}
+                  ? t("ipInfo.confirmBanTitle")
+                  : t("ipInfo.addToWhitelistTitle")}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -326,8 +349,8 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
                 <h4 className="text-white font-semibold mb-3 flex items-center">
                   <Network className="h-4 w-4 mr-2 text-blue-400" />
                   {confirmingAction.type === "ban"
-                    ? "CIDR da Bannare"
-                    : "CIDR da Aggiungere"}
+                    ? t("ipInfo.cidrToBan")
+                    : t("ipInfo.cidrToAdd")}
                 </h4>
                 <div className="space-y-2">
                   <div className="flex items-center">
@@ -360,8 +383,8 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
               {confirmingAction.type === "ban" && (
                 <div className="bg-red-900/20 border border-red-700/50 rounded-lg p-3">
                   <p className="text-xs text-red-300 flex items-start">
-                    <AlertTriangle className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />{" "}
-                    Questo CIDR sarà bannato nel database e in fail2ban
+                    <AlertTriangle className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />
+                    {t("ipInfo.banWarning")}
                   </p>
                 </div>
               )}
@@ -369,8 +392,8 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
               {confirmingAction.type === "whitelist" && (
                 <div className="bg-emerald-900/20 border border-emerald-700/50 rounded-lg p-3">
                   <p className="text-xs text-emerald-300 flex items-start">
-                    <CheckCircle className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />{" "}
-                    Questo CIDR sarà aggiunto alla whitelist
+                    <CheckCircle className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />
+                    {t("ipInfo.whitelistWarning")}
                   </p>
                 </div>
               )}
@@ -382,7 +405,7 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
                   disabled={isBanningCIDR || isAddingWhitelist}
                   className="text-slate-400 hover:text-slate-300 hover:bg-slate-700 transition-colors duration-200"
                 >
-                  Annulla
+                  {t("ipInfo.cancelButton")}
                 </Button>
                 <Button
                   onClick={
@@ -401,13 +424,13 @@ const IPInfoCard: FC<IPInfoCardProps> = ({
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                       {confirmingAction.type === "ban"
-                        ? "Bannando..."
-                        : "Aggiungendo..."}
+                        ? t("common.banning")
+                        : t("ipInfo.adding")}
                     </>
                   ) : confirmingAction.type === "ban" ? (
-                    "Banna CIDR"
+                    t("ipInfo.banCIDRButton")
                   ) : (
-                    "Aggiungi a Whitelist"
+                    t("ipInfo.addToWhitelistButton")
                   )}
                 </Button>
               </div>

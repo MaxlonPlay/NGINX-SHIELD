@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -28,7 +29,6 @@ import { EditWhitelistEntryForm } from "./EditWhitelistEntryForm";
 import { useToast } from "@/hooks/use-toast";
 import { authService } from "../../utils/apiService";
 import { WhitelistEntry as APIWhitelistEntry } from "../../utils/apiEndpoints";
-import { t } from "i18next";
 
 interface WhitelistEntry {
   id: string;
@@ -41,6 +41,7 @@ interface WhitelistEntry {
 type FilterType = "all" | "ip" | "domain" | "network" | "cidr";
 
 export const WhitelistManager = () => {
+  const { t } = useTranslation();
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingEntry, setEditingEntry] = useState<WhitelistEntry | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -259,7 +260,7 @@ export const WhitelistManager = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
               <Input
-                placeholder="Cerca per IP, dominio o descrizione..."
+                placeholder={t("whitelist.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
@@ -280,28 +281,29 @@ export const WhitelistManager = () => {
             <div className="flex items-center space-x-3">
               <div className="flex items-center text-slate-300 text-sm">
                 <Filter className="h-4 w-4 mr-2" />
-                Filtra per:
+                {t("whitelist.filter")}
               </div>
               <div className="flex space-x-2">
                 <button
                   onClick={() => setSelectedFilter("all")}
                   className={getFilterButtonClass("all")}
                 >
-                  Tutti ({whitelistEntries.length})
+                  {t("whitelist.filterAll")} ({whitelistEntries.length})
                 </button>
                 <button
                   onClick={() => setSelectedFilter("ip")}
                   className={getFilterButtonClass("ip")}
                 >
                   <Monitor className="h-3 w-3 mr-1 inline" />
-                  IP ({whitelistEntries.filter((e) => e.type === "ip").length})
+                  {t("whitelist.filterIP")} (
+                  {whitelistEntries.filter((e) => e.type === "ip").length})
                 </button>
                 <button
                   onClick={() => setSelectedFilter("domain")}
                   className={getFilterButtonClass("domain")}
                 >
                   <Globe2 className="h-3 w-3 mr-1 inline" />
-                  Domini (
+                  {t("whitelist.filterDomain")} (
                   {whitelistEntries.filter((e) => e.type === "domain").length})
                 </button>
                 <button
@@ -309,7 +311,7 @@ export const WhitelistManager = () => {
                   className={getFilterButtonClass("network")}
                 >
                   <Network className="h-3 w-3 mr-1 inline" />
-                  Reti (
+                  {t("whitelist.filterNetwork")} (
                   {
                     whitelistEntries.filter(
                       (e) => e.type === "network" || e.type === "cidr",
@@ -327,7 +329,7 @@ export const WhitelistManager = () => {
                   className="text-slate-400 hover:text-white ml-4"
                 >
                   <X className="h-4 w-4 mr-1" />
-                  Pulisci filtri
+                  {t("whitelist.clearFilters")}
                 </Button>
               )}
             </div>
@@ -335,9 +337,16 @@ export const WhitelistManager = () => {
             {}
             {(searchTerm || selectedFilter !== "all") && (
               <div className="text-sm text-slate-400">
-                Mostrati {filteredEntries.length} di {whitelistEntries.length}{" "}
-                elementi
-                {searchTerm && <span> per "{searchTerm}"</span>}
+                {t("whitelist.results", {
+                  count: filteredEntries.length,
+                  total: whitelistEntries.length,
+                })}
+                {searchTerm && (
+                  <span>
+                    {" "}
+                    {t("whitelist.resultsSearch", { search: searchTerm })}
+                  </span>
+                )}
               </div>
             )}
           </div>
@@ -347,10 +356,10 @@ export const WhitelistManager = () => {
             {filteredEntries.length === 0 ? (
               <div className="text-center text-slate-400 py-8">
                 {isLoading
-                  ? "Caricamento whitelist..."
+                  ? t("whitelist.loading")
                   : searchTerm || selectedFilter !== "all"
-                    ? "Nessun risultato trovato per i filtri selezionati"
-                    : "Nessuna entry nella whitelist"}
+                    ? t("whitelist.noResults")
+                    : t("whitelist.noEntries")}
               </div>
             ) : (
               filteredEntries.map((entry) => (
@@ -368,8 +377,11 @@ export const WhitelistManager = () => {
                         {entry.description}
                       </p>
                       <p className="text-slate-500 text-xs">
-                        Aggiunto:{" "}
-                        {new Date(entry.createdAt).toLocaleDateString("it-IT")}
+                        {t("whitelist.addedDate", {
+                          date: new Date(entry.createdAt).toLocaleDateString(
+                            "it-IT",
+                          ),
+                        })}
                       </p>
                     </div>
                   </div>
@@ -395,7 +407,7 @@ export const WhitelistManager = () => {
                           disabled={isLoading}
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
                         >
-                          Conferma
+                          {t("whitelist.confirm")}
                         </Button>
                         <Button
                           variant="ghost"
@@ -403,7 +415,7 @@ export const WhitelistManager = () => {
                           onClick={() => setConfirmingDeleteId(null)}
                           className="text-slate-400 hover:text-slate-300"
                         >
-                          Annulla
+                          {t("whitelist.cancel")}
                         </Button>
                       </>
                     ) : (
@@ -440,7 +452,7 @@ export const WhitelistManager = () => {
         <CardHeader>
           <CardTitle className="text-white flex items-center">
             <Shield className="h-5 w-5 mr-2 text-blue-400" />
-            Statistiche Whitelist
+            {t("whitelist.stats")}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -449,19 +461,25 @@ export const WhitelistManager = () => {
               <div className="text-2xl font-bold text-white">
                 {whitelistEntries.length}
               </div>
-              <div className="text-slate-400 text-sm">Entry Totali</div>
+              <div className="text-slate-400 text-sm">
+                {t("whitelist.totalEntries")}
+              </div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-400">
                 {whitelistEntries.filter((e) => e.type === "ip").length}
               </div>
-              <div className="text-slate-400 text-sm">IP Singoli</div>
+              <div className="text-slate-400 text-sm">
+                {t("whitelist.singleIPs")}
+              </div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-400">
                 {whitelistEntries.filter((e) => e.type === "domain").length}
               </div>
-              <div className="text-slate-400 text-sm">Domini</div>
+              <div className="text-slate-400 text-sm">
+                {t("whitelist.domains")}
+              </div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-400">
@@ -471,7 +489,9 @@ export const WhitelistManager = () => {
                   ).length
                 }
               </div>
-              <div className="text-slate-400 text-sm">Reti</div>
+              <div className="text-slate-400 text-sm">
+                {t("whitelist.networks")}
+              </div>
             </div>
           </div>
         </CardContent>

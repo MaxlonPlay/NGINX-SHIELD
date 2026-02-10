@@ -6,6 +6,8 @@ services:
     environment:
       # The localization module requires at least 2 GB of RAM to disable IP geolocation lookup (set to "true", "1", or "yes" to disable)
       - DISABLE_GEOLOCATE=false
+      # GeoIP language code for country names ('it' for Italian, 'en' for English, 'fr' for French, 'es' for Spanish, 'de' for German)
+      - GEOIP_LANG=it
     volumes:
       # Nginx access and error logs directory (required for log monitoring and analysis)
       - /dockers/npm/data/logs:/app/nginx-logs

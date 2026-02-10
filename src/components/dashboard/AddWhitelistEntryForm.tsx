@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +20,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Plus, X, Loader2 } from "lucide-react";
 import { authService } from "../../utils/apiService";
-import { t } from "i18next";
 
 interface AddWhitelistEntryFormProps {
   onAdd: (entry: { type: string; value: string; description: string }) => void;
@@ -30,6 +30,7 @@ export const AddWhitelistEntryForm = ({
   onAdd,
   onClose,
 }: AddWhitelistEntryFormProps) => {
+  const { t } = useTranslation();
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("ip");
@@ -40,7 +41,7 @@ export const AddWhitelistEntryForm = ({
     if (!value.trim()) {
       toast({
         title: t("common.error"),
-        description: t("error.invalidValue"),
+        description: t("whitelist.errors.invalidValue"),
         variant: "destructive",
       });
       return false;

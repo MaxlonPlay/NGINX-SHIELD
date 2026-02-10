@@ -10,10 +10,11 @@ from commons.country_codes import get_country_name
 
 
 class BanManager:
-    def __init__(self, db_file: str, config_file: str, debug_log_func=None):
+    def __init__(self, db_file: str, config_file: str, debug_log_func=None, geoip_lang: str = "en"):
 
         self.db_file = db_file
         self.config_file = config_file
+        self.geoip_lang = geoip_lang
         self.debug_log = debug_log_func or (
             lambda msg, log_enabled=True: (
                 print(f"[DEBUG] {msg}") if log_enabled else None
@@ -70,7 +71,7 @@ class BanManager:
                     )
 
                     country_code = result.get("country")
-                    country = get_country_name(country_code) if country_code else None
+                    country = get_country_name(country_code, self.geoip_lang) if country_code else None
 
                     return {
                         "network": result.get("network"),

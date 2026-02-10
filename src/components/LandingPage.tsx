@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,6 +20,7 @@ import {
   HandCoins,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 interface LandingPageProps {
   onGetStarted?: () => void;
@@ -36,6 +38,7 @@ interface Orb {
 }
 
 export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
+  const { t } = useTranslation();
   const [orbs, setOrbs] = useState<Orb[]>([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
@@ -286,13 +289,14 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
               {}
               <Link to="/">
                 <Button
                   variant="ghost"
                   className="text-white hover:bg-slate-700/50"
                 >
-                  Torna al Login
+                  {t("landingPage.backToLogin")}
                 </Button>
               </Link>
 
@@ -331,26 +335,19 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
         <div className="container mx-auto px-4 py-16 text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-6xl font-bold text-white mb-6 hero-main-text animate-heroAppear animate-float">
-              Protezione <span className="text-red-400">Automatica</span>
+              {t("landingPage.hero.protection")}{" "}
+              <span className="text-red-400">
+                {t("landingPage.hero.automatic")}
+              </span>
               <br />
-              per i tuoi Server <span className="text-red-400">NGINX</span>
+              {t("landingPage.hero.for")}{" "}
+              <span className="text-red-400">NGINX</span>
             </h2>
             <p
               className="text-xl text-slate-300 mb-8 leading-relaxed animate-fadeUp"
               style={{ animationDelay: "0.4s" }}
             >
-              NGINX Shield è una soluzione di sicurezza avanzata progettata per
-              monitorare in modo continuo e automatizzato i log del server
-              NGINX. Grazie all'analisi in tempo reale dei dati di log, il
-              sistema è in grado di identificare tempestivamente comportamenti
-              sospetti e attività potenzialmente dannose. Al rilevamento di
-              pattern anomali o tentativi di intrusione, NGINX Shield procede al
-              blocco immediato degli indirizzi IP compromessi, garantendo così
-              una protezione proattiva e robusta dell'infrastruttura. Questo
-              approccio consente di prevenire efficacemente attacchi informatici
-              quali tentativi di accesso non autorizzato, attacchi DDoS, e altre
-              minacce comuni, assicurando la continuità e la sicurezza dei
-              servizi web.
+              {t("landingPage.hero.description")}
             </p>
             <Button
               onClick={onGetStarted}
@@ -359,7 +356,7 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
               style={{ animationDelay: "0.6s" }}
             >
               <Shield className="h-5 w-5 mr-2" />
-              Inizia Ora
+              {t("landingPage.hero.startNow")}
             </Button>
           </div>
         </div>
@@ -368,13 +365,13 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
         <div className="container mx-auto px-4 py-16">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-white mb-4 animate-fadeSlideInLeft hero-text">
-              Funzionalità Principali
+              {t("landingPage.features.title")}
             </h3>
             <p
               className="text-slate-300 text-lg animate-fadeSlideInLeft"
               style={{ animationDelay: "0.2s" }}
             >
-              Tutto quello che ti serve per proteggere i tuoi server
+              {t("landingPage.features.subtitle")}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -384,109 +381,92 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
                   <ShieldAlert className="h-6 w-6 text-red-400 feature-card-icon" />
                 ),
                 bg: "bg-red-500/20",
-                title: "Rilevamento Automatico",
-                desc: "Analizza automaticamente i log di NGINX e rileva comportamenti sospetti",
-                items: [
-                  "Monitoraggio 24/7",
-                  "Pattern recognition avanzato",
-                  "Integrazione con fail2ban",
-                ],
+                titleKey: "landingPage.features.detection.title",
+                descKey: "landingPage.features.detection.desc",
+                itemsKey: "landingPage.features.detection.items",
               },
               {
                 icon: (
                   <Activity className="h-6 w-6 text-blue-400 feature-card-icon" />
                 ),
                 bg: "bg-blue-500/20",
-                title: "Analisi in Tempo Reale",
-                desc: "Dashboard completa per monitorare minacce e attività",
-                items: [
-                  "Statistiche dettagliate",
-                  "Grafici e timeline",
-                  "Alerting configurabile",
-                ],
+                titleKey: "landingPage.features.realtime.title",
+                descKey: "landingPage.features.realtime.desc",
+                itemsKey: "landingPage.features.realtime.items",
               },
               {
                 icon: (
                   <ClipboardList className="h-6 w-6 text-green-400 feature-card-icon" />
                 ),
                 bg: "bg-green-500/20",
-                title: "Gestione Whitelist",
-                desc: "Proteggi IP fidati e gestisci eccezioni",
-                items: [
-                  "IP e intere reti CIDR autorizzate",
-                  "Domini in whitelisted nel caso di IP dinamici",
-                ],
+                titleKey: "landingPage.features.whitelist.title",
+                descKey: "landingPage.features.whitelist.desc",
+                itemsKey: "landingPage.features.whitelist.items",
               },
               {
                 icon: (
                   <ShieldCheck className="h-6 w-6 text-purple-400 feature-card-icon" />
                 ),
                 bg: "bg-purple-500/20",
-                title: "Ban Intelligente",
-                desc: "Sistema di ban automatico basato su regole configurabili dall'utente via WEBUI",
-                items: [
-                  "Ban automatico per troppe richieste errate",
-                  "Rilevamento brute force",
-                  "Rilevamento User-Agent e pattern URL pericolosi",
-                ],
+                titleKey: "landingPage.features.ban.title",
+                descKey: "landingPage.features.ban.desc",
+                itemsKey: "landingPage.features.ban.items",
               },
               {
                 icon: (
                   <Zap className="h-6 w-6 text-orange-400 feature-card-icon" />
                 ),
                 bg: "bg-orange-500/20",
-                title: "Configurazione Flessibile",
-                desc: "Personalizza soglie, pattern e comportamenti",
-                items: [
-                  "Soglie prima del ban personalizzabili",
-                  "Pattern regex UA-URL custom",
-                  "Notifiche email",
-                ],
+                titleKey: "landingPage.features.flexible.title",
+                descKey: "landingPage.features.flexible.desc",
+                itemsKey: "landingPage.features.flexible.items",
               },
               {
                 icon: (
                   <Logs className="h-6 w-6 text-yellow-400 feature-card-icon" />
                 ),
                 bg: "bg-yellow-500/20",
-                title: "Log Avanzati",
-                desc: "Logging completo e visualizzazione in WEBUI",
-                items: [
-                  "Presentazione dei log chiara e immediata",
-                  "Maggiore leggibilità e comprensione degli eventi",
-                  "Analisi strutturata più efficiente",
-                  "Funzionalità di esportazione e analisi approfondita",
-                ],
+                titleKey: "landingPage.features.logs.title",
+                descKey: "landingPage.features.logs.desc",
+                itemsKey: "landingPage.features.logs.items",
               },
-            ].map(({ icon, bg, title, desc, items }, idx) => (
-              <Card
-                key={idx}
-                className="feature-card bg-slate-800/30 border-slate-600 hover:bg-slate-700/40 transition-all duration-500 animate-fadeUp backdrop-blur-md"
-                style={{ animationDelay: `${0.2 * idx}s` }}
-              >
-                <CardHeader>
-                  <div
-                    className={`p-3 ${bg} rounded-lg w-fit animate-float`}
-                    style={{ animationDelay: `${idx * 0.5}s` }}
-                  >
-                    {icon}
-                  </div>
-                  <CardTitle className="text-white text-lg">{title}</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    {desc}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="text-slate-300 space-y-2 text-sm">
-                    {items.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <span className="text-red-400 mr-2">•</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
+            ].map(({ icon, bg, titleKey, descKey, itemsKey }, idx) => {
+              const items = t(itemsKey, { returnObjects: true }) as string[];
+              return (
+                <Card
+                  key={idx}
+                  className="feature-card bg-slate-800/30 border-slate-600 hover:bg-slate-700/40 transition-all duration-500 animate-fadeUp backdrop-blur-md"
+                  style={{ animationDelay: `${0.2 * idx}s` }}
+                >
+                  <CardHeader>
+                    <div
+                      className={`p-3 ${bg} rounded-lg w-fit animate-float`}
+                      style={{ animationDelay: `${idx * 0.5}s` }}
+                    >
+                      {icon}
+                    </div>
+                    <CardTitle className="text-white text-lg">
+                      {t(titleKey)}
+                    </CardTitle>
+                    <CardDescription className="text-slate-300">
+                      {t(descKey)}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="text-slate-300 space-y-2 text-sm">
+                      {items &&
+                        Array.isArray(items) &&
+                        items.map((item, i) => (
+                          <li key={i} className="flex items-center">
+                            <span className="text-red-400 mr-2">•</span>
+                            {item}
+                          </li>
+                        ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
 
@@ -494,13 +474,13 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
         <div className="container mx-auto px-4 py-16">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-white mb-4 animate-fadeSlideInLeft hero-text">
-              Come Funziona
+              {t("landingPage.howItWorks.title")}
             </h3>
             <p
               className="text-slate-300 text-lg animate-fadeSlideInLeft"
               style={{ animationDelay: "0.2s" }}
             >
-              Protezione automatica in 3 semplici passi
+              {t("landingPage.howItWorks.subtitle")}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -509,27 +489,27 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
                 number: 1,
                 color: "text-red-400",
                 bg: "bg-red-500/20",
-                title: "Monitoraggio",
-                desc: "NGINX Shield analizza continuamente i log di NGINX, rilevando pattern sospetti e comportamenti anomali",
+                titleKey: "landingPage.steps.step1.title",
+                descKey: "landingPage.steps.step1.desc",
                 anim: "fadeSlideInLeft",
               },
               {
                 number: 2,
                 color: "text-orange-400",
                 bg: "bg-orange-500/20",
-                title: "Analisi",
-                desc: "Il sistema valuta la gravità delle minacce utilizzando regole intelligenti e Intrusion Detection and Prevention System (IDPS)",
+                titleKey: "landingPage.steps.step2.title",
+                descKey: "landingPage.steps.step2.desc",
                 anim: "fadeUp",
               },
               {
                 number: 3,
                 color: "text-green-400",
                 bg: "bg-green-500/20",
-                title: "Protezione",
-                desc: "Gli indirizzi IP malevoli vengono automaticamente bloccati tramite Fail2Ban, garantendo una protezione efficace della tua infrastruttura.",
+                titleKey: "landingPage.steps.step3.title",
+                descKey: "landingPage.steps.step3.desc",
                 anim: "fadeSlideInRight",
               },
-            ].map(({ number, color, bg, title, desc, anim }, idx) => (
+            ].map(({ number, color, bg, titleKey, descKey, anim }, idx) => (
               <div
                 key={number}
                 className={`text-center animate-${anim} hover:scale-105 transition-transform duration-300`}
@@ -548,9 +528,9 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
                   </span>
                 </div>
                 <h4 className="text-xl font-semibold text-white mb-2">
-                  {title}
+                  {t(titleKey)}
                 </h4>
-                <p className="text-slate-300">{desc}</p>
+                <p className="text-slate-300">{t(descKey)}</p>
               </div>
             ))}
           </div>
@@ -563,10 +543,10 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
             style={{ animationDuration: "1s" }}
           >
             <h3 className="text-4xl font-bold text-white mb-4 hero-text animate-float">
-              Pronto a Proteggere i tuoi Server?
+              {t("landingPage.cta.title")}
             </h3>
             <p className="text-slate-300 text-lg mb-8">
-              Inizia subito con NGINX Shield
+              {t("landingPage.cta.subtitle")}
             </p>
             <Button
               onClick={onGetStarted}
@@ -574,7 +554,7 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
               className="bg-red-600 hover:bg-red-700 text-white text-lg px-8 py-3 inline-flex items-center justify-center transition-all duration-300 ease-in-out animate-pulseBtn hover:shadow-xl hover:shadow-red-500/25"
             >
               <Shield className="h-5 w-5 mr-2" />
-              Accedi al Sistema
+              {t("landingPage.cta.button")}
             </Button>
           </div>
         </div>
@@ -599,14 +579,14 @@ export const LandingPage = ({ onGetStarted = () => {} }: LandingPageProps) => {
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                 </svg>
               </a>
-              . Distribuito sotto la{" "}
+              . {t("landingPage.footer.license")}{" "}
               <a
                 href="https://www.gnu.org/licenses/gpl-3.0.html"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-red-400 hover:underline"
               >
-                GNU General Public License v3.0
+                {t("landingPage.footer.licenseName")}
               </a>
               .
             </p>

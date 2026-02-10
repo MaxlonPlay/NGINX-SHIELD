@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -36,7 +37,7 @@ export const ChangePasswordPage = ({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-
+  const { t } = useTranslation();
   const [cardVisible, setCardVisible] = useState(false);
   const [logoVisible, setLogoVisible] = useState(false);
 
@@ -116,7 +117,7 @@ export const ChangePasswordPage = ({
           )
         ) {
           errorMessage =
-            "Non puoi cambiare il tuo username da 'admin_shield' a 'admin_david'. Effettua il primo login con 'admin_shield', poi cambia lo username a 'admin_david' e la password. Quindi effettua il login con le nuove credenziali.";
+            "Non puoi cambiare il tuo username. Effettua il primo login con 'admin_shield', poi cambia lo username e la password. Quindi effettua il login con le nuove credenziali.";
         } else if (status === 409) {
           errorMessage = "Username già in uso. Scegli un altro username.";
         } else if (error.response.data?.detail) {
@@ -140,7 +141,6 @@ export const ChangePasswordPage = ({
   return (
     <>
       <style>{`
-        /* Animazione di ingresso per la card */
         .login-card-enter {
           opacity: 0;
           transform: translateY(20px);
@@ -151,7 +151,6 @@ export const ChangePasswordPage = ({
           transition: opacity 0.7s ease-out, transform 0.7s ease-out;
         }
 
-        /* Animazione per il logo */
         .logo-icon-enter {
           opacity: 0;
           transform: scale(0.8);
@@ -162,7 +161,6 @@ export const ChangePasswordPage = ({
           transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
-        /* Animazione per il titolo */
         .title-glow {
           animation: text-glow 1.5s ease-in-out infinite alternate;
         }
@@ -176,7 +174,6 @@ export const ChangePasswordPage = ({
           }
         }
 
-        /* Sfondo animato */
         .animated-background {
           background-size: 400% 400%;
           animation: gradient-animation 15s ease infinite;
@@ -188,7 +185,6 @@ export const ChangePasswordPage = ({
           100% { background-position: 0% 50%; }
         }
 
-        /* Stili per i link social */
         .social-link {
           transition: all 0.3s ease;
           transform-origin: center;
@@ -229,10 +225,10 @@ export const ChangePasswordPage = ({
               </div>
             </div>
             <CardTitle className="text-3xl text-white title-glow">
-              Cambia Credenziali
+              {t("loginPage.changePassword.title")}
             </CardTitle>
             <CardDescription className="text-slate-400">
-              Per motivi di sicurezza, devi cambiare le credenziali di default.
+              {t("loginPage.changePassword.description")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -242,7 +238,7 @@ export const ChangePasswordPage = ({
                 <div className="space-y-2">
                   <Label htmlFor="current-password" className="text-slate-300">
                     <Lock className="h-4 w-4 inline mr-2" />
-                    Password Corrente
+                    {t("auth.currentPasswordLabel")}
                   </Label>
                   <div className="relative">
                     <Input
@@ -276,12 +272,12 @@ export const ChangePasswordPage = ({
                 <div className="space-y-2">
                   <Label htmlFor="new-username" className="text-slate-300">
                     <User className="h-4 w-4 inline mr-2" />
-                    Nuovo Username
+                    {t("auth.newUsernameLabel")}
                   </Label>
                   <Input
                     id="new-username"
                     type="text"
-                    placeholder="Scegli un nuovo username"
+                    placeholder={t("auth.newUsernamePlaceholder")}
                     value={newUsername}
                     onChange={(e) => setNewUsername(e.target.value)}
                     className="bg-slate-900/50 border-slate-600 text-white"
@@ -294,13 +290,13 @@ export const ChangePasswordPage = ({
                 <div className="space-y-2">
                   <Label htmlFor="new-password" className="text-slate-300">
                     <Lock className="h-4 w-4 inline mr-2" />
-                    Nuova Password
+                    {t("auth.newPasswordLabel")}
                   </Label>
                   <div className="relative">
                     <Input
                       id="new-password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="Min. 8 caratteri, maiuscola, minuscola, numero, speciale"
+                      placeholder={t("auth.newPasswordPlaceholder")}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       className="bg-slate-900/50 border-slate-600 text-white pr-10"
@@ -326,13 +322,13 @@ export const ChangePasswordPage = ({
                 <div className="space-y-2">
                   <Label htmlFor="confirm-password" className="text-slate-300">
                     <Lock className="h-4 w-4 inline mr-2" />
-                    Conferma Nuova Password
+                    {t("auth.confirmNewPasswordLabel")}
                   </Label>
                   <div className="relative">
                     <Input
                       id="confirm-password"
                       type={showConfirmPassword ? "text" : "password"}
-                      placeholder="Conferma la nuova password"
+                      placeholder={t("auth.confirmPasswordPlaceholder")}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className="bg-slate-900/50 border-slate-600 text-white pr-10"

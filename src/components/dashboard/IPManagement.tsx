@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useToast } from "@/hooks/use-toast";
 import {
   fetchBans,
@@ -18,6 +19,7 @@ import { createCIDRBanReason } from "./ip-management/banUtils";
 import IPInfoSection from "./ip-management/IPInfoSection";
 
 export const IPManagement = () => {
+  const { t } = useTranslation();
   const [automaticBans, setAutomaticBans] = useState<BanEntry[]>([]);
   const [manualBans, setManualBans] = useState<BanEntry[]>([]);
   const [filteredAutomaticBans, setFilteredAutomaticBans] = useState<
@@ -136,8 +138,8 @@ export const IPManagement = () => {
     } catch (error) {
       console.error("DEBUG: Errore caricamento IP bannati:", error);
       toast({
-        title: "Errore",
-        description: "Impossibile caricare la lista IP bannati",
+        title: t("common.error"),
+        description: t("ipManagement.errors.cannotLoadBans"),
         variant: "destructive",
       });
     } finally {
@@ -159,8 +161,8 @@ export const IPManagement = () => {
       await unbanIP(ip, type);
 
       toast({
-        title: "IP Sbloccato",
-        description: `${ip} è stato rimosso dai ban`,
+        title: t("ipManagement.success.unbanTitle"),
+        description: t("ipManagement.success.unbanDesc", { ip: ip }),
       });
 
       if (type === "automatic") {
@@ -173,8 +175,8 @@ export const IPManagement = () => {
     } catch (error) {
       console.error("DEBUG: Errore unban IP:", error);
       toast({
-        title: "Errore",
-        description: "Errore durante lo sblocco dell'IP",
+        title: t("common.error"),
+        description: t("ipManagement.errors.cannotUnbanIP"),
         variant: "destructive",
       });
     } finally {
@@ -232,8 +234,8 @@ export const IPManagement = () => {
     } catch (error) {
       console.error("DEBUG: Errore caricamento altri ban automatici:", error);
       toast({
-        title: "Errore",
-        description: "Impossibile caricare altri ban automatici",
+        title: t("common.error"),
+        description: t("ipManagement.errors.cannotLoadMoreAutomatic"),
         variant: "destructive",
       });
     } finally {
@@ -267,8 +269,8 @@ export const IPManagement = () => {
     } catch (error) {
       console.error("DEBUG: Errore caricamento altri ban manuali:", error);
       toast({
-        title: "Errore",
-        description: "Impossibile caricare altri ban manuali",
+        title: t("common.error"),
+        description: t("ipManagement.errors.cannotLoadMoreManual"),
         variant: "destructive",
       });
     } finally {
@@ -282,13 +284,13 @@ export const IPManagement = () => {
       const result = await banCIDR(cidr, reason);
 
       toast({
-        title: "CIDR Bannato",
-        description: `La rete ${cidr} è stata bannata correttamente`,
+        title: t("ipManagement.success.cidrBannedTitle"),
+        description: t("ipManagement.success.cidrBannedDesc", { cidr: cidr }),
       });
 
       if (result.warning) {
         toast({
-          title: "⚠️ Avviso",
+          title: t("common.warning"),
           description: result.warning,
           variant: "default",
         });
@@ -303,13 +305,12 @@ export const IPManagement = () => {
       console.error("Errore ban CIDR:", error);
       const errorResult = formatApiError(error);
 
-      let errorTitle = "Errore nel Ban del CIDR";
+      let errorTitle = t("ipManagement.errors.cidrBanError");
       let errorDescription = errorResult.message;
 
       if (errorResult.message.includes("fail2ban")) {
-        errorTitle = "Errore fail2ban";
-        const hint =
-          "fail2ban sia installato | fail2ban sia in esecuzione | L'utente abbia i permessi";
+        errorTitle = t("ipManagement.errors.fail2banError");
+        const hint = t("ipManagement.errors.fail2banHint");
         errorDescription = `${errorResult.message}\n\n💡 Verifica che: ${hint}`;
       }
 
@@ -346,8 +347,11 @@ export const IPManagement = () => {
       const result = await banMultipleCIDRs(cidrsToban);
 
       toast({
-        title: "Ban di Massa Completato",
-        description: `${result.data?.successful || 0} CIDR bannati con successo, ${result.data?.failed || 0} falliti`,
+        title: t("ipManagement.success.bulkBanTitle"),
+        description: t("ipManagement.success.bulkBanDesc", {
+          successful: result.data?.successful || 0,
+          failed: result.data?.failed || 0,
+        }),
       });
 
       await Promise.all([
@@ -360,7 +364,7 @@ export const IPManagement = () => {
       const errorResult = formatApiError(error);
 
       toast({
-        title: "Errore nel Ban di Massa",
+        title: t("ipManagement.errors.bulkBanError"),
         description: errorResult.message,
         variant: "destructive",
       });

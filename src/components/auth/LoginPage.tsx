@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -23,6 +24,7 @@ import { useToast } from "@/hooks/use-toast";
 import { authService } from "@/utils/apiService";
 import { Link } from "react-router-dom";
 import SecureAccessBlockedPage from "@/pages/SecureAccessBlockedPage";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 interface LoginPageProps {
   onLogin: (success: boolean, requiresPasswordChange?: boolean) => void;
@@ -30,6 +32,7 @@ interface LoginPageProps {
 }
 
 export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [totpCode, setTotpCode] = useState("");
@@ -89,8 +92,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
 
     if (!username.trim() || !password.trim()) {
       toast({
-        title: "Campi obbligatori",
-        description: "Inserisci username e password",
+        title: t("loginPage.errors.requiredFields"),
+        description: t("loginPage.errors.enterCredentials"),
         variant: "destructive",
       });
       return;
@@ -106,22 +109,22 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
 
       if (loginResult.success) {
         toast({
-          title: "Accesso riuscito",
-          description: loginResult.message || "Benvenuto!",
+          title: t("loginPage.success.loginSuccess"),
+          description: loginResult.message || t("loginPage.success.welcome"),
           variant: "default",
         });
 
         onLogin(true, loginResult.requiresPasswordChange);
       } else {
         toast({
-          title: "Errore di accesso",
-          description: "Login fallito",
+          title: t("loginPage.errors.loginFailed"),
+          description: t("loginPage.errors.loginFailedDesc"),
           variant: "destructive",
         });
         onLogin(false);
       }
     } catch (error: any) {
-      let errorMessage = "Errore durante l'autenticazione. Riprova.";
+      let errorMessage = t("loginPage.errors.authenticationError");
       console.log("[LoginPage] Errore capito:", error);
 
       if (error.response) {
@@ -154,9 +157,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
               console.log("[LoginPage] TOTP richiesto rilevato!");
               setRequiresToTP(true);
               toast({
-                title: "Autenticazione 2FA richiesta",
-                description:
-                  "Inserisci il codice TOTP dall'app di autenticazione",
+                title: t("loginPage.success.totpRequired"),
+                description: t("loginPage.success.totpDescription"),
                 variant: "default",
               });
               setIsLoading(false);
@@ -167,12 +169,12 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
               "[LoginPage] Errore nel parsing della risposta 422:",
               parseError,
             );
-            errorMessage = "Errore di validazione. Riprova.";
+            errorMessage = t("loginPage.errors.validationError");
           }
         } else if (status === 401) {
-          errorMessage = "Credenziali non valide";
+          errorMessage = t("loginPage.errors.invalidCredentials");
         } else if (status === 403) {
-          errorMessage = "Accesso negato";
+          errorMessage = t("loginPage.errors.accessDenied");
         } else if (responseData?.detail) {
           errorMessage =
             typeof responseData.detail === "string"
@@ -180,15 +182,14 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
               : JSON.stringify(responseData.detail);
         }
       } else if (error.code === "ECONNABORTED") {
-        errorMessage = "Timeout della richiesta. Riprova.";
+        errorMessage = t("loginPage.errors.timeout");
       } else if (error.message.includes("Network Error")) {
-        errorMessage =
-          "Impossibile connettersi al server. Verifica la tua connessione o contatta l'amministratore.";
+        errorMessage = t("loginPage.errors.networkError");
       }
 
       if (!requiresTOTP) {
         toast({
-          title: "Errore di connessione",
+          title: t("loginPage.errors.connectionError"),
           description: errorMessage,
           variant: "destructive",
         });
@@ -219,9 +220,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
     const allFilled = backupCodes.every((code) => code.length === 8);
     if (!allFilled) {
       toast({
-        title: "Codici incompleti",
-        description:
-          "Inserisci tutti e 10 i codici di recupero (8 caratteri ciascuno)",
+        title: t("loginPage.errors.incompleteCodes"),
+        description: t("loginPage.errors.enter10Codes"),
         variant: "destructive",
       });
       return;
@@ -250,8 +250,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
         );
 
         toast({
-          title: "Accesso riuscito",
-          description: "Login completato con successo!",
+          title: t("loginPage.success.loginSuccess"),
+          description: t("loginPage.success.loginComplete"),
           variant: "default",
         });
         setRequiresToTP(false);
@@ -271,17 +271,18 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
           errorData,
         );
         toast({
-          title: "Errore verifica backup codes",
-          description: errorData.detail || "Codici di recupero non validi",
+          title: t("loginPage.errors.backupCodesError"),
+          description:
+            errorData.detail || t("loginPage.errors.invalidBackupCodes"),
           variant: "destructive",
         });
       }
     } catch (error: any) {
       console.error("[LoginPage] Errore nella verifica backup codes:", error);
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description:
-          error.message || "Errore durante la verifica dei backup codes",
+          error.message || t("loginPage.errors.verifyBackupCodesError"),
         variant: "destructive",
       });
     } finally {
@@ -294,8 +295,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
 
     if (!totpCode.trim() || totpCode.length !== 6) {
       toast({
-        title: "Codice non valido",
-        description: "Inserisci un codice di 6 cifre",
+        title: t("loginPage.errors.invalidCode"),
+        description: t("loginPage.errors.enter6Digits"),
         variant: "destructive",
       });
       return;
@@ -322,8 +323,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
         console.log("[LoginPage] Cookie disponibili:", document.cookie);
 
         toast({
-          title: "Accesso riuscito",
-          description: "Login completato con successo!",
+          title: t("loginPage.success.loginSuccess"),
+          description: t("loginPage.success.loginComplete"),
           variant: "default",
         });
         setRequiresToTP(false);
@@ -341,15 +342,15 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
           errorData,
         );
         toast({
-          title: "Errore TOTP",
-          description: errorData.detail || "Codice TOTP non valido",
+          title: t("loginPage.errors.totpError"),
+          description: errorData.detail || t("loginPage.errors.invalidTotp"),
           variant: "destructive",
         });
       }
     } catch (error: any) {
       console.error("[LoginPage] Errore nella verifica TOTP:", error);
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: error.message || "Errore durante la verifica TOTP",
         variant: "destructive",
       });
@@ -379,23 +380,24 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
         if (extractedCodes.length === 10) {
           setBackupCodes(extractedCodes);
           toast({
-            title: "Codici caricati con successo",
-            description:
-              "Tutti i 10 codici sono stati riempiti automaticamente",
+            title: t("loginPage.success.codesLoaded"),
+            description: t("loginPage.recovery.completedCount", { count: 10 }),
             variant: "default",
           });
         } else {
           toast({
-            title: "Errore nel file",
-            description: `Trovati ${extractedCodes.length} codici, ma ne servono esattamente 10`,
+            title: t("loginPage.errors.fileError"),
+            description: t("loginPage.errors.codesFound", {
+              count: extractedCodes.length,
+            }),
             variant: "destructive",
           });
         }
       } catch (error) {
         console.error("Errore nel caricamento del file:", error);
         toast({
-          title: "Errore",
-          description: "Errore nel parsing del file. Verifica il formato.",
+          title: t("common.error"),
+          description: t("loginPage.errors.fileParseError"),
           variant: "destructive",
         });
       }
@@ -410,8 +412,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
 
     if (!recoveryUsername.trim()) {
       toast({
-        title: "Nome utente richiesto",
-        description: "Inserisci il nome utente per il recupero",
+        title: t("common.error"),
+        description: t("loginPage.errors.usernameRequired"),
         variant: "destructive",
       });
       return;
@@ -420,9 +422,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
     const allFilled = backupCodes.every((code) => code.length === 8);
     if (!allFilled) {
       toast({
-        title: "Codici incompleti",
-        description:
-          "Inserisci tutti e 10 i codici di recupero (8 caratteri ciascuno)",
+        title: t("loginPage.errors.incompleteCodes"),
+        description: t("loginPage.errors.enter10Codes"),
         variant: "destructive",
       });
       return;
@@ -451,9 +452,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
         );
 
         toast({
-          title: "Accesso riuscito",
-          description:
-            "Account ripristinato! Una nuova password è stata generata.",
+          title: t("loginPage.success.loginSuccess"),
+          description: t("loginPage.recovery.newPasswordGenerated"),
           variant: "default",
         });
 
@@ -474,16 +474,17 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
           errorData,
         );
         toast({
-          title: "Errore verifica recovery",
-          description: errorData.detail || "Codici di recupero non validi",
+          title: t("loginPage.errors.recoveryError"),
+          description:
+            errorData.detail || t("loginPage.errors.invalidRecoveryCode"),
           variant: "destructive",
         });
       }
     } catch (error: any) {
       console.error("[LoginPage] Errore nella verifica recovery:", error);
       toast({
-        title: "Errore",
-        description: error.message || "Errore durante la verifica del recovery",
+        title: t("common.error"),
+        description: error.message || t("loginPage.errors.recoveryError"),
         variant: "destructive",
       });
     } finally {
@@ -497,7 +498,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-400 mx-auto mb-4"></div>
-            <p className="text-slate-400">Controllo accesso...</p>
+            <p className="text-slate-400">{t("loginPage.checking")}</p>
           </div>
         </div>
       )}
@@ -509,7 +510,6 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
       {!isCheckingHealth && !isSecureAccessBlocked && (
         <>
           <style>{`
-        /* Animazione di ingresso per la card */
         .login-card-enter {
           opacity: 0;
           transform: translateY(20px);
@@ -520,7 +520,6 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
           transition: opacity 0.7s ease-out, transform 0.7s ease-out;
         }
 
-        /* Animazione per il logo */
         .logo-icon-enter {
           opacity: 0;
           transform: scale(0.8);
@@ -531,7 +530,6 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
           transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
-        /* Animazione per il titolo */
         .title-glow {
           animation: text-glow 1.5s ease-in-out infinite alternate;
         }
@@ -545,7 +543,6 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
           }
         }
 
-        /* Sfondo animato */
         .animated-background {
           background-size: 400% 400%;
           animation: gradient-animation 15s ease infinite;
@@ -557,7 +554,6 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
           100% { background-position: 0% 50%; }
         }
 
-        /* Stili per i link social */
         .social-link {
           transition: all 0.3s ease;
           transform-origin: center;
@@ -587,15 +583,18 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
 
           <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4 animated-background">
             {}
-            <Link to="/info" className="absolute top-4 right-4">
-              <Button
-                variant="ghost"
-                className="text-white hover:bg-slate-700/50"
-              >
-                <Info className="h-4 w-4 mr-2" />
-                Informazioni sul Prodotto
-              </Button>
-            </Link>
+            <div className="absolute top-4 right-4 flex items-center gap-2">
+              <LanguageSwitcher />
+              <Link to="/info">
+                <Button
+                  variant="ghost"
+                  className="text-white hover:bg-slate-700/50"
+                >
+                  <Info className="h-4 w-4 mr-2" />
+                  {t("loginPage.productInfo")}
+                </Button>
+              </Link>
+            </div>
 
             <Card
               className={`w-full max-w-md bg-slate-800/50 border-slate-700 backdrop-blur-md login-card-enter ${cardVisible ? "login-card-enter-active" : ""}`}
@@ -612,12 +611,12 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                   NGINX Shield
                 </CardTitle>
                 <CardDescription className="text-slate-400">
-                  Accedi al sistema di sicurezza
+                  {t("loginPage.greeting")}
                 </CardDescription>
                 {isFirstLogin && (
                   <div className="mt-2 p-2 bg-orange-500/10 rounded-md border border-orange-500/20">
                     <p className="text-sm text-orange-400">
-                      🔑 Primo accesso: usa le credenziali di default
+                      {t("loginPage.firstLoginWarning")}
                     </p>
                   </div>
                 )}
@@ -628,7 +627,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                     <div className="p-3 bg-violet-500/10 rounded-md border border-violet-500/20 flex items-center gap-2">
                       <ShieldAlert className="h-5 w-5 text-violet-400 flex-shrink-0" />
                       <p className="text-sm text-violet-400">
-                        Recupero account tramite codici di backup
+                        {t("loginPage.recovery.title")}
                       </p>
                     </div>
 
@@ -638,7 +637,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                         className="text-slate-300"
                       >
                         <User className="h-4 w-4 inline mr-2" />
-                        Nome Utente
+                        {t("loginPage.recovery.username")}
                       </Label>
                       <Input
                         id="recovery-username"
@@ -646,7 +645,9 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                         value={recoveryUsername}
                         onChange={(e) => setRecoveryUsername(e.target.value)}
                         className="bg-slate-900/50 border-slate-600 text-white"
-                        placeholder="Inserisci il nome utente"
+                        placeholder={t(
+                          "loginPage.recovery.usernamePlaceholder",
+                        )}
                         disabled={isLoading}
                         autoFocus
                       />
@@ -655,10 +656,10 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
                         <Label className="text-slate-300">
-                          Inserisci tutti e 10 i codici
+                          {t("loginPage.recovery.codesLabel")}
                         </Label>
                         <span className="text-xs text-slate-400">
-                          Completati:{" "}
+                          {t("loginPage.recovery.codesCompleted")}{" "}
                           {
                             backupCodes.filter((code) => code.length === 8)
                               .length
@@ -708,8 +709,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                       </div>
 
                       <p className="text-xs text-slate-400 text-center">
-                        Ogni codice è di 8 caratteri. Verranno applicati
-                        automaticamente.
+                        {t("loginPage.recovery.codesHint")}
                       </p>
 
                       <div className="pt-2">
@@ -722,7 +722,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                             className="hidden"
                           />
                           <span className="text-xs text-violet-400 font-medium">
-                            📄 Carica codici da file .txt
+                            {t("loginPage.recovery.loadFromFile")}
                           </span>
                         </label>
                       </div>
@@ -737,7 +737,9 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                         !backupCodes.every((code) => code.length === 8)
                       }
                     >
-                      {isLoading ? "Recupero in corso..." : "Recupera Account"}
+                      {isLoading
+                        ? t("loginPage.recovery.button") + "..."
+                        : t("loginPage.recovery.button")}
                     </Button>
 
                     <Button
@@ -752,7 +754,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                       }}
                       disabled={isLoading}
                     >
-                      Indietro al Login
+                      {t("loginPage.recovery.back")}
                     </Button>
                   </form>
                 ) : !requiresTOTP ? (
@@ -760,7 +762,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                     <div className="space-y-2">
                       <Label htmlFor="username" className="text-slate-300">
                         <User className="h-4 w-4 inline mr-2" />
-                        Nome Utente
+                        {t("loginPage.credentials.username")}
                       </Label>
                       <Input
                         id="username"
@@ -770,8 +772,8 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                         className="bg-slate-900/50 border-slate-600 text-white"
                         placeholder={
                           isFirstLogin
-                            ? "Nome utente"
-                            : "Inserisci il nome utente"
+                            ? t("loginPage.credentials.firstLoginUsername")
+                            : t("loginPage.credentials.usernamePlaceholder")
                         }
                         disabled={isLoading}
                         onKeyDown={(e) => {
@@ -786,7 +788,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                     <div className="space-y-2">
                       <Label htmlFor="password" className="text-slate-300">
                         <Lock className="h-4 w-4 inline mr-2" />
-                        Password
+                        {t("loginPage.credentials.password")}
                       </Label>
                       <div className="relative">
                         <Input
@@ -796,7 +798,9 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                           onChange={(e) => setPassword(e.target.value)}
                           className="bg-slate-900/50 border-slate-600 text-white pr-10"
                           placeholder={
-                            isFirstLogin ? "Password" : "Inserisci la password"
+                            isFirstLogin
+                              ? t("loginPage.credentials.firstLoginPassword")
+                              : t("loginPage.credentials.passwordPlaceholder")
                           }
                           disabled={isLoading}
                           onKeyDown={(e) => {
@@ -826,7 +830,9 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                       className="w-full bg-red-600 hover:bg-red-700 text-white disabled:opacity-50"
                       disabled={isLoading}
                     >
-                      {isLoading ? "Accesso in corso..." : "Accedi"}
+                      {isLoading
+                        ? t("loginPage.credentials.logging")
+                        : t("loginPage.credentials.login")}
                     </Button>
 
                     <Button
@@ -840,7 +846,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                       }}
                       disabled={isLoading}
                     >
-                      Non riesco ad accedere?
+                      {t("loginPage.credentials.cantAccess")}
                     </Button>
                   </form>
                 ) : (
@@ -848,14 +854,14 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                     <div className="p-3 bg-blue-500/10 rounded-md border border-blue-500/20 flex items-center gap-2">
                       <ShieldAlert className="h-5 w-5 text-blue-400 flex-shrink-0" />
                       <p className="text-sm text-blue-400">
-                        Autenticazione a due fattori (2FA) richiesta
+                        {t("loginPage.totp.title")}
                       </p>
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="totp-code" className="text-slate-300">
                         <Lock className="h-4 w-4 inline mr-2" />
-                        Codice TOTP
+                        {t("loginPage.totp.codeLabel")}
                       </Label>
                       <Input
                         id="totp-code"
@@ -867,7 +873,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                           )
                         }
                         className="bg-slate-900/50 border-slate-600 text-white text-center text-2xl tracking-widest font-mono"
-                        placeholder="000000"
+                        placeholder={t("loginPage.totp.codePlaceholder")}
                         maxLength={6}
                         disabled={isLoading}
                         autoFocus
@@ -879,8 +885,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                         }}
                       />
                       <p className="text-xs text-slate-400">
-                        Inserisci il codice di 6 cifre dall'app di
-                        autenticazione
+                        {t("loginPage.totp.hint")}
                       </p>
                     </div>
 
@@ -889,7 +894,9 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                       className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
                       disabled={isLoading || totpCode.length !== 6}
                     >
-                      {isLoading ? "Verifica in corso..." : "Verifica"}
+                      {isLoading
+                        ? t("loginPage.totp.verifying")
+                        : t("loginPage.totp.verify")}
                     </Button>
 
                     <Button
@@ -904,7 +911,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                       }}
                       disabled={isLoading}
                     >
-                      Non riesco ad accedere?
+                      {t("loginPage.credentials.cantAccess")}
                     </Button>
 
                     <Button
@@ -919,7 +926,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                       }}
                       disabled={isLoading}
                     >
-                      Indietro
+                      {t("loginPage.totp.back")}
                     </Button>
                   </form>
                 )}
@@ -928,18 +935,18 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                   {isFirstLogin && (
                     <div className="text-center text-sm text-slate-400 bg-slate-900/50 p-3 rounded-md">
                       <p className="font-medium text-slate-300">
-                        Credenziali di default:
+                        {t("loginPage.credentials.defaultCredentials")}
                       </p>
                       <p className="text-slate-400">
-                        Username:{" "}
+                        {t("loginPage.credentials.defaultUsername")}{" "}
                         <span className="text-white font-mono">
-                          admin_shield
+                          {t("loginPage.credentials.defaultUsernameValue")}
                         </span>
                       </p>
                       <p className="text-slate-400">
-                        Password:{" "}
+                        {t("loginPage.credentials.defaultPassword")}{" "}
                         <span className="text-white font-mono">
-                          nginxshield
+                          {t("loginPage.credentials.defaultPasswordValue")}
                         </span>
                       </p>
                     </div>
@@ -1001,16 +1008,16 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                     </div>
                   </div>
                   <CardTitle className="text-2xl text-violet-400">
-                    Account Ripristinato!
+                    {t("loginPage.recovery.restored")}
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    La tua password è stata rigenerata
+                    {t("loginPage.recovery.newPasswordGenerated")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 pt-6">
                   <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
                     <p className="text-sm text-amber-400 font-semibold mb-2">
-                      ⚠️ Nuova Password Temporanea:
+                      {t("loginPage.recovery.tempPassword")}
                     </p>
                     <div className="flex items-center gap-2">
                       <code className="flex-1 bg-slate-900/50 p-3 rounded text-white font-mono text-center text-lg tracking-wider">
@@ -1026,7 +1033,9 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                           setTimeout(() => setCopiedToClipboard(false), 2000);
                         }}
                       >
-                        {copiedToClipboard ? "✓" : "Copia"}
+                        {copiedToClipboard
+                          ? t("loginPage.recovery.copied")
+                          : t("loginPage.recovery.copy")}
                       </Button>
                     </div>
                   </div>
@@ -1034,30 +1043,23 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                   <div className="space-y-3 text-slate-300 text-sm">
                     <div className="flex gap-2">
                       <span className="text-violet-400 font-semibold">✓</span>
-                      <span>
-                        I codici di backup sono stati consumati e non sono più
-                        disponibili
-                      </span>
+                      <span>{t("loginPage.recovery.codesConsumed")}</span>
                     </div>
                     <div className="flex gap-2">
                       <span className="text-violet-400 font-semibold">✓</span>
-                      <span>
-                        L'autenticazione a 2 fattori (TOTP) è stata disabilitata
-                      </span>
+                      <span>{t("loginPage.recovery.totp2faDisabled")}</span>
                     </div>
                     <div className="flex gap-2">
                       <span className="text-amber-400 font-semibold">!</span>
                       <span className="text-amber-300">
-                        La password sopra è TEMPORANEA e necessaria per cambiare
-                        la password nel passaggio sucessivo.
+                        {t("loginPage.recovery.warning")}
                       </span>
                     </div>
                   </div>
 
                   <div className="p-3 bg-slate-900/50 rounded-lg border border-slate-600">
                     <p className="text-xs text-slate-400">
-                      !!!ATTENZIONE!!! Copiala verrà richiesta nel passaggio
-                      successivo.
+                      {t("loginPage.recovery.attention")}
                     </p>
                   </div>
 
@@ -1077,7 +1079,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                         }, 500);
                       }}
                     >
-                      Procedi con cambio password
+                      {t("loginPage.recovery.proceed")}
                     </Button>
 
                     <Button
@@ -1096,7 +1098,7 @@ export const LoginPage = ({ onLogin, serverStatus }: LoginPageProps) => {
                         }, 500);
                       }}
                     >
-                      Mantieni pass autogenerata (non sicuro)
+                      {t("loginPage.recovery.keepAutoGenerated")}
                     </Button>
                   </div>
                 </CardContent>

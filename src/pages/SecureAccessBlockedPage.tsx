@@ -63,7 +63,7 @@ const SecureAccessBlockedPage = () => {
             </p>
           </div>
 
-          {/* [ES] */}
+          {}
           <div className="p-5 rounded-lg border border-red-500/30 bg-red-500/5 backdrop-blur-sm">
             <div className="flex items-center gap-2 mb-2">
               <ShieldAlert className="h-4 w-4 text-red-500" />
@@ -79,7 +79,7 @@ const SecureAccessBlockedPage = () => {
             </p>
           </div>
 
-          {/* [DE] */}
+          {}
           <div className="p-5 rounded-lg border border-red-500/30 bg-red-500/5 backdrop-blur-sm">
             <div className="flex items-center gap-2 mb-2">
               <ShieldAlert className="h-4 w-4 text-red-500" />
@@ -96,9 +96,9 @@ const SecureAccessBlockedPage = () => {
           </div>
         </div>
 
-        {/* Solutions - Fully translated to English */}
+        {}
         <div className="space-y-6">
-          {/* Option 1 */}
+          {}
           <div className="bg-slate-700/20 rounded-lg border border-blue-500/30 p-6">
             <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
               <span className="bg-blue-500/20 text-blue-400 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
@@ -121,7 +121,7 @@ const SecureAccessBlockedPage = () => {
             </div>
           </div>
 
-          {/* Option 2 */}
+          {}
           <div className="bg-slate-700/20 rounded-lg border border-orange-500/30 p-6">
             <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
               <span className="bg-orange-500/20 text-orange-400 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
@@ -177,7 +177,7 @@ const SecureAccessBlockedPage = () => {
           </div>
         </div>
 
-        {/* Footer */}
+        {}
         <div className="container mx-auto px-4 py-8 border-t border-slate-700 mt-8">
           <div className="flex items-center justify-center text-slate-400 text-sm">
             <p className="flex items-center space-x-2">

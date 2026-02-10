@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -50,6 +51,7 @@ const PatternFormModal = ({
   placeholderDesc,
   isEditing = false,
 }: any) => {
+  const { t } = useTranslation();
   const patternInputRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
@@ -77,14 +79,14 @@ const PatternFormModal = ({
           </CardTitle>
           <CardDescription className="text-slate-400">
             {isEditing
-              ? "Modifica il pattern esistente"
-              : "Aggiungi un nuovo pattern al sistema di sicurezza"}
+              ? t("patternManager.modal.editDescription")
+              : t("patternManager.modal.addDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <label className="text-slate-300 text-sm font-medium mb-2 block">
-              Pattern (Regex)
+              {t("patternManager.modal.patternLabel")}
             </label>
             <Input
               ref={patternInputRef}
@@ -99,12 +101,12 @@ const PatternFormModal = ({
               className="bg-slate-900/50 border-slate-600 text-white font-mono"
             />
             <p className="text-slate-500 text-xs mt-1">
-              Usa sintassi regex valida
+              {t("patternManager.modal.regexHint")}
             </p>
           </div>
           <div>
             <label className="text-slate-300 text-sm font-medium mb-2 block">
-              Descrizione
+              {t("patternManager.modal.descriptionLabel")}
             </label>
             <Textarea
               ref={descriptionRef}
@@ -143,12 +145,12 @@ const PatternFormModal = ({
               {isEditing ? (
                 <>
                   <Edit className="h-4 w-4 mr-2" />
-                  Modifica
+                  {t("patternManager.modal.editButton")}
                 </>
               ) : (
                 <>
                   <Plus className="h-4 w-4 mr-2" />
-                  Aggiungi
+                  {t("patternManager.modal.addButton")}
                 </>
               )}
             </Button>
@@ -157,7 +159,7 @@ const PatternFormModal = ({
               onClick={onClose}
               className="bg-white text-slate-900 border-white hover:bg-slate-100 font-medium flex-1"
             >
-              Annulla
+              {t("patternManager.modal.cancelButton")}
             </Button>
           </div>
         </CardContent>
@@ -167,6 +169,7 @@ const PatternFormModal = ({
 };
 
 export const PatternManager = () => {
+  const { t } = useTranslation();
   const [patterns, setPatterns] = useState<PatternEntry[]>([]);
   const [openAddFormType, setOpenAddFormType] = useState<
     "user_agent" | "url" | "dangerous_ua" | "dangerous_url" | null
@@ -238,8 +241,8 @@ export const PatternManager = () => {
     } catch (error) {
       console.error("Errore caricamento pattern:", error);
       toast({
-        title: "Errore",
-        description: "Errore durante il caricamento dei pattern",
+        title: t("common.error"),
+        description: t("patternManager.messages.errorLoading"),
         variant: "destructive",
       });
     } finally {
@@ -254,8 +257,8 @@ export const PatternManager = () => {
   ) => {
     if (!newPattern.pattern.trim() || !newPattern.description.trim()) {
       toast({
-        title: "Errore",
-        description: "Pattern e descrizione sono obbligatori",
+        title: t("common.error"),
+        description: t("patternManager.messages.errorValidation"),
         variant: "destructive",
       });
       return;
@@ -273,16 +276,18 @@ export const PatternManager = () => {
       resetFunc();
 
       toast({
-        title: "Pattern aggiunto",
-        description: `Pattern "${newPattern.pattern}" aggiunto con successo`,
+        title: t("common.success"),
+        description: t("patternManager.messages.addSuccess", {
+          pattern: newPattern.pattern,
+        }),
       });
 
       await loadPatterns();
     } catch (error) {
       console.error("Errore aggiunta pattern:", error);
       toast({
-        title: "Errore",
-        description: "Errore durante l'aggiunta del pattern",
+        title: t("common.error"),
+        description: t("patternManager.messages.addError"),
         variant: "destructive",
       });
     }
@@ -298,16 +303,16 @@ export const PatternManager = () => {
       setDeleteConfirm(null);
 
       toast({
-        title: "Pattern rimosso",
-        description: "Pattern eliminato con successo",
+        title: t("common.success"),
+        description: t("patternManager.messages.removeSuccess"),
       });
 
       await loadPatterns();
     } catch (error) {
       console.error("Errore rimozione pattern:", error);
       toast({
-        title: "Errore",
-        description: "Errore durante la rimozione del pattern",
+        title: t("common.error"),
+        description: t("patternManager.messages.removeError"),
         variant: "destructive",
       });
     }
@@ -330,8 +335,8 @@ export const PatternManager = () => {
 
     if (!editFormData.pattern.trim() || !editFormData.description.trim()) {
       toast({
-        title: "Errore",
-        description: "Pattern e descrizione sono obbligatori",
+        title: t("common.error"),
+        description: t("patternManager.messages.errorValidation"),
         variant: "destructive",
       });
       return;
@@ -352,8 +357,10 @@ export const PatternManager = () => {
       );
 
       toast({
-        title: "Pattern modificato",
-        description: `Pattern "${editFormData.pattern}" modificato con successo`,
+        title: t("common.success"),
+        description: t("patternManager.messages.editSuccess", {
+          pattern: editFormData.pattern,
+        }),
       });
 
       setEditingPattern(null);
@@ -362,8 +369,8 @@ export const PatternManager = () => {
     } catch (error) {
       console.error("Errore modifica pattern:", error);
       toast({
-        title: "Errore",
-        description: "Errore durante la modifica del pattern",
+        title: t("common.error"),
+        description: t("patternManager.messages.editError"),
         variant: "destructive",
       });
     }
@@ -383,16 +390,18 @@ export const PatternManager = () => {
       });
 
       toast({
-        title: "Pattern copiato",
-        description: `Pattern "${pattern.pattern}" aggiunto ai pattern pericolosi`,
+        title: t("common.success"),
+        description: t("patternManager.messages.copySuccess", {
+          pattern: pattern.pattern,
+        }),
       });
 
       await loadPatterns();
     } catch (error) {
       console.error("Errore copia pattern:", error);
       toast({
-        title: "Errore",
-        description: "Errore durante la copia del pattern",
+        title: t("common.error"),
+        description: t("patternManager.messages.copyError"),
         variant: "destructive",
       });
     }
@@ -413,16 +422,18 @@ export const PatternManager = () => {
       );
 
       toast({
-        title: "Pattern rimosso",
-        description: `Pattern "${pattern.pattern}" rimosso dai pattern pericolosi`,
+        title: t("common.success"),
+        description: t("patternManager.messages.removeFromDangerousSuccess", {
+          pattern: pattern.pattern,
+        }),
       });
 
       await loadPatterns();
     } catch (error) {
       console.error("Errore rimozione pattern dai pericolosi:", error);
       toast({
-        title: "Errore",
-        description: "Errore durante la rimozione del pattern",
+        title: t("common.error"),
+        description: t("patternManager.messages.removeFromDangerousError"),
         variant: "destructive",
       });
     }
@@ -510,11 +521,10 @@ export const PatternManager = () => {
       <div>
         <h1 className="text-3xl font-bold text-white flex items-center">
           <Filter className="h-8 w-8 mr-3 text-blue-400" />
-          Pattern Manager
+          {t("patternManager.title")}
         </h1>
         <p className="text-slate-400 mt-1">
-          Gestisci pattern per User-Agent, URL e elementi pericolosi (
-          {stats.total} totali)
+          {t("patternManager.subtitle", { total: stats.total })}
         </p>
       </div>
 
@@ -526,7 +536,7 @@ export const PatternManager = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-blue-300 text-sm font-medium">
-                    User Agent
+                    {t("patternManager.stats.userAgent")}
                   </p>
                   <p className="text-2xl font-bold text-white">
                     {stats.user_agent}
@@ -541,7 +551,9 @@ export const PatternManager = () => {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-green-300 text-sm font-medium">URL</p>
+                  <p className="text-green-300 text-sm font-medium">
+                    {t("patternManager.stats.url")}
+                  </p>
                   <p className="text-2xl font-bold text-white">{stats.url}</p>
                 </div>
                 <Globe className="h-8 w-8 text-green-400" />
@@ -554,7 +566,7 @@ export const PatternManager = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-red-300 text-sm font-medium">
-                    UA Pericolosi
+                    {t("patternManager.stats.dangerousUA")}
                   </p>
                   <p className="text-2xl font-bold text-white">
                     {stats.dangerous_ua}
@@ -570,7 +582,7 @@ export const PatternManager = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-red-300 text-sm font-medium">
-                    URL Pericolosi
+                    {t("patternManager.stats.dangerousURL")}
                   </p>
                   <p className="text-2xl font-bold text-white">
                     {stats.dangerous_url}
@@ -588,7 +600,7 @@ export const PatternManager = () => {
         <div className="relative w-full max-w-xs">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
           <Input
-            placeholder="Cerca pattern..."
+            placeholder={t("patternManager.search.placeholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10 bg-slate-900/50 border-slate-600 text-white w-full"
@@ -603,12 +615,12 @@ export const PatternManager = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <AlertTriangle className="h-5 w-5 mr-2 text-red-400" />
-                Conferma Eliminazione
+                {t("patternManager.delete.title")}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-slate-300">
-                Sei sicuro di voler eliminare questo pattern?
+                {t("patternManager.delete.message")}
               </p>
               <div className="bg-slate-900/50 p-3 rounded border">
                 <code className="text-red-300 text-sm break-all">
@@ -616,7 +628,7 @@ export const PatternManager = () => {
                 </code>
               </div>
               <p className="text-slate-400 text-sm">
-                Questa azione non può essere annullata.
+                {t("patternManager.delete.warning")}
               </p>
               <div className="flex space-x-2 pt-2">
                 <Button
@@ -624,7 +636,7 @@ export const PatternManager = () => {
                   className="bg-red-600 hover:bg-red-700"
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
-                  Elimina
+                  {t("patternManager.delete.button")}
                 </Button>
                 <Button
                   variant="outline"
@@ -648,7 +660,7 @@ export const PatternManager = () => {
               <div className="flex-1">
                 <CardTitle className="text-white flex items-center">
                   <User className="h-5 w-5 mr-2 text-blue-400" />
-                  User Agent Patterns
+                  {t("patternManager.cards.userAgentTitle")}
                   <Badge
                     variant="outline"
                     className="ml-2 text-blue-400 border-blue-400"
@@ -657,14 +669,14 @@ export const PatternManager = () => {
                   </Badge>
                 </CardTitle>
                 <CardDescription className="text-slate-400">
-                  Pattern per identificare user agent specifici
+                  {t("patternManager.cards.userAgentDesc")}
                 </CardDescription>
               </div>
               <Button
                 size="sm"
                 onClick={() => setOpenAddFormType("user_agent")}
                 className="bg-blue-600 hover:bg-blue-700 ml-2"
-                title="Aggiungi pattern User Agent"
+                title={t("patternManager.cards.userAgentTitle")}
               >
                 <Plus className="h-4 w-4" />
               </Button>
@@ -700,7 +712,7 @@ export const PatternManager = () => {
                         <Badge
                           className={`${getTypeColor(pattern.type)} text-xs`}
                         >
-                          USER-AGENT
+                          {t("patternManager.badges.userAgent")}
                         </Badge>
                         {isPatternInDangerous(pattern, "dangerous_ua") ? (
                           <Button
@@ -713,7 +725,7 @@ export const PatternManager = () => {
                               )
                             }
                             className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                            title="Rimuovi da User Agent Pericolosi"
+                            title={t("patternManager.buttons.remove")}
                           >
                             <X className="h-4 w-4" />
                           </Button>
@@ -728,7 +740,7 @@ export const PatternManager = () => {
                               )
                             }
                             className="text-orange-400 hover:text-orange-300 hover:bg-orange-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                            title="Copia in User Agent Pericolosi"
+                            title={t("patternManager.buttons.copy")}
                           >
                             <Copy className="h-4 w-4" />
                           </Button>
@@ -738,7 +750,7 @@ export const PatternManager = () => {
                           size="sm"
                           onClick={() => handleEditPattern(pattern)}
                           className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Modifica pattern"
+                          title={t("patternManager.buttons.edit")}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
@@ -749,7 +761,7 @@ export const PatternManager = () => {
                             confirmDelete(pattern.id, pattern.pattern)
                           }
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Elimina pattern"
+                          title={t("patternManager.buttons.delete")}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -759,8 +771,8 @@ export const PatternManager = () => {
                 ))
               ) : (
                 <EmptyState
-                  title="Nessun pattern User Agent"
-                  description="Aggiungi pattern per identificare user agent specifici come bot, crawler o client personalizzati"
+                  title={t("patternManager.empty.userAgentTitle")}
+                  description={t("patternManager.empty.userAgentDesc")}
                   icon={User}
                 />
               )}
@@ -775,7 +787,7 @@ export const PatternManager = () => {
               <div className="flex-1">
                 <CardTitle className="text-white flex items-center">
                   <Globe className="h-5 w-5 mr-2 text-green-400" />
-                  URL Patterns
+                  {t("patternManager.cards.urlTitle")}
                   <Badge
                     variant="outline"
                     className="ml-2 text-green-400 border-green-400"
@@ -784,14 +796,14 @@ export const PatternManager = () => {
                   </Badge>
                 </CardTitle>
                 <CardDescription className="text-slate-400">
-                  Pattern per controllare percorsi e URL specifici
+                  {t("patternManager.cards.urlDesc")}
                 </CardDescription>
               </div>
               <Button
                 size="sm"
                 onClick={() => setOpenAddFormType("url")}
                 className="bg-green-600 hover:bg-green-700 ml-2"
-                title="Aggiungi pattern URL"
+                title={t("patternManager.cards.urlTitle")}
               >
                 <Plus className="h-4 w-4" />
               </Button>
@@ -827,7 +839,7 @@ export const PatternManager = () => {
                         <Badge
                           className={`${getTypeColor(pattern.type)} text-xs`}
                         >
-                          URL
+                          {t("patternManager.badges.url")}
                         </Badge>
                         {isPatternInDangerous(pattern, "dangerous_url") ? (
                           <Button
@@ -840,7 +852,7 @@ export const PatternManager = () => {
                               )
                             }
                             className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                            title="Rimuovi da URL Pericolosi"
+                            title={t("patternManager.buttons.removeURL")}
                           >
                             <X className="h-4 w-4" />
                           </Button>
@@ -855,7 +867,7 @@ export const PatternManager = () => {
                               )
                             }
                             className="text-orange-400 hover:text-orange-300 hover:bg-orange-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                            title="Copia in URL Pericolosi"
+                            title={t("patternManager.buttons.copyURL")}
                           >
                             <Copy className="h-4 w-4" />
                           </Button>
@@ -865,7 +877,7 @@ export const PatternManager = () => {
                           size="sm"
                           onClick={() => handleEditPattern(pattern)}
                           className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Modifica pattern"
+                          title={t("patternManager.buttons.edit")}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
@@ -876,7 +888,7 @@ export const PatternManager = () => {
                             confirmDelete(pattern.id, pattern.pattern)
                           }
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Elimina pattern"
+                          title={t("patternManager.buttons.delete")}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -886,8 +898,8 @@ export const PatternManager = () => {
                 ))
               ) : (
                 <EmptyState
-                  title="Nessun pattern URL"
-                  description="Aggiungi pattern per controllare percorsi specifici come /admin, /api, o endpoint sensibili"
+                  title={t("patternManager.empty.urlTitle")}
+                  description={t("patternManager.empty.urlDesc")}
                   icon={Globe}
                 />
               )}
@@ -905,7 +917,7 @@ export const PatternManager = () => {
               <div className="flex-1">
                 <CardTitle className="text-white flex items-center">
                   <AlertTriangle className="h-5 w-5 mr-2 text-red-400" />
-                  User Agent Pericolosi
+                  {t("patternManager.cards.dangerousUATitle")}
                   <Badge
                     variant="outline"
                     className="ml-2 text-red-400 border-red-400"
@@ -914,14 +926,14 @@ export const PatternManager = () => {
                   </Badge>
                 </CardTitle>
                 <CardDescription className="text-slate-400">
-                  User agent identificati come potenzialmente dannosi
+                  {t("patternManager.cards.dangerousUADesc")}
                 </CardDescription>
               </div>
               <Button
                 size="sm"
                 onClick={() => setOpenAddFormType("dangerous_ua")}
                 className="bg-red-600 hover:bg-red-700 ml-2"
-                title="Aggiungi pattern User Agent pericoloso"
+                title={t("patternManager.cards.dangerousUATitle")}
               >
                 <Plus className="h-4 w-4" />
               </Button>
@@ -951,14 +963,14 @@ export const PatternManager = () => {
                         <Badge
                           className={`${getTypeColor(pattern.type)} text-xs`}
                         >
-                          DANGEROUS UA
+                          {t("patternManager.badges.dangerousUA")}
                         </Badge>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleEditPattern(pattern)}
                           className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Modifica pattern"
+                          title={t("patternManager.buttons.edit")}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
@@ -969,7 +981,7 @@ export const PatternManager = () => {
                             confirmDelete(pattern.id, pattern.pattern)
                           }
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Elimina pattern"
+                          title={t("patternManager.buttons.delete")}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -979,8 +991,8 @@ export const PatternManager = () => {
                 ))
               ) : (
                 <EmptyState
-                  title="Nessun User Agent pericoloso"
-                  description="Aggiungi pattern per identificare user agent dannosi come scanner, exploit tool o bot malevoli"
+                  title={t("patternManager.empty.dangerousUATitle")}
+                  description={t("patternManager.empty.dangerousUADesc")}
                   icon={User}
                 />
               )}
@@ -995,7 +1007,7 @@ export const PatternManager = () => {
               <div className="flex-1">
                 <CardTitle className="text-white flex items-center">
                   <AlertTriangle className="h-5 w-5 mr-2 text-red-400" />
-                  URL Pericolosi
+                  {t("patternManager.cards.dangerousURLTitle")}
                   <Badge
                     variant="outline"
                     className="ml-2 text-red-400 border-red-400"
@@ -1004,14 +1016,14 @@ export const PatternManager = () => {
                   </Badge>
                 </CardTitle>
                 <CardDescription className="text-slate-400">
-                  URL pattern che identificano percorsi potenzialmente dannosi
+                  {t("patternManager.cards.dangerousURLDesc")}
                 </CardDescription>
               </div>
               <Button
                 size="sm"
                 onClick={() => setOpenAddFormType("dangerous_url")}
                 className="bg-red-600 hover:bg-red-700 ml-2"
-                title="Aggiungi pattern URL pericoloso"
+                title={t("patternManager.cards.dangerousURLTitle")}
               >
                 <Plus className="h-4 w-4" />
               </Button>
@@ -1041,14 +1053,14 @@ export const PatternManager = () => {
                         <Badge
                           className={`${getTypeColor(pattern.type)} text-xs`}
                         >
-                          DANGEROUS URL
+                          {t("patternManager.badges.dangerousURL")}
                         </Badge>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleEditPattern(pattern)}
                           className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Modifica pattern"
+                          title={t("patternManager.buttons.edit")}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
@@ -1059,7 +1071,7 @@ export const PatternManager = () => {
                             confirmDelete(pattern.id, pattern.pattern)
                           }
                           className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Elimina pattern"
+                          title={t("patternManager.buttons.delete")}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -1069,8 +1081,8 @@ export const PatternManager = () => {
                 ))
               ) : (
                 <EmptyState
-                  title="Nessun URL pericoloso"
-                  description="Aggiungi pattern per identificare percorsi dannosi come exploit path, directory traversal o endpoint vulnerabili"
+                  title={t("patternManager.empty.dangerousURLTitle")}
+                  description={t("patternManager.empty.dangerousURLDesc")}
                   icon={Globe}
                 />
               )}
@@ -1081,7 +1093,7 @@ export const PatternManager = () => {
 
       {}
       <PatternFormModal
-        title="Aggiungi User Agent Pattern"
+        title={t("patternManager.modal.addTitle")}
         isOpen={openAddFormType === "user_agent"}
         onClose={() => {
           setOpenAddFormType(null);
@@ -1095,13 +1107,13 @@ export const PatternManager = () => {
             setOpenAddFormType(null);
           });
         }}
-        placeholderPattern="es. ^curl.*|.*bot.*"
-        placeholderDesc="Descrizione del pattern..."
+        placeholderPattern={t("patternManager.modal.patternPlaceholder")}
+        placeholderDesc={t("patternManager.modal.descriptionPlaceholder")}
         type="user_agent"
       />
 
       <PatternFormModal
-        title="Aggiungi URL Pattern"
+        title={t("patternManager.modal.addUrlTitle")}
         isOpen={openAddFormType === "url"}
         onClose={() => {
           setOpenAddFormType(null);
@@ -1115,13 +1127,13 @@ export const PatternManager = () => {
             setOpenAddFormType(null);
           });
         }}
-        placeholderPattern="es. /admin.*|.*\\.env"
-        placeholderDesc="Descrizione del pattern..."
+        placeholderPattern={t("patternManager.modal.urlPlaceholder")}
+        placeholderDesc={t("patternManager.modal.descriptionPlaceholder")}
         type="url"
       />
 
       <PatternFormModal
-        title="Aggiungi User Agent Pericoloso"
+        title={t("patternManager.modal.addDangerousUATitle")}
         isOpen={openAddFormType === "dangerous_ua"}
         onClose={() => {
           setOpenAddFormType(null);
@@ -1135,13 +1147,13 @@ export const PatternManager = () => {
             setOpenAddFormType(null);
           });
         }}
-        placeholderPattern="es. ^Nmap.*|^sqlmap.*"
-        placeholderDesc="Descrizione del pattern..."
+        placeholderPattern={t("patternManager.modal.dangerousUAPlaceholder")}
+        placeholderDesc={t("patternManager.modal.descriptionPlaceholder")}
         type="dangerous_ua"
       />
 
       <PatternFormModal
-        title="Aggiungi URL Pericoloso"
+        title={t("patternManager.modal.addDangerousURLTitle")}
         isOpen={openAddFormType === "dangerous_url"}
         onClose={() => {
           setOpenAddFormType(null);
@@ -1155,13 +1167,13 @@ export const PatternManager = () => {
             setOpenAddFormType(null);
           });
         }}
-        placeholderPattern="es. /shell\\.php|.*\\.phtml"
-        placeholderDesc="Descrizione del pattern..."
+        placeholderPattern={t("patternManager.modal.dangerousURLPlaceholder")}
+        placeholderDesc={t("patternManager.modal.descriptionPlaceholder")}
         type="dangerous_url"
       />
 
       <PatternFormModal
-        title="Modifica Pattern"
+        title={t("patternManager.modal.editTitle")}
         isOpen={editingPattern !== null}
         onClose={() => {
           setEditingPattern(null);
@@ -1170,8 +1182,8 @@ export const PatternManager = () => {
         pattern={editFormData}
         setPattern={setEditFormData}
         onSubmit={handleSaveEditPattern}
-        placeholderPattern="es. /admin.*|.*\\.env"
-        placeholderDesc="Descrizione del pattern..."
+        placeholderPattern={t("patternManager.modal.urlPlaceholder")}
+        placeholderDesc={t("patternManager.modal.descriptionPlaceholder")}
         isEditing={true}
       />
     </div>

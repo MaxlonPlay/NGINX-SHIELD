@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { logService } from "@/utils/logsService";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { t } from "i18next";
 
 interface LogLine {
   text: string;
@@ -130,7 +131,7 @@ export const LogViewer = () => {
       const response = await logService.getAvailableLogs();
       const logsList = response.available_logs || [];
       if (logsList.length === 0) {
-        setError("Nessun file di log disponibile");
+        setError(t("logViewer.noLogsAvailable"));
         setAvailableLogs(["npm_debug"]);
         setSelectedLogType("npm_debug");
       } else {
@@ -270,17 +271,18 @@ export const LogViewer = () => {
             <div>
               <CardTitle className="text-white flex items-center">
                 <FileText className="h-5 w-5 mr-2 text-blue-400" />
-                Visualizzatore Log
+                {t("logViewer.title")}
                 {autoRefresh && (
                   <span className="ml-2 text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full flex items-center">
-                    <span className="animate-pulse mr-1">●</span> Live
+                    <span className="animate-pulse mr-1">●</span>{" "}
+                    {t("logViewer.live")}
                   </span>
                 )}
               </CardTitle>
               <CardDescription className="text-slate-400">
-                Visualizza i log del sistema da backend API{" "}
-                {autoRefresh &&
-                  `(aggiornamento ogni ${refreshInterval / 1000}s)`}
+                {t("logViewer.description", {
+                  refreshInterval: refreshInterval / 1000,
+                })}
               </CardDescription>
             </div>
             <div className="flex items-center space-x-2">
@@ -298,12 +300,12 @@ export const LogViewer = () => {
                 {autoRefresh ? (
                   <>
                     <Pause className="h-4 w-4 mr-2" />
-                    Pausa
+                    {t("logViewer.pause")}
                   </>
                 ) : (
                   <>
                     <Play className="h-4 w-4 mr-2" />
-                    Avvia
+                    {t("logViewer.start")}
                   </>
                 )}
               </Button>
@@ -318,16 +320,16 @@ export const LogViewer = () => {
                 </SelectTrigger>
                 <SelectContent className="bg-slate-800 border-slate-600">
                   <SelectItem value="1000" className="text-white">
-                    1s
+                    {t("logViewer.intervals.1s")}
                   </SelectItem>
                   <SelectItem value="3000" className="text-white">
-                    3s
+                    {t("logViewer.intervals.3s")}
                   </SelectItem>
                   <SelectItem value="5000" className="text-white">
-                    5s
+                    {t("logViewer.intervals.5s")}
                   </SelectItem>
                   <SelectItem value="10000" className="text-white">
-                    10s
+                    {t("logViewer.intervals.10s")}
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -350,7 +352,7 @@ export const LogViewer = () => {
                 <SelectContent className="bg-slate-800 border-slate-600">
                   {availableLogs.length === 0 ? (
                     <div className="text-slate-400 text-sm p-2">
-                      Nessun log disponibile
+                      {t("logViewer.noLogsAvailable")}
                     </div>
                   ) : (
                     availableLogs.map((logType) => (
@@ -375,7 +377,7 @@ export const LogViewer = () => {
                 <RefreshCw
                   className={`h-4 w-4 mr-2 ${isLoadingInitial ? "animate-spin" : ""}`}
                 />
-                Ricarica
+                {t("common.refresh")}
               </Button>
               <Button
                 onClick={exportLogs}
@@ -385,7 +387,7 @@ export const LogViewer = () => {
                 className="border-slate-600 text-slate-900"
               >
                 <Download className="h-4 w-4 mr-2" />
-                Export CSV
+                {t("logViewer.exportCSV")}
               </Button>
             </div>
           </div>
@@ -416,7 +418,7 @@ export const LogViewer = () => {
                 size="sm"
                 className="border-slate-600 text-slate-900"
               >
-                Cancella
+                {t("common.clear")}
               </Button>
             )}
           </div>
@@ -428,11 +430,15 @@ export const LogViewer = () => {
               <span>
                 {searchQuery.trim() ? (
                   <>
-                    Trovati {filteredLogs.length} log di {logs.length} totali
+                    {t("common.found", {
+                      count: filteredLogs.length,
+                      total: logs.length,
+                    })}
                   </>
                 ) : (
                   <>
-                    Visualizzati {logs.length} log di {total} totali
+                    {t("logViewer.displayed")} {logs.length}{" "}
+                    {t("logViewer.logsOf")} {total} {t("common.total")}
                   </>
                 )}
               </span>

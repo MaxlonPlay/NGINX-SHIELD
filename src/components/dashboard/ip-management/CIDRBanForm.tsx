@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -37,6 +38,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
   onBanSuccess,
   onReloadRequest,
 }) => {
+  const { t } = useTranslation();
   const [cidr, setCIDR] = useState("");
   const [reason, setReason] = useState("");
   const [step, setStep] = useState<CIDRBanStep>({ status: "input" });
@@ -57,8 +59,8 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
 
     if (!trimmedCIDR) {
       toast({
-        title: "Errore di Validazione",
-        description: "Il CIDR è obbligatorio.",
+        title: t("cidrBan.validationError"),
+        description: t("cidrBan.cidrRequired"),
         variant: "destructive",
       });
       return;
@@ -66,8 +68,8 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
 
     if (!validateCIDR(trimmedCIDR)) {
       toast({
-        title: "Errore di Validazione",
-        description: "Formato CIDR non valido. Usa il formato: 192.168.1.0/24",
+        title: t("cidrBan.validationError"),
+        description: t("cidrBan.invalidCIDR"),
         variant: "destructive",
       });
       return;
@@ -75,8 +77,8 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
 
     if (!trimmedReason || trimmedReason.length < 3) {
       toast({
-        title: "Errore di Validazione",
-        description: "Il motivo deve contenere almeno 3 caratteri.",
+        title: t("cidrBan.validationError"),
+        description: t("cidrBan.reasonTooShort"),
         variant: "destructive",
       });
       return;
@@ -89,7 +91,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
       const banResult = await banCIDR(trimmedCIDR, trimmedReason);
       if (!banResult.success) {
         toast({
-          title: "Errore nel Ban",
+          title: t("cidrBan.banError"),
           description: banResult.message,
           variant: "destructive",
         });
@@ -99,8 +101,8 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
       }
 
       toast({
-        title: "Successo",
-        description: `CIDR ${trimmedCIDR} bannato correttamente`,
+        title: t("cidrBan.successTitle"),
+        description: t("cidrBan.cidrBannedSuccessfully", { cidr: trimmedCIDR }),
         variant: "default",
       });
 
@@ -152,11 +154,10 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
       }
 
       toast({
-        title: "❌ Errore",
+        title: t("cidrBan.errorTitle"),
         description: description,
         variant: "destructive",
       });
-      setStep({ status: "input" });
     } finally {
       setIsProcessing(false);
     }
@@ -173,7 +174,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
 
       if (!unbanResult.success) {
         toast({
-          title: "Errore",
+          title: t("cidrBan.errorTitle"),
           description: unbanResult.message,
           variant: "destructive",
         });
@@ -181,8 +182,10 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
       }
 
       toast({
-        title: "Successo",
-        description: `${unbanResult.unbanned_ips.length} IP sbannati correttamente`,
+        title: t("cidrBan.successTitle"),
+        description: t("cidrBan.ipsUnbanned", {
+          count: unbanResult.unbanned_ips.length,
+        }),
         variant: "default",
       });
 
@@ -242,11 +245,9 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Network className="w-5 h-5" />
-          Ban CIDR
+          {t("cidrBan.title")}
         </CardTitle>
-        <CardDescription>
-          Banna una intera subnet e gestisci gli IP singoli
-        </CardDescription>
+        <CardDescription>{t("cidrBan.description")}</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -254,10 +255,10 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
           <div className="space-y-4">
             <div>
               <label className="text-sm font-medium">
-                CIDR (es: 192.168.1.0/24)
+                {t("cidrBan.cidrLabel")}
               </label>
               <Input
-                placeholder="192.168.1.0/24"
+                placeholder={t("cidrBan.cidrPlaceholder")}
                 value={cidr}
                 onChange={(e) => setCIDR(e.target.value)}
                 disabled={isLoading || isProcessing}
@@ -266,9 +267,11 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
             </div>
 
             <div>
-              <label className="text-sm font-medium">Motivo del Ban</label>
+              <label className="text-sm font-medium">
+                {t("cidrBan.reasonLabel")}
+              </label>
               <Input
-                placeholder="Es: DDoS, Malware, Spam..."
+                placeholder={t("cidrBan.reasonPlaceholder")}
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 disabled={isLoading || isProcessing}
@@ -284,12 +287,12 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
               {isProcessing ? (
                 <>
                   <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                  Bannando...
+                  {t("cidrBan.banning")}
                 </>
               ) : (
                 <>
                   <Network className="w-4 h-4 mr-2" />
-                  Banna CIDR
+                  {t("cidrBan.banCIDRButton")}
                 </>
               )}
             </Button>
@@ -300,7 +303,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
           <div className="space-y-4 text-center">
             <RefreshCw className="w-8 h-8 animate-spin mx-auto text-blue-500" />
             <p className="text-sm text-gray-600">
-              Bannando CIDR {step.cidr}...
+              {t("cidrBan.banningText", { cidr: step.cidr })}
             </p>
           </div>
         )}
@@ -308,9 +311,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
         {step.status === "checking" && (
           <div className="space-y-4 text-center">
             <RefreshCw className="w-8 h-8 animate-spin mx-auto text-blue-500" />
-            <p className="text-sm text-gray-600">
-              Cercando IP appartenenti al CIDR...
-            </p>
+            <p className="text-sm text-gray-600">{t("cidrBan.checking")}</p>
           </div>
         )}
 
@@ -320,10 +321,10 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
               <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0" />
               <div>
                 <p className="text-sm font-medium text-blue-900">
-                  Trovati {step.ipsFound?.length || 0} IP singoli in questo CIDR
+                  {t("cidrBan.ipsFound", { count: step.ipsFound?.length || 0 })}
                 </p>
                 <p className="text-xs text-blue-700 mt-1">
-                  Il CIDR è già bannato. Vuoi sbannare gli IP singoli?
+                  {t("cidrBan.cidrAlreadyBanned")}
                 </p>
               </div>
             </div>
@@ -336,7 +337,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
                   onClick={handleSelectAll}
                   disabled={isProcessing}
                 >
-                  Seleziona Tutto
+                  {t("cidrBan.selectAll")}
                 </Button>
                 <Button
                   size="sm"
@@ -344,7 +345,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
                   onClick={handleDeselectAll}
                   disabled={isProcessing}
                 >
-                  Deseleziona Tutto
+                  {t("cidrBan.deselectAll")}
                 </Button>
               </div>
 
@@ -377,12 +378,14 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
                 {isProcessing ? (
                   <>
                     <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                    Sbannando...
+                    {t("cidrBan.unbanning")}
                   </>
                 ) : (
                   <>
                     <Network className="w-4 h-4 mr-2" />
-                    Sbanna IP Selezionati ({step.selectedIPIds?.length || 0})
+                    {t("cidrBan.unbanSelected", {
+                      count: step.selectedIPIds?.length || 0,
+                    })}
                   </>
                 )}
               </Button>
@@ -396,7 +399,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
                 variant="outline"
                 disabled={isProcessing}
               >
-                Fatto
+                {t("cidrBan.done")}
               </Button>
             </div>
           </div>
@@ -410,11 +413,13 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
               </div>
             </div>
             <p className="text-sm text-gray-600">
-              CIDR {step.cidr} bannato correttamente
+              {t("cidrBan.cidrBannedSuccessfully", { cidr: step.cidr })}
             </p>
             {step.ipsFound && step.ipsFound.length > 0 && (
               <p className="text-xs text-gray-500">
-                {step.selectedIPIds?.length || 0} IP sbannati
+                {t("cidrBan.ipsUnbanned", {
+                  count: step.selectedIPIds?.length || 0,
+                })}
               </p>
             )}
             <Button
@@ -425,7 +430,7 @@ const CIDRBanForm: FC<CIDRBanFormProps> = ({
               }}
               className="w-full"
             >
-              Banna un altro CIDR
+              {t("cidrBan.banAnotherCIDR")}
             </Button>
           </div>
         )}

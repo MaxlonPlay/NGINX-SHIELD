@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -36,6 +37,7 @@ export const EditWhitelistEntryForm = ({
   onUpdate,
   onClose,
 }: EditWhitelistEntryFormProps) => {
+  const { t } = useTranslation();
   const [type, setType] = useState(entry.type);
   const [value, setValue] = useState(entry.value);
   const [description, setDescription] = useState(entry.description);
@@ -45,8 +47,8 @@ export const EditWhitelistEntryForm = ({
   const validateInput = () => {
     if (!value.trim()) {
       toast({
-        title: "Errore",
-        description: "Inserisci un valore valido",
+        title: t("common.error"),
+        description: t("whitelist.errors.invalidValue"),
         variant: "destructive",
       });
       return false;
@@ -58,8 +60,8 @@ export const EditWhitelistEntryForm = ({
           /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if (!ipRegex.test(value.trim())) {
           toast({
-            title: "Errore",
-            description: "Formato IP non valido (es: 192.168.1.100)",
+            title: t("common.error"),
+            description: t("whitelist.errors.invalidIP"),
             variant: "destructive",
           });
           return false;
@@ -71,8 +73,8 @@ export const EditWhitelistEntryForm = ({
           /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(?:[0-9]|[1-2][0-9]|3[0-2])$/;
         if (!cidrRegex.test(value.trim())) {
           toast({
-            title: "Errore",
-            description: "Formato CIDR non valido (es: 192.168.1.0/24)",
+            title: t("common.error"),
+            description: t("whitelist.errors.invalidCIDR"),
             variant: "destructive",
           });
           return false;
@@ -84,8 +86,8 @@ export const EditWhitelistEntryForm = ({
           /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         if (!domainRegex.test(value.trim()) || value.trim().length < 3) {
           toast({
-            title: "Errore",
-            description: "Formato dominio non valido (es: example.com)",
+            title: t("common.error"),
+            description: t("whitelist.errors.invalidDomain"),
             variant: "destructive",
           });
           return false;
@@ -99,22 +101,22 @@ export const EditWhitelistEntryForm = ({
   const getPlaceholder = () => {
     switch (type) {
       case "domain":
-        return "es: example.com";
+        return t("whitelist.placeholders.domain");
       case "cidr":
-        return "es: 192.168.1.0/24";
+        return t("whitelist.placeholders.cidr");
       default:
-        return "es: 192.168.1.100";
+        return t("whitelist.placeholders.ip");
     }
   };
 
   const getLabel = () => {
     switch (type) {
       case "domain":
-        return "Dominio";
+        return t("whitelist.types.domain");
       case "cidr":
-        return "Rete (CIDR)";
+        return t("whitelist.types.cidr1");
       default:
-        return "Indirizzo IP";
+        return t("whitelist.types.ip");
     }
   };
 
@@ -127,8 +129,8 @@ export const EditWhitelistEntryForm = ({
 
     if (!description.trim()) {
       toast({
-        title: "Errore",
-        description: "Inserisci una descrizione valida",
+        title: t("common.error"),
+        description: t("whitelist.errors.invalidDescription"),
         variant: "destructive",
       });
       return;
@@ -150,23 +152,22 @@ export const EditWhitelistEntryForm = ({
 
       if (addResult.success) {
         toast({
-          title: "Successo",
-          description: "Entry aggiornata con successo",
+          title: t("common.success"),
+          description: t("whitelist.success.updated"),
         });
 
         onUpdate();
       } else {
         toast({
-          title: "Errore",
-          description:
-            addResult.message || "Errore durante l'aggiornamento dell'entry",
+          title: t("common.error"),
+          description: addResult.message || t("whitelist.errors.updateError"),
           variant: "destructive",
         });
       }
     } catch (error: any) {
       console.error("Errore durante l'aggiornamento dell'entry:", error);
 
-      let errorMessage = "Impossibile aggiornare l'entry della whitelist.";
+      let errorMessage = t("whitelist.errors.cannotUpdate");
       if (error.response && error.response.data && error.response.data.detail) {
         errorMessage = error.response.data.detail;
       } else if (error.message) {
@@ -174,7 +175,7 @@ export const EditWhitelistEntryForm = ({
       }
 
       toast({
-        title: "Errore",
+        title: t("common.error"),
         description: errorMessage,
         variant: "destructive",
       });
@@ -190,10 +191,10 @@ export const EditWhitelistEntryForm = ({
           <div>
             <CardTitle className="text-white flex items-center">
               <Edit className="h-5 w-5 mr-2 text-blue-400" />
-              Modifica Entry Whitelist
+              {t("whitelist.editEntry")}
             </CardTitle>
             <CardDescription className="text-slate-400">
-              Modifica la descrizione dell'entry selezionata
+              {t("whitelist.editDescription")}
             </CardDescription>
           </div>
           <Button
@@ -209,9 +210,11 @@ export const EditWhitelistEntryForm = ({
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Entry originale - Info */}
+          {}
           <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-600">
-            <div className="text-slate-400 text-sm mb-1">Entry originale:</div>
+            <div className="text-slate-400 text-sm mb-1">
+              {t("whitelist.originalEntry")}
+            </div>
             <div className="flex items-center space-x-2">
               <div className="text-white font-mono text-sm bg-slate-700 px-2 py-1 rounded">
                 {entry.value}
@@ -230,24 +233,28 @@ export const EditWhitelistEntryForm = ({
             </div>
           </div>
 
-          {/* Tipo modificabile */}
+          {}
           <div className="space-y-2">
             <Label htmlFor="type" className="text-slate-300">
-              Tipo
+              {t("whitelist.type")}
             </Label>
             <Select value={type} onValueChange={setType} disabled={isLoading}>
               <SelectTrigger className="bg-slate-900/50 border-slate-600 text-white">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-slate-800 border-slate-600">
-                <SelectItem value="ip">IP Address</SelectItem>
-                <SelectItem value="cidr">Network/CIDR</SelectItem>
-                <SelectItem value="domain">Domain</SelectItem>
+                <SelectItem value="ip">{t("whitelist.types.ip")}</SelectItem>
+                <SelectItem value="cidr">
+                  {t("whitelist.types.cidr1")}
+                </SelectItem>
+                <SelectItem value="domain">
+                  {t("whitelist.types.domain")}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          {/* Valore modificabile */}
+          {}
           <div className="space-y-2">
             <Label htmlFor="value" className="text-slate-300">
               {getLabel()}
@@ -262,16 +269,16 @@ export const EditWhitelistEntryForm = ({
             />
           </div>
 
-          {/* Descrizione modificabile */}
+          {}
           <div className="space-y-2">
             <Label htmlFor="description" className="text-slate-300">
-              Descrizione
+              {t("whitelist.description")}
             </Label>
             <Input
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Inserisci una descrizione"
+              placeholder={t("whitelist.insertDescription")}
               className="bg-slate-900/50 border-slate-600 text-white placeholder-slate-500"
               disabled={isLoading}
             />
@@ -286,12 +293,12 @@ export const EditWhitelistEntryForm = ({
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Aggiornando...
+                  {t("whitelist.updating")}
                 </>
               ) : (
                 <>
                   <Edit className="h-4 w-4 mr-2" />
-                  Aggiorna
+                  {t("common.update")}
                 </>
               )}
             </Button>
@@ -302,7 +309,7 @@ export const EditWhitelistEntryForm = ({
               className="bg-white text-slate-900 border-white hover:bg-slate-100 font-medium"
               disabled={isLoading}
             >
-              Annulla
+              {t("common.cancel")}
             </Button>
           </div>
         </form>

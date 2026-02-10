@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -43,6 +44,7 @@ const ManualBansList: FC<ManualBansListProps> = ({
   totalManualBansCount,
   onBanCIDR,
 }) => {
+  const { t } = useTranslation();
   const scrollContainerRef = useInfiniteScroll({
     onLoadMore: onLoadMore,
     hasMore: hasMoreManual,
@@ -57,11 +59,11 @@ const ManualBansList: FC<ManualBansListProps> = ({
         <CardTitle className="text-white flex items-center">
           {}
           <Shield className="h-5 w-5 mr-2 text-red-400 flex-shrink-0" />
-          IP Bannati Manualmente Visualizzati: {manualBans.length} /{" "}
+          {t("ipManagement.manualBansDisplayed")} {manualBans.length} /
           {totalManualBansCount || 0}
         </CardTitle>
         <CardDescription className="text-slate-400">
-          Lista degli IP bannati manualmente
+          {t("ipManagement.manualBansDescription")}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -74,15 +76,16 @@ const ManualBansList: FC<ManualBansListProps> = ({
           manualBans.length === 0 &&
           totalManualBansCount === 0 ? (
             <div className="text-center text-slate-400 py-8 flex items-center justify-center">
-              <Loader2 className="animate-spin h-5 w-5 mr-2" /> Caricamento...
+              <Loader2 className="animate-spin h-5 w-5 mr-2" />{" "}
+              {t("common.loading")}
             </div>
           ) : manualBans.length === 0 && totalManualBansCount === 0 ? (
             <div className="text-center text-slate-400 py-8">
-              Nessun IP manuale trovato.
+              {t("ipManagement.noManualBans")}
             </div>
           ) : manualBans.length === 0 && totalManualBansCount > 0 ? (
             <div className="text-center text-slate-400 py-8">
-              Nessun IP manuale trovato con i criteri di ricerca attuali.
+              {t("ipManagement.noManualBansWithFilters")}
             </div>
           ) : (
             manualBans.map((ban, index) => (
@@ -102,13 +105,13 @@ const ManualBansList: FC<ManualBansListProps> = ({
           )}
           {loadingMoreManual && hasMoreManual && (
             <div className="text-center text-slate-400 py-4 flex items-center justify-center">
-              <Loader2 className="animate-spin h-5 w-5 mr-2" /> Caricando altri
-              ban manuali...
+              <Loader2 className="animate-spin h-5 w-5 mr-2" />{" "}
+              {t("ipManagement.loadingMoreManual")}
             </div>
           )}
           {!hasMoreManual && manualBans.length > 0 && !loadingMoreManual && (
             <div className="text-center text-slate-500 py-4 text-sm">
-              Fine della lista dei ban manuali.
+              {t("ipManagement.endOfManualList")}
             </div>
           )}
         </div>
