@@ -613,8 +613,13 @@ class AuthManager:
                 if not user.totp_enabled:
                     return {"success": False, "message": "TOTP non è attivo"}
 
-                if not self.verify_totp_code(username, totp_code):
-                    return {"success": False, "message": "Codice TOTP non valido"}
+                totp_result = self.verify_totp_code(username, totp_code)
+
+                if not totp_result["success"]:
+                    return {
+                        "success": False,
+                        "message": totp_result["message"],
+                    }
 
                 backup_codes = self.generate_backup_codes()
                 user.backup_codes = self.encrypt_sensitive_data(backup_codes)
