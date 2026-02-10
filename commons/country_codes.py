@@ -251,8 +251,11 @@ country_codes = {
 
 def get_country_name(code: str, lang: str = "en") -> str:
 
-    data = country_codes.get(code)
+    code_upper = code.upper() if code else ""
+    lang_lower = lang.lower() if lang else "en"
+    
+    data = country_codes.get(code_upper)
     if data:
-        name = data.get(lang) or data.get("en")
-        return f"{code} {name}"
-    return f"{code} Not available"
+        name = data.get(lang_lower) or data.get("en")
+        return f"{code_upper} {name}"
+    return f"{code_upper} Not available"
