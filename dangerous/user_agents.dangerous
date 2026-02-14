@@ -1,7 +1,3 @@
-{"id": "dangerous_ua_001", "pattern": "sqlmap", "description": "Tool automatico per SQL injection", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_002", "pattern": "nikto", "description": "Scanner di vulnerabilit\u00e0 Nikto", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_003", "pattern": "nmap", "description": "Scanner di rete Nmap", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_004", "pattern": "masscan", "description": "Scanner di rete masscan (molto veloce)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_005", "pattern": "acunetix", "description": "Scanner di vulnerabilit\u00e0 commerciale Acunetix", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_006", "pattern": "nessus", "description": "Scanner di vulnerabilit\u00e0 commerciale Nessus", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_007", "pattern": "openvas", "description": "Scanner di vulnerabilit\u00e0 OpenVAS", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
@@ -18,7 +14,6 @@
 {"id": "dangerous_ua_040", "pattern": "zmeu", "description": "Bot malevolo noto Zmeu", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_041", "pattern": "morfeus", "description": "Scanner/bot malevolo Morfeus", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_042", "pattern": "binlar", "description": "Bot malevolo Binlar", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_043", "pattern": "masscan", "description": "Scanner massivo di rete", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_050", "pattern": "python-requests", "description": "Client Python requests (spesso bot/script)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_051", "pattern": "python-urllib", "description": "Client Python urllib (spesso script)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_052", "pattern": "python/2\\.", "description": "Python 2.x client (spesso vecchi script)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
@@ -29,13 +24,21 @@
 {"id": "dangerous_ua_071", "pattern": "wget/1\\.(0|1|2|3|4|5|6|7|8|9|10)\\.", "description": "Versioni vecchie di wget (sospette)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_080", "pattern": "hello-world", "description": "User-Agent generico di script test", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_081", "pattern": "xfa1", "description": "User-Agent sospetto (bot non identificato)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_082", "pattern": "test", "description": "User-Agent di test generico", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_090", "pattern": "scanner", "description": "User-Agent generico di scanner", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_091", "pattern": "bot", "description": "User-Agent generico di bot", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_092", "pattern": "crawler", "description": "User-Agent generico di crawler", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_093", "pattern": "spider", "description": "User-Agent generico di spider", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_100", "pattern": "nmap scripting engine", "description": "Nmap NSE (modulo script Nmap)", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_ua_101", "pattern": "masscan/", "description": "Masscan scanner", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_110", "pattern": "nuclei", "description": "Scanner vulnerabilit\u00e0 Nuclei", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_111", "pattern": "httpx", "description": "Tool httpx per HTTP probing", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "dangerous_ua_112", "pattern": "subfinder", "description": "Tool subdomain enumeration", "type": "dangerous_ua", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_ua_1771093156609", "pattern": "Nikto", "description": "Scanner: Nikto Web Server Scanner", "type": "dangerous_ua", "createdAt": "2026-02-14T19:19:16.609299"}
+{"id": "dangerous_ua_1771093157252", "pattern": "sqlmap", "description": "Scanner: sqlmap (SQL Injection Tool)", "type": "dangerous_ua", "createdAt": "2026-02-14T19:19:17.252438"}
+{"id": "dangerous_ua_1771093157954", "pattern": "ZmEu", "description": "Scanner: ZmEu Vulnerability Scanner", "type": "dangerous_ua", "createdAt": "2026-02-14T19:19:17.954859"}
+{"id": "dangerous_ua_1771093158946", "pattern": "nmap", "description": "Scanner: Nmap Network Scanner", "type": "dangerous_ua", "createdAt": "2026-02-14T19:19:18.946803"}
+{"id": "dangerous_ua_1771093160396", "pattern": "masscan", "description": "Scanner: Masscan (Port Scanner)", "type": "dangerous_ua", "createdAt": "2026-02-14T19:19:20.396283"}
+{"id": "dangerous_ua_1771093161039", "pattern": "libredtail-http", "description": "Tool: libredtail (Scanner/Automazione)", "type": "dangerous_ua", "createdAt": "2026-02-14T19:19:21.039844"}
+{"id": "dangerous_ua_1771093187827", "pattern": "python-requests|Python/|aiohttp|curl/|wget/", "description": "Bot o script automatico.", "type": "dangerous_ua", "createdAt": "2026-02-14T19:19:47.827527"}
+{"id": "dangerous_ua_1771093199094", "pattern": "MJ12bot", "description": "Bot: Majestic SEO Bot", "type": "dangerous_ua", "createdAt": "2026-02-14T19:19:59.094016"}
+{"id": "dangerous_ua_1771093200829", "pattern": "DotBot", "description": "Bot: DotBot (Moz/OpenSiteExplorer)", "type": "dangerous_ua", "createdAt": "2026-02-14T19:20:00.829602"}
+{"id": "dangerous_ua_1771093208764", "pattern": "SemrushBot", "description": "Bot: Semrush SEO Bot", "type": "dangerous_ua", "createdAt": "2026-02-14T19:20:08.764146"}
+{"id": "dangerous_ua_1771093209684", "pattern": "AhrefsBot", "description": "Bot: Ahrefs SEO Bot", "type": "dangerous_ua", "createdAt": "2026-02-14T19:20:09.684057"}

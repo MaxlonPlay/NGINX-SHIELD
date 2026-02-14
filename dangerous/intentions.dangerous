@@ -1,39 +1,38 @@
-{"id": "dangerous_url_001", "pattern": "web shell", "description": "Tentativo di web shell", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_002", "pattern": "reverse shell", "description": "Tentativo di reverse shell", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_003", "pattern": "backdoor", "description": "Tentativo di backdoor", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_004", "pattern": "remote code execution", "description": "Tentativo di RCE", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_005", "pattern": "code injection", "description": "Tentativo di code injection", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_006", "pattern": "command injection", "description": "Tentativo di command injection", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_010", "pattern": "sql injection", "description": "Tentativo di SQL injection", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_011", "pattern": "sqli", "description": "Tentativo di SQL injection (abbreviato)", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_012", "pattern": "union select", "description": "SQL injection UNION-based", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_020", "pattern": "cross-site scripting", "description": "Tentativo di XSS", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_021", "pattern": "xss", "description": "Tentativo di XSS (abbreviato)", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_022", "pattern": "script injection", "description": "Tentativo di script injection", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_030", "pattern": "brute force", "description": "Attacco brute force", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_031", "pattern": "bruteforce", "description": "Attacco brute force", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_032", "pattern": "password cracking", "description": "Tentativo di cracking password", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_040", "pattern": "path traversal", "description": "Tentativo di path traversal", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_041", "pattern": "directory traversal", "description": "Tentativo di directory traversal", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_042", "pattern": "lfi", "description": "Local File Inclusion", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_043", "pattern": "rfi", "description": "Remote File Inclusion", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_050", "pattern": "exploit", "description": "Tentativo di sfruttare vulnerabilità", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_051", "pattern": "vulnerability", "description": "Riferimento a vulnerabilità", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_052", "pattern": "zero-day", "description": "Exploit zero-day", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_060", "pattern": "malware", "description": "Riferimento a malware", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_061", "pattern": "trojan", "description": "Riferimento a trojan", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_062", "pattern": "virus", "description": "Riferimento a virus", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_063", "pattern": "ransomware", "description": "Riferimento a ransomware", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_070", "pattern": "botnet", "description": "Riferimento a botnet", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_071", "pattern": "ddos", "description": "Tentativo di attacco DDoS", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_072", "pattern": "dos attack", "description": "Tentativo di attacco DoS", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_080", "pattern": "crypto mining", "description": "Tentativo di crypto mining", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_081", "pattern": "cryptojacking", "description": "Tentativo di cryptojacking", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_090", "pattern": "scanner", "description": "Utilizzo di tool scanner", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_091", "pattern": "scanning", "description": "Tentativo di scansione", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_092", "pattern": "vulnerability scan", "description": "Scansione vulnerabilità", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_093", "pattern": "port scan", "description": "Scansione porte", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_100", "pattern": "unauthorized access", "description": "Tentativo di accesso non autorizzato", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_101", "pattern": "privilege escalation", "description": "Tentativo di escalation privilegi", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_110", "pattern": "file upload malicious", "description": "Tentativo di upload file malevolo", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "dangerous_url_111", "pattern": "unrestricted file upload", "description": "Upload file non ristretto", "type": "dangerous_url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "dangerous_url_1771093164737", "pattern": "robots\\.txt", "description": "Accesso a robots.txt (legittimo o scansione)", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:24.737806"}
+{"id": "dangerous_url_1771093165475", "pattern": "/(le_connector|bridge2cart)/", "description": "Scanner: Ricerca bridge/connettori e-commerce", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:25.475587"}
+{"id": "dangerous_url_1771093166188", "pattern": "nikto|sqlmap|nmap|masscan|acunetix|havij|zmeu", "description": "Scanner automatico o tool hacking riconosciuto", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:26.188193"}
+{"id": "dangerous_url_1771093167142", "pattern": "\\\\x[0-9a-f]{2,}", "description": "Richiesta malformata o binaria (scan/fuzzing)", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:27.142643"}
+{"id": "dangerous_url_1771093168377", "pattern": "crossdomain\\.xml", "description": "Accesso a crossdomain.xml (scansione vulnerabilit\u00e0)", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:28.377085"}
+{"id": "dangerous_url_1771093169514", "pattern": "/(fff|function)\\.php", "description": "Scanner: Ricerca file PHP sospetti o backdoor", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:29.514877"}
+{"id": "dangerous_url_1771093170209", "pattern": "/\\.(vscode|idea|terraform|aws)", "description": "Scanner: Accesso file configurazione DevOps/IDE sensibili", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:30.209411"}
+{"id": "dangerous_url_1771093171750", "pattern": "(\\.interactsh\\.com|\\.oast\\.fun|\\.burpcollaborator\\.net)", "description": "Scanner: Interazione OAST/Out-of-Band (Burp/Interactsh)", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:31.750218"}
+{"id": "dangerous_url_1771093172445", "pattern": "^/(api/v1/namespaces|v1\\.24/containers|v2/_catalog)", "description": "Scanner: Enumerazione API Kubernetes o Docker Registry", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:32.445211"}
+{"id": "dangerous_url_1771093174206", "pattern": "sitemap\\.xml", "description": "Scanner: Accesso Mappa del sito (potenziale scraping)", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:34.206831"}
+{"id": "dangerous_url_1771093174964", "pattern": "/(dashboard/|api/http/routers)", "description": "Scanner: Esposizione Dashboard Traefik o Proxy", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:34.964009"}
+{"id": "dangerous_url_1771093181499", "pattern": "Mozi\\.m|/tmp/", "description": "Tentativo botnet Mozi o esecuzione da /tmp", "type": "dangerous_url", "createdAt": "2026-02-14T19:19:41.499176"}
+{"id": "dangerous_url_1771093257150", "pattern": "/(slowloris|hulk|xmrig|hydra|medusa|john)", "description": "Tentativo di attacco DDoS, mining o bruteforce", "type": "dangerous_url", "createdAt": "2026-02-14T19:20:57.150315"}
+{"id": "dangerous_url_1771093260852", "pattern": "/xmlrpc\\.php", "description": "Tentativo di sfruttare XML-RPC WordPress (bruteforce/DDoS)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:00.852804"}
+{"id": "dangerous_url_1771093273221", "pattern": "(\\.\\./|%2e%2e/|%2f)", "description": "Tentativo di path traversal (accesso directory superiori)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:13.221844"}
+{"id": "dangerous_url_1771093278788", "pattern": "/wp-(admin|login|content/plugins)", "description": "Tentativo di accesso WordPress (admin, login o plugin)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:18.788567"}
+{"id": "dangerous_url_1771093280529", "pattern": "/phpMyAdmin", "description": "Tentativo di accesso a phpMyAdmin", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:20.529165"}
+{"id": "dangerous_url_1771093283067", "pattern": "/db/phpMyAdmin-\\d+/index\\.php", "description": "Tentativo di accesso a vecchie versioni phpMyAdmin", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:23.067769"}
+{"id": "dangerous_url_1771093284487", "pattern": "/etc/passwd", "description": "Tentativo di lettura file sensibili del sistema", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:24.487313"}
+{"id": "dangerous_url_1771093287021", "pattern": "\\b(select|union|insert|drop|delete)\\b.*\\b(from|where|table)\\b", "description": "Tentativo di SQL Injection", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:27.021506"}
+{"id": "dangerous_url_1771093288031", "pattern": "(<script>|</script>|javascript:)", "description": "Tentativo di XSS (Cross-Site Scripting)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:28.031531"}
+{"id": "dangerous_url_1771093288742", "pattern": "/\\.env", "description": "Tentativo di accesso a file .env (variabili sensibili)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:28.742414"}
+{"id": "dangerous_url_1771093290326", "pattern": "/\\.git", "description": "Tentativo di accesso alla cartella .git (esposizione sorgenti)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:30.326899"}
+{"id": "dangerous_url_1771093290890", "pattern": "/\\.ssh/", "description": "Tentativo di accesso a directory SSH", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:30.890334"}
+{"id": "dangerous_url_1771093293016", "pattern": "/shell\\.php", "description": "Tentativo di upload o esecuzione di web shell", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:33.016365"}
+{"id": "dangerous_url_1771093293762", "pattern": "base64_decode|eval\\(", "description": "Tentativo di esecuzione codice PHP malevolo", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:33.762651"}
+{"id": "dangerous_url_1771093295909", "pattern": "\\.(sql|bak|backup|old|swp)$", "description": "Tentativo di accedere a file backup o SQL dump", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:35.909577"}
+{"id": "dangerous_url_1771093296629", "pattern": "/config\\.(php|inc\\.php|bak)", "description": "Tentativo di accesso a file di configurazione", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:36.629056"}
+{"id": "dangerous_url_1771093297263", "pattern": "/(admin|administrator|login|webmail)/", "description": "Tentativo di accesso ad aree amministrative o login", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:37.263782"}
+{"id": "dangerous_url_1771093299333", "pattern": "/admin/assets/js/views/login\\.js", "description": "Tentativo di localizzare file JS di login admin", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:39.333674"}
+{"id": "dangerous_url_1771093300068", "pattern": "/cgi-bin/.*bin/sh", "description": "Tentativo di RCE (Remote Code Execution) via CGI", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:40.068680"}
+{"id": "dangerous_url_1771093301527", "pattern": "wget|curl.*http|nc\\s+|bash\\s+|python\\s+", "description": "Tentativo di eseguire comandi shell (wget, curl, nc, bash)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:41.527567"}
+{"id": "dangerous_url_1771093306127", "pattern": "(allow_url_include|auto_prepend_file|php://input)", "description": "Tentativo di RCE via iniezione parametri PHP", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:46.127891"}
+{"id": "dangerous_url_1771093307618", "pattern": "/(manager|jmx-console|invoker)/", "description": "Tentativo di accesso a console JBoss o Tomcat", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:47.618473"}
+{"id": "dangerous_url_1771093308455", "pattern": "/HNAP1/", "description": "Tentativo di sfruttamento HNAP (router vulnerabili)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:48.455552"}
+{"id": "dangerous_url_1771093310118", "pattern": "/owa/", "description": "Tentativo di accesso a Outlook Web Access", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:50.118036"}
+{"id": "dangerous_url_1771093311822", "pattern": "pingback\\.php", "description": "Tentativo di sfruttare pingback WordPress", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:51.822699"}
+{"id": "dangerous_url_1771093312592", "pattern": "169\\.254\\.169\\.254", "description": "Exploit: Tentativo SSRF Cloud Metadata (AWS/GCP/Azure)", "type": "dangerous_url", "createdAt": "2026-02-14T19:21:52.592700"}

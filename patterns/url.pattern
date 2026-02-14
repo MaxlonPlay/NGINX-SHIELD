@@ -4,6 +4,8 @@
 {"id": "url_004", "pattern": "/socket\\?api_key=[a-f0-9]{32}", "description": "Jellyfin: Connessione websocket", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_005", "pattern": "/QuickConnect/Enabled", "description": "Jellyfin: Verifica QuickConnect", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_006", "pattern": "/Branding/Configuration", "description": "Jellyfin: Configurazione branding", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "url_007", "pattern": "^/System/Info/Public", "description": "Jellyfin: Informazioni pubbliche sul server", "type": "url", "createdAt": "2026-02-12T14:00:00.000000"}
+{"id": "url_008", "pattern": "^/Users/Me", "description": "Jellyfin: Richiesta info profilo utente corrente", "type": "url", "createdAt": "2026-02-12T14:00:00.000000"}
 {"id": "url_010", "pattern": "/api2/json/cluster/resources", "description": "Proxmox: Elenco risorse cluster", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_011", "pattern": "/api2/json/cluster/tasks", "description": "Proxmox: Consultazione task cluster", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_012", "pattern": "/api2/json/nodes/.*/lxc/.*/status/current", "description": "Proxmox: Stato container LXC", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
@@ -11,18 +13,22 @@
 {"id": "url_021", "pattern": "/ocs/v2\\.php/cloud/capabilities", "description": "Nextcloud: Recupero capabilities", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_022", "pattern": "/index\\.php/avatar/", "description": "Nextcloud: Accesso avatar utente", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_023", "pattern": "/apps/richdocuments/settings/fonts\\.json", "description": "Nextcloud: Configurazione font Collabora", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "url_024", "pattern": "/standalone-signaling/spreed", "description": "Nextcloud Talk: Backend di segnalazione", "type": "url", "createdAt": "2026-02-12T14:00:00.000000"}
 {"id": "url_030", "pattern": "/api/logs\\?log_type=", "description": "Sistema: Consultazione log applicazione", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_031", "pattern": "/api/system/(status|history)", "description": "Sistema: Stato o cronologia sistema", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_032", "pattern": "/api/services/restart/", "description": "Sistema: Riavvio servizi", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_033", "pattern": "/api/tasks", "description": "Sistema: Gestione task", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "url_040", "pattern": "/webapi/entry\\.cgi", "description": "Synology: Accesso API (Photos o DSM)", "type": "url", "createdAt": "2026-02-12T14:00:00.000000"}
 {"id": "url_100", "pattern": "^/$", "description": "Accesso alla pagina principale del sito", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_101", "pattern": "/favicon\\.ico", "description": "Accesso al file favicon.ico", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_102", "pattern": "robots\\.txt", "description": "Accesso a robots.txt (legittimo o scansione)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_200", "pattern": "/wp-(admin|login|content/plugins)", "description": "Tentativo di accesso WordPress (admin, login o plugin)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_201", "pattern": "/xmlrpc\\.php", "description": "Tentativo di sfruttare XML-RPC WordPress (bruteforce/DDoS)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_202", "pattern": "/wp-json/wp/v2/users", "description": "Enumerazione utenti WordPress via REST API", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "url_203", "pattern": "/wp-includes/", "description": "Accesso a file core/assets di WordPress", "type": "url", "createdAt": "2026-02-12T14:00:00.000000"}
 {"id": "url_210", "pattern": "/phpMyAdmin", "description": "Tentativo di accesso a phpMyAdmin", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_211", "pattern": "/db/phpMyAdmin-\\d+/index\\.php", "description": "Tentativo di accesso a vecchie versioni phpMyAdmin", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "url_212", "pattern": "/(le_connector|bridge2cart)/", "description": "Scanner: Ricerca bridge/connettori e-commerce", "type": "url", "createdAt": "2026-02-12T14:00:00.000000"}
 {"id": "url_220", "pattern": "(\\.\\./|%2e%2e/|%2f)", "description": "Tentativo di path traversal (accesso directory superiori)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_221", "pattern": "/etc/passwd", "description": "Tentativo di lettura file sensibili del sistema", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_230", "pattern": "\\b(select|union|insert|drop|delete)\\b.*\\b(from|where|table)\\b", "description": "Tentativo di SQL Injection", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
@@ -38,14 +44,21 @@
 {"id": "url_280", "pattern": "/(admin|administrator|login|webmail)/", "description": "Tentativo di accesso ad aree amministrative o login", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_281", "pattern": "/admin/assets/js/views/login\\.js", "description": "Tentativo di localizzare file JS di login admin", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_290", "pattern": "nikto|sqlmap|nmap|masscan|acunetix|havij|zmeu", "description": "Scanner automatico o tool hacking riconosciuto", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "url_291", "pattern": "python-requests|Python/|aiohttp|curl/|wget/", "description": "Bot o script automatico (Python, curl, wget)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_300", "pattern": "/cgi-bin/.*bin/sh", "description": "Tentativo di RCE (Remote Code Execution) via CGI", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_301", "pattern": "wget|curl.*http|nc\\s+|bash\\s+|python\\s+", "description": "Tentativo di eseguire comandi shell (wget, curl, nc, bash)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_302", "pattern": "Mozi\\.m|/tmp/", "description": "Tentativo botnet Mozi o esecuzione da /tmp", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "url_303", "pattern": "(allow_url_include|auto_prepend_file|php://input)", "description": "Tentativo di RCE via iniezione parametri PHP", "type": "url", "createdAt": "2026-02-12T14:00:00.000000"}
 {"id": "url_310", "pattern": "/(manager|jmx-console|invoker)/", "description": "Tentativo di accesso a console JBoss o Tomcat", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_311", "pattern": "/HNAP1/", "description": "Tentativo di sfruttamento HNAP (router vulnerabili)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_312", "pattern": "/owa/", "description": "Tentativo di accesso a Outlook Web Access", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_320", "pattern": "/(slowloris|hulk|xmrig|hydra|medusa|john)", "description": "Tentativo di attacco DDoS, mining o bruteforce", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_330", "pattern": "\\\\x[0-9a-f]{2,}", "description": "Richiesta malformata o binaria (scan/fuzzing)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "url_331", "pattern": "crossdomain\\.xml", "description": "Accesso a crossdomain.xml (scansione vulnerabilità)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "url_331", "pattern": "crossdomain\\.xml", "description": "Accesso a crossdomain.xml (scansione vulnerabilit\u00e0)", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "url_332", "pattern": "pingback\\.php", "description": "Tentativo di sfruttare pingback WordPress", "type": "url", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "url_333", "pattern": "/(fff|function)\\.php", "description": "Scanner: Ricerca file PHP sospetti o backdoor", "type": "url", "createdAt": "2026-02-12T14:00:00.000000"}
+{"id": "url_401", "pattern": "169\\.254\\.169\\.254", "description": "Exploit: Tentativo SSRF Cloud Metadata (AWS/GCP/Azure)", "type": "url", "createdAt": "2026-02-14T19:00:00.000000"}
+{"id": "url_402", "pattern": "/\\.(vscode|idea|terraform|aws)", "description": "Scanner: Accesso file configurazione DevOps/IDE sensibili", "type": "url", "createdAt": "2026-02-14T19:00:00.000000"}
+{"id": "url_403", "pattern": "(\\.interactsh\\.com|\\.oast\\.fun|\\.burpcollaborator\\.net)", "description": "Scanner: Interazione OAST/Out-of-Band (Burp/Interactsh)", "type": "url", "createdAt": "2026-02-14T19:00:00.000000"}
+{"id": "url_404", "pattern": "^/(api/v1/namespaces|v1\\.24/containers|v2/_catalog)", "description": "Scanner: Enumerazione API Kubernetes o Docker Registry", "type": "url", "createdAt": "2026-02-14T19:00:00.000000"}
+{"id": "url_405", "pattern": "sitemap\\.xml", "description": "Scanner: Accesso Mappa del sito (potenziale scraping)", "type": "url", "createdAt": "2026-02-14T19:00:00.000000"}
+{"id": "url_406", "pattern": "/(dashboard/|api/http/routers)", "description": "Scanner: Esposizione Dashboard Traefik o Proxy", "type": "url", "createdAt": "2026-02-14T19:00:00.000000"}

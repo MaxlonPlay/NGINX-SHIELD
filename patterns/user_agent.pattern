@@ -3,24 +3,56 @@
 {"id": "ua_003", "pattern": "Mozilla/5\\.0.*Safari/.*(?!Chrome)", "description": "Browser: Apple Safari", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_004", "pattern": "Mozilla/5\\.0.*Edg/", "description": "Browser: Microsoft Edge", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_005", "pattern": "Opera/", "description": "Browser: Opera", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_006", "pattern": "Brave", "description": "Browser: Brave", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_007", "pattern": "Vivaldi", "description": "Browser: Vivaldi", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_008", "pattern": "SamsungBrowser", "description": "Browser: Samsung Internet", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_009", "pattern": "UCBrowser", "description": "Browser: UC Browser", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
 {"id": "ua_010", "pattern": "Android.*Mobile", "description": "Dispositivo mobile: Android", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_011", "pattern": "iPhone.*Mobile", "description": "Dispositivo mobile: iPhone", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_012", "pattern": "iPad.*Mobile", "description": "Dispositivo mobile: iPad", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_013", "pattern": "Dalvik/", "description": "Ambiente: Android runtime (Dalvik/ART)", "type": "user_agent", "createdAt": "2026-02-12T14:00:00.000000"}
+{"id": "ua_014", "pattern": "Windows NT 10", "description": "Sistema Operativo: Windows 10/11", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_015", "pattern": "Macintosh.*Mac OS X", "description": "Sistema Operativo: macOS", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_016", "pattern": "X11.*Linux", "description": "Sistema Operativo: Linux", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
 {"id": "ua_020", "pattern": "Jellyfin", "description": "Client: Jellyfin", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_021", "pattern": "Nextcloud", "description": "Client: Nextcloud", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_022", "pattern": "ownCloud", "description": "Client: ownCloud", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "ua_030", "pattern": "Googlebot", "description": "Bot: Google Search Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "ua_031", "pattern": "bingbot", "description": "Bot: Bing Search Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "ua_032", "pattern": "Baiduspider", "description": "Bot: Baidu Search Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "ua_033", "pattern": "DuckDuckBot", "description": "Bot: DuckDuckGo Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "ua_034", "pattern": "Slackbot", "description": "Bot: Slack Link Preview Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "ua_035", "pattern": "TelegramBot", "description": "Bot: Telegram Link Preview Bot (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "ua_036", "pattern": "WhatsApp", "description": "Bot: WhatsApp Link Preview (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_023", "pattern": "Ktor client", "description": "Library: Ktor (Client HTTP usato da Jellyfin)", "type": "user_agent", "createdAt": "2026-02-12T14:00:00.000000"}
+{"id": "ua_024", "pattern": "Synology-Synology_Photos", "description": "Client: Synology Photos Mobile App", "type": "user_agent", "createdAt": "2026-02-12T14:00:00.000000"}
+{"id": "ua_025", "pattern": "Plex", "description": "Client: Plex Media Player", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_026", "pattern": "Kodi", "description": "Client: Kodi Media Center", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_027", "pattern": "VLC", "description": "Client: VLC Media Player", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
 {"id": "ua_040", "pattern": "curl/[8-9]\\.", "description": "Tool: curl moderno (potenzialmente legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_041", "pattern": "wget/1\\.(2[0-9])", "description": "Tool: wget moderno (potenzialmente legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
-{"id": "ua_050", "pattern": "monitoring|uptime|pingdom|statuscake", "description": "Servizio: Monitoring/Uptime (legittimo)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_042", "pattern": "libredtail-http", "description": "Tool: libredtail (Scanner/Automazione)", "type": "user_agent", "createdAt": "2026-02-12T14:00:00.000000"}
+{"id": "ua_043", "pattern": "python-requests", "description": "Library: Python Requests", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_044", "pattern": "Apache-HttpClient", "description": "Library: Apache HttpClient (Java)", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_045", "pattern": "Go-http-client", "description": "Library: Go HTTP Client", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_046", "pattern": "okhttp", "description": "Library: OkHttp (Android/Java)", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_050", "pattern": "monitoring|uptime|pingdom|statuscake", "description": "Servizio: Monitoring/Uptime", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_051", "pattern": "Prometheus|Grafana", "description": "Monitoring: Prometheus/Grafana", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_052", "pattern": "Zabbix", "description": "Monitoring: Zabbix", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_053", "pattern": "Nagios", "description": "Monitoring: Nagios", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
 {"id": "ua_060", "pattern": "axios/", "description": "Library: Axios (JavaScript HTTP client)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_061", "pattern": "node-fetch", "description": "Library: node-fetch (Node.js)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_062", "pattern": "PostmanRuntime", "description": "Tool: Postman (testing API)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
 {"id": "ua_063", "pattern": "Insomnia", "description": "Tool: Insomnia (testing API)", "type": "user_agent", "createdAt": "2026-01-31T12:00:00.000000"}
+{"id": "ua_064", "pattern": "Scrapy", "description": "Tool: Scrapy (Web Scraping Framework)", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_065", "pattern": "Selenium", "description": "Tool: Selenium WebDriver", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_066", "pattern": "HeadlessChrome", "description": "Tool: Chrome Headless", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_067", "pattern": "Puppeteer", "description": "Tool: Puppeteer", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_070", "pattern": "^-$", "description": "Identit\u00e0: Mancante o Anonima (-)", "type": "user_agent", "createdAt": "2026-02-12T14:00:00.000000"}
+{"id": "ua_071", "pattern": "^$", "description": "Identit\u00e0: User-Agent vuoto", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_081", "pattern": "AhrefsBot", "description": "Bot: Ahrefs SEO Bot", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_082", "pattern": "SemrushBot", "description": "Bot: Semrush SEO Bot", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_083", "pattern": "MJ12bot", "description": "Bot: Majestic SEO Bot", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_084", "pattern": "DotBot", "description": "Bot: DotBot (Moz/OpenSiteExplorer)", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_100", "pattern": "RSS|Feed", "description": "Client: RSS/Feed Reader", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_101", "pattern": "Feedly", "description": "Client: Feedly RSS Reader", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_102", "pattern": "NewsBlur", "description": "Client: NewsBlur RSS Reader", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_110", "pattern": "masscan", "description": "Scanner: Masscan (Port Scanner)", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_111", "pattern": "nmap", "description": "Scanner: Nmap Network Scanner", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_112", "pattern": "ZmEu", "description": "Scanner: ZmEu Vulnerability Scanner", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_113", "pattern": "sqlmap", "description": "Scanner: sqlmap (SQL Injection Tool)", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "ua_114", "pattern": "Nikto", "description": "Scanner: Nikto Web Server Scanner", "type": "user_agent", "createdAt": "2026-02-14T10:00:00.000000"}
+{"id": "user_agent_1771093069735", "pattern": "python-requests|Python/|aiohttp|curl/|wget/", "description": "Bot o script automatico.", "type": "user_agent", "createdAt": "2026-02-14T19:17:49.735534"}
