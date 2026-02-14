@@ -19,7 +19,7 @@ from functions.log_writer import log_event
 from functions.ip_manager import IPDataManager, start_memory_cleanup_thread
 from functions.ban_manager import should_ban_ip, ban_and_reset, setup_db
 from functions.file_monitor import tail_file, monitor_pattern
-from functions.blacklist_manager import load_blacklists_once, is_dangerous
+from functions.blacklist_manager import load_blacklists_once
 from functions.signal_handler import handle_signal
 
 APPLICATION_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -107,7 +107,7 @@ whitelist_manager = WhitelistManager(WHITELIST_DB_PATH, NPM_DEBUG_LOG)
 
 ip_manager = IPDataManager(TIME_FRAME, MAX_REQUESTS, NPM_DEBUG_LOG)
 
-user_agents_blacklist, intent_blacklist_set = load_blacklists_once(
+danger_detector = load_blacklists_once(
     MALICIOUS_USER_AGENTS, MALICIOUS_INTENTS, NPM_DEBUG_LOG
 )
 
@@ -240,20 +240,21 @@ def batch_ban_processor():
                         url=url,
                     )
                 except Exception as e:
-                    debug_log(f"Errore flush ban IP {ip}: {e}", NPM_DEBUG_LOG)
+                    debug_log(f"Errore ban finale IP {ip}: {e}", NPM_DEBUG_LOG)
 
     debug_log("Batch ban processor terminato", NPM_DEBUG_LOG)
 
 
 def batch_log_writer():
 
-    log_batch = deque(maxlen=500)
-    last_write_time = time.time()
+    log_batch = []
+    last_batch_time = time.time()
 
     debug_log("Batch log writer avviato", NPM_DEBUG_LOG)
 
     while not SHUTDOWN_SIGNAL.is_set():
         try:
+
             try:
                 log_entry = log_queue.get(timeout=0.1)
                 log_batch.append(log_entry)
@@ -261,48 +262,55 @@ def batch_log_writer():
                 pass
 
             current_time = time.time()
-            should_write = len(log_batch) >= LOG_BATCH_SIZE or (
-                log_batch and (current_time - last_write_time) > LOG_BATCH_TIMEOUT
+            should_process = len(log_batch) >= LOG_BATCH_SIZE or (
+                log_batch and (current_time - last_batch_time) > LOG_BATCH_TIMEOUT
             )
 
-            if should_write and log_batch:
+            if should_process and log_batch:
+
                 with log_write_lock:
                     try:
-                        with open(SUSPICIOUS_IP_LOG, "a", buffering=8192) as f:
+                        with open(SUSPICIOUS_IP_LOG, "a") as log_file:
                             for entry in log_batch:
-                                f.write(entry + "\n")
+                                log_file.write(entry + "\n")
                     except Exception as e:
-                        debug_log(f"Errore scrittura batch log: {e}", NPM_DEBUG_LOG)
+                        debug_log(f"Errore scrittura log batch: {e}", NPM_DEBUG_LOG)
 
+                debug_log(
+                    f"Batch log scritto: {len(log_batch)} entry", NPM_DEBUG_LOG
+                )
                 log_batch.clear()
-                last_write_time = current_time
+                last_batch_time = current_time
 
         except Exception as e:
             debug_log(f"Errore critico nel batch log writer: {e}", NPM_DEBUG_LOG)
             time.sleep(0.1)
 
     if log_batch:
-        debug_log(f"Flush finale log batch: {len(log_batch)} entries", NPM_DEBUG_LOG)
+        debug_log(f"Flush finale log batch: {len(log_batch)} entry", NPM_DEBUG_LOG)
         with log_write_lock:
             try:
-                with open(SUSPICIOUS_IP_LOG, "a") as f:
+                with open(SUSPICIOUS_IP_LOG, "a") as log_file:
                     for entry in log_batch:
-                        f.write(entry + "\n")
+                        log_file.write(entry + "\n")
             except Exception as e:
-                debug_log(f"Errore flush log: {e}", NPM_DEBUG_LOG)
+                debug_log(f"Errore scrittura log finale: {e}", NPM_DEBUG_LOG)
 
     debug_log("Batch log writer terminato", NPM_DEBUG_LOG)
 
 
 def stats_reporter():
-    debug_log("Stats reporter avviato", NPM_DEBUG_LOG)
+
+    debug_log("Stats reporter avviato - report ogni 5 minuti", NPM_DEBUG_LOG)
 
     while not SHUTDOWN_SIGNAL.is_set():
-        if SHUTDOWN_SIGNAL.wait(300):
+        time.sleep(300)
+
+        if SHUTDOWN_SIGNAL.is_set():
             break
 
         stats = get_stats_summary()
-        debug_log("=== STATISTICHE PERFORMANCE ===", NPM_DEBUG_LOG)
+        debug_log("=== STATS REPORT ===", NPM_DEBUG_LOG)
         debug_log(f"Uptime: {stats['uptime_seconds']:.1f}s", NPM_DEBUG_LOG)
         debug_log(f"Linee processate: {stats['lines_processed']}", NPM_DEBUG_LOG)
         debug_log(
@@ -310,7 +318,8 @@ def stats_reporter():
         )
         debug_log(f"Ban eseguiti: {stats['bans_executed']}", NPM_DEBUG_LOG)
         debug_log(f"Cache hit rate: {stats['cache_hit_rate']:.1f}%", NPM_DEBUG_LOG)
-        debug_log(f"Cache info: {cached_pattern_match.cache_info()}", NPM_DEBUG_LOG)
+        debug_log(f"Cache hits: {stats['cache_hits']}", NPM_DEBUG_LOG)
+        debug_log(f"Cache misses: {stats['cache_misses']}", NPM_DEBUG_LOG)
 
     debug_log("Stats reporter terminato", NPM_DEBUG_LOG)
 
@@ -323,7 +332,6 @@ def process_and_check_ban_optimized(
         return
 
     meaning = get_status_meaning(code, STATUS_MEANING_MAP)
-
     error_count, is_banned = ip_manager.update_ip_data(ip, code, CODES_TO_ALLOW)
 
     base_log = (
@@ -336,9 +344,7 @@ def process_and_check_ban_optimized(
     if is_banned:
         return
 
-    if is_dangerous(
-        user_agent_full, url, user_agents_blacklist, intent_blacklist_set
-    ):
+    if danger_detector.is_dangerous(user_agent_full, url):
         debug_log(f"IP: {ip}, BLACKLIST. BAN IMMEDIATO.", NPM_DEBUG_LOG)
         ban_queue.put(
             (
@@ -391,10 +397,8 @@ def parse_fallback_line_optimized(line):
     if req_match:
         method = req_match.group(1)
         url = req_match.group(2)
-    else:
-        url = request
 
-    domain = "FALLBACK_DOMAIN"
+    domain = "NON RILEVATO"
 
     if whitelist_manager.is_whitelisted(ip):
         if ENABLE_WHITELIST_LOG:
@@ -433,10 +437,8 @@ def parse_default_line_optimized(line):
     if req_match:
         method = req_match.group(1)
         url = req_match.group(2)
-    else:
-        url = request
 
-    domain = "BYPASS_DOMAIN"
+    domain = "NON RILEVATO"
 
     if whitelist_manager.is_whitelisted(ip):
         if ENABLE_WHITELIST_LOG:
