@@ -35,7 +35,7 @@ LOG_FILE_WHITELISTED_PROXY = os.path.join(
     ANALYSIS_LOG_DIR, "proxy-host-error-whitelist.log"
 )
 NPM_DEBUG_LOG = os.path.join(ANALYSIS_LOG_DIR, "npm_debug.log")
-SUSPICIOUS_IP_LOG = os.path.join(ANALYSIS_LOG_DIR, "banhammer.log")
+SUSPICIOUS_IP_LOG = os.path.join(ANALYSIS_LOG_DIR, "suspicious.log")
 
 BLOCKLIST_DB_PATH = os.path.join(APPLICATION_ROOT, "data", "db", "banned_ips.db")
 
